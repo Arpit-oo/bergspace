@@ -1,0 +1,363 @@
+"use client";
+
+import { useMemo } from "react";
+import {
+  GoalCycle,
+  Department,
+  ThrustArea,
+  Profile,
+  Goal,
+  Achievement,
+} from "@/lib/types";
+import { UOM_LABELS } from "@/lib/constants";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
+import type { PieLabelRenderProps } from "recharts";
+
+/* Chart palette per design spec */
+const CHART_COLORS = ["#C45A2D", "#3B7DD8", "#3D9A5F", "#8B5FC7", "#C08B30"];
+const PIE_COLORS = [
+  "#C45A2D", "#3B7DD8", "#3D9A5F", "#8B5FC7", "#C08B30",
+  "#F97316", "#06B6D4", "#84CC16", "#E879F9", "#FBBF24",
+];
+
+const axisTickStyle = { fontSize: 11, fill: "#8C8578" };
+const gridProps = { stroke: "#E8E2D6", strokeDasharray: "3 3" };
+
+function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ name: string; value: number; color: string }>; label?: string }) {
+  if (!active || !payload) return null;
+  return (
+    <div className="bg-white border border-[#E8E2D6] rounded-lg shadow-lg p-3">
+      <p className="text-xs font-medium text-[#1A1A1A] mb-1">{label}</p>
+      {payload.map((entry, i) => (
+        <p key={i} className="text-xs text-[#5C564C]">
+          <span className="inline-block w-2 h-2 rounded-full mr-1.5" style={{ backgroundColor: entry.color }} />
+          {entry.name}: <span className="font-mono tabular-nums font-medium">{entry.value}</span>
+        </p>
+      ))}
+    </div>
+  );
+}
+
+interface GoalSheetWithRelations {
+  id: string;
+  employee_id: string;
+  cycle_id: string;
+  status: string;
+  employee?: Profile;
+  goals?: (Goal & { achievements?: Achievement[] })[];
+}
+
+interface CheckinRecord {
+  id: string;
+  manager_id: string;
+  employee_id: string;
+  cycle_id: string;
+  manager?: { full_name: string };
+}
+
+interface AnalyticsViewProps {
+  cycles: GoalCycle[];
+  departments: Department[];
+  goalSheets: Record<string, unknown>[];
+  thrustAreas: ThrustArea[];
+  checkins: Record<string, unknown>[];
+  managers: Record<string, unknown>[];
+  employees: Record<string, unknown>[];
+}
+
+export function AnalyticsView({
+  cycles,
+  departments,
+  goalSheets: rawSheets,
+  thrustAreas,
+  checkins: rawCheckins,
+  managers: rawManagers,
+  employees: rawEmployees,
+}: AnalyticsViewProps) {
+  const sheets = rawSheets as unknown as GoalSheetWithRelations[];
+  const checkins = rawCheckins as unknown as CheckinRecord[];
+  const managerList = rawManagers as unknown as Profile[];
+  const employeeList = rawEmployees as unknown as Profile[];
+
+  const qoqData = useMemo(() => {
+    return cycles.map((cycle) => {
+      const cycleSheets = sheets.filter((s) => s.cycle_id === cycle.id);
+      let totalTarget = 0;
+      let totalActual = 0;
+      let goalCount = 0;
+      cycleSheets.forEach((sheet) => {
+        (sheet.goals || []).forEach((goal) => {
+          totalTarget += goal.target_value * (goal.weightage / 100);
+          goalCount++;
+          const latest = goal.achievements?.sort(
+            (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+          )?.[0];
+          if (latest?.actual_value != null) {
+            totalActual += latest.actual_value * (goal.weightage / 100);
+          }
+        });
+      });
+      const achievementPct = totalTarget > 0 ? Math.round((totalActual / totalTarget) * 100) : 0;
+      return { name: cycle.name, achievement: achievementPct, employees: cycleSheets.length, goals: goalCount };
+    });
+  }, [cycles, sheets]);
+
+  const thrustAreaData = useMemo(() => {
+    const map = new Map<string, number>();
+    sheets.forEach((sheet) => {
+      (sheet.goals || []).forEach((goal) => {
+        const name = goal.thrust_area?.name || "Unassigned";
+        map.set(name, (map.get(name) || 0) + 1);
+      });
+    });
+    return Array.from(map.entries()).map(([name, value]) => ({ name, value }));
+  }, [sheets]);
+
+  const uomData = useMemo(() => {
+    const map = new Map<string, number>();
+    sheets.forEach((sheet) => {
+      (sheet.goals || []).forEach((goal) => {
+        const label = UOM_LABELS[goal.uom] || goal.uom;
+        map.set(label, (map.get(label) || 0) + 1);
+      });
+    });
+    return Array.from(map.entries()).map(([name, value]) => ({ name, value }));
+  }, [sheets]);
+
+  const deptCompletionData = useMemo(() => {
+    return departments.map((dept) => {
+      const deptEmployees = employeeList.filter((e) => e.department_id === dept.id);
+      const deptSheets = sheets.filter((s) => s.employee?.department_id === dept.id);
+      const approvedSheets = deptSheets.filter((s) => s.status === "approved");
+      const submittedOrApproved = deptSheets.filter((s) => s.status === "submitted" || s.status === "approved");
+      const completionRate = deptEmployees.length > 0 ? Math.round((approvedSheets.length / deptEmployees.length) * 100) : 0;
+      const submissionRate = deptEmployees.length > 0 ? Math.round((submittedOrApproved.length / deptEmployees.length) * 100) : 0;
+      return { name: dept.name, completion: completionRate, submission: submissionRate, employees: deptEmployees.length };
+    });
+  }, [departments, sheets, employeeList]);
+
+  const managerEffectiveness = useMemo(() => {
+    return managerList.map((mgr) => {
+      const mgrEmployees = employeeList.filter((e) => e.manager_id === mgr.id);
+      const mgrCheckins = checkins.filter((c) => c.manager_id === mgr.id);
+      const checkedEmployeeIds = new Set(mgrCheckins.map((c) => c.employee_id));
+      const completedCount = mgrEmployees.filter((e) => checkedEmployeeIds.has(e.id)).length;
+      const rate = mgrEmployees.length > 0 ? Math.round((completedCount / mgrEmployees.length) * 100) : 0;
+      return { name: mgr.full_name, rate, completed: completedCount, total: mgrEmployees.length };
+    });
+  }, [managerList, employeeList, checkins]);
+
+  const totalGoals = sheets.reduce((sum, s) => sum + (s.goals?.length || 0), 0);
+  const totalApproved = sheets.filter((s) => s.status === "approved").length;
+  const totalCheckins = checkins.length;
+
+  const summaryStats = [
+    { value: sheets.length, label: "TOTAL SHEETS" },
+    { value: totalGoals, label: "TOTAL GOALS" },
+    { value: totalApproved, label: "APPROVED" },
+    { value: totalCheckins, label: "CHECK-INS" },
+  ];
+
+  return (
+    <div className="flex flex-col gap-6">
+      <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Analytics</h1>
+
+      {/* Summary */}
+      <div className="grid grid-cols-4 gap-4">
+        {summaryStats.map((stat) => (
+          <div key={stat.label} className="bg-white border border-[#E8E2D6] rounded-xl p-5">
+            <p className="text-3xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
+              {stat.value}
+            </p>
+            <p className="text-xs text-[#A89F91] uppercase tracking-wider mt-1">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* QoQ Achievement Trends */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#E8E2D6]">
+          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Quarter-over-Quarter Achievement Trends</h2>
+        </div>
+        <div className="p-5">
+          {qoqData.length === 0 ? (
+            <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">
+              No cycle data available.
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={qoqData}>
+                <CartesianGrid {...gridProps} />
+                <XAxis dataKey="name" tick={axisTickStyle} />
+                <YAxis unit="%" tick={axisTickStyle} />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend wrapperStyle={{ fontSize: "12px", color: "#5C564C" }} />
+                <Line
+                  type="monotone"
+                  dataKey="achievement"
+                  stroke="#C45A2D"
+                  strokeWidth={2}
+                  name="Achievement %"
+                  dot={{ r: 4, fill: "#C45A2D" }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </div>
+
+      {/* Pie Charts Row */}
+      <div className="grid grid-cols-2 gap-6">
+        {/* Thrust Area Distribution */}
+        <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+          <div className="px-5 py-4 border-b border-[#E8E2D6]">
+            <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Goals by Thrust Area</h2>
+          </div>
+          <div className="p-5">
+            {thrustAreaData.length === 0 ? (
+              <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">
+                No goal data available.
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={thrustAreaData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(props: PieLabelRenderProps) =>
+                      `${props.name ?? ""} (${(((props.percent as number | undefined) ?? 0) * 100).toFixed(0)}%)`
+                    }
+                    outerRadius={100}
+                    dataKey="value"
+                  >
+                    {thrustAreaData.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
+          </div>
+        </div>
+
+        {/* UoM Distribution */}
+        <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+          <div className="px-5 py-4 border-b border-[#E8E2D6]">
+            <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Goals by Unit of Measurement</h2>
+          </div>
+          <div className="p-5">
+            {uomData.length === 0 ? (
+              <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">
+                No goal data available.
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={uomData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(props: PieLabelRenderProps) =>
+                      `${props.name ?? ""} (${(((props.percent as number | undefined) ?? 0) * 100).toFixed(0)}%)`
+                    }
+                    outerRadius={100}
+                    dataKey="value"
+                  >
+                    {uomData.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Department Completion Rates */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#E8E2D6]">
+          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Department Completion Rates</h2>
+        </div>
+        <div className="p-5">
+          {deptCompletionData.length === 0 ? (
+            <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">
+              No department data available.
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={350}>
+              <BarChart data={deptCompletionData}>
+                <CartesianGrid {...gridProps} />
+                <XAxis dataKey="name" tick={axisTickStyle} />
+                <YAxis unit="%" tick={axisTickStyle} />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend wrapperStyle={{ fontSize: "12px", color: "#5C564C" }} />
+                <Bar
+                  dataKey="submission"
+                  fill="#C08B30"
+                  name="Submission Rate %"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="completion"
+                  fill="#3D9A5F"
+                  name="Approval Rate %"
+                  radius={[4, 4, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </div>
+
+      {/* Manager Effectiveness */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#E8E2D6]">
+          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Manager Effectiveness: Check-in Completion Rates</h2>
+        </div>
+        <div className="p-5">
+          {managerEffectiveness.length === 0 ? (
+            <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">
+              No manager data available.
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={350}>
+              <BarChart data={managerEffectiveness}>
+                <CartesianGrid {...gridProps} />
+                <XAxis dataKey="name" tick={axisTickStyle} />
+                <YAxis unit="%" tick={axisTickStyle} domain={[0, 100]} />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend wrapperStyle={{ fontSize: "12px", color: "#5C564C" }} />
+                <Bar
+                  dataKey="rate"
+                  fill="#8B5FC7"
+                  name="Check-in Completion %"
+                  radius={[4, 4, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
