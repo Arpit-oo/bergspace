@@ -10,6 +10,23 @@ import {
   EscalationTriggerType,
 } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 import {
   AlertTriangle,
@@ -20,6 +37,7 @@ import {
   Clock,
   Bell,
   Activity,
+  Plus,
 } from "lucide-react";
 
 const TRIGGER_TYPE_LABELS: Record<EscalationTriggerType, string> = {
@@ -163,6 +181,15 @@ export function EscalationsView({
   const [resolvingId, setResolvingId] = useState<string | null>(null);
   const [sendingReminder, setSendingReminder] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"rules" | "log" | "intervention">("rules");
+  const [newRuleOpen, setNewRuleOpen] = useState(false);
+  const [newRuleTrigger, setNewRuleTrigger] = useState<EscalationTriggerType>("no_submission");
+  const [newRuleDays, setNewRuleDays] = useState("7");
+  const [newRuleNotifyEmployee, setNewRuleNotifyEmployee] = useState(true);
+  const [newRuleNotifyManager, setNewRuleNotifyManager] = useState(true);
+  const [newRuleNotifySkipLevel, setNewRuleNotifySkipLevel] = useState(false);
+  const [newRuleNotifyHr, setNewRuleNotifyHr] = useState(false);
+  const [newRuleActive, setNewRuleActive] = useState(true);
+  const [creatingRule, setCreatingRule] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -268,6 +295,49 @@ export function EscalationsView({
     }
   }
 
+  async function createRule() {
+    const days = parseInt(newRuleDays);
+    if (!days || days < 1) {
+      toast.error("Days threshold must be at least 1");
+      return;
+    }
+    setCreatingRule(true);
+    try {
+      const { data, error } = await supabase
+        .from("escalation_rules")
+        .insert({
+          trigger_type: newRuleTrigger,
+          days_threshold: days,
+          notify_employee: newRuleNotifyEmployee,
+          notify_manager: newRuleNotifyManager,
+          notify_skip_level: newRuleNotifySkipLevel,
+          notify_hr: newRuleNotifyHr,
+          is_active: newRuleActive,
+        })
+        .select()
+        .single();
+      if (error) throw error;
+      if (data) {
+        setRules((prev) => [...prev, data as EscalationRule]);
+      }
+      toast.success("Escalation rule created");
+      setNewRuleOpen(false);
+      setNewRuleTrigger("no_submission");
+      setNewRuleDays("7");
+      setNewRuleNotifyEmployee(true);
+      setNewRuleNotifyManager(true);
+      setNewRuleNotifySkipLevel(false);
+      setNewRuleNotifyHr(false);
+      setNewRuleActive(true);
+      router.refresh();
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : "Failed to create rule";
+      toast.error(msg);
+    } finally {
+      setCreatingRule(false);
+    }
+  }
+
   async function toggleRule(ruleId: string, currentlyActive: boolean) {
     setTogglingId(ruleId);
     try {
@@ -361,8 +431,16 @@ export function EscalationsView({
         {/* Rules Tab */}
         {activeTab === "rules" && (
           <div className="bg-white border border-[#E8E2D6] border-t-0 rounded-b-xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#E8E2D6]">
+            <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
               <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Escalation Rules</h2>
+              <Button
+                onClick={() => setNewRuleOpen(true)}
+                className="gap-1.5 text-white border-0 text-xs"
+                size="sm"
+                style={{ backgroundColor: "#C45A2D" }}
+              >
+                <Plus className="h-3.5 w-3.5" /> New Rule
+              </Button>
             </div>
             {rules.length === 0 ? (
               <div className="text-center text-[#A89F91] text-sm py-8 mx-4 my-4 border border-dashed border-[#E8E2D6] rounded-xl">
@@ -599,6 +677,142 @@ export function EscalationsView({
           </div>
         )}
       </div>
+
+      {/* New Rule Dialog */}
+      <Dialog open={newRuleOpen} onOpenChange={setNewRuleOpen}>
+        <DialogContent className="max-w-4xl w-[85vw] p-8 bg-white border border-[#E8E2D6] rounded-xl">
+          <DialogHeader>
+            <DialogTitle className="text-base font-semibold text-[#1A1A1A]">
+              New Escalation Rule
+            </DialogTitle>
+            <DialogDescription className="text-sm text-[#8C8578]">
+              Configure when and who to notify when deadlines are missed.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="mt-4 flex flex-col gap-5">
+            <div>
+              <Label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">
+                Trigger Type
+              </Label>
+              <Select
+                value={newRuleTrigger}
+                onValueChange={(v: string | null) =>
+                  setNewRuleTrigger((v ?? "no_submission") as EscalationTriggerType)
+                }
+                items={[
+                  { value: "no_submission", label: "No Submission" },
+                  { value: "no_approval", label: "No Approval" },
+                  { value: "missed_checkin", label: "Missed Check-in" },
+                ]}
+              >
+                <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="no_submission">No Submission</SelectItem>
+                  <SelectItem value="no_approval">No Approval</SelectItem>
+                  <SelectItem value="missed_checkin">Missed Check-in</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">
+                Days Threshold
+              </Label>
+              <Input
+                type="number"
+                min={1}
+                value={newRuleDays}
+                onChange={(e) => setNewRuleDays(e.target.value)}
+                placeholder="e.g., 7"
+                className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] font-mono tabular-nums focus:ring-0 max-w-[200px]"
+              />
+              <p className="text-xs text-[#A89F91] mt-1">
+                Number of days after deadline before escalation triggers.
+              </p>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-[#1A1A1A] mb-2 block">
+                Notify
+              </Label>
+              <div className="flex flex-wrap gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={newRuleNotifyEmployee}
+                    onCheckedChange={(checked) =>
+                      setNewRuleNotifyEmployee(checked === true)
+                    }
+                  />
+                  <span className="text-sm text-[#1A1A1A]">Employee</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={newRuleNotifyManager}
+                    onCheckedChange={(checked) =>
+                      setNewRuleNotifyManager(checked === true)
+                    }
+                  />
+                  <span className="text-sm text-[#1A1A1A]">Manager</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={newRuleNotifySkipLevel}
+                    onCheckedChange={(checked) =>
+                      setNewRuleNotifySkipLevel(checked === true)
+                    }
+                  />
+                  <span className="text-sm text-[#1A1A1A]">Skip-level</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={newRuleNotifyHr}
+                    onCheckedChange={(checked) =>
+                      setNewRuleNotifyHr(checked === true)
+                    }
+                  />
+                  <span className="text-sm text-[#1A1A1A]">HR</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={newRuleActive}
+                  onCheckedChange={(checked) =>
+                    setNewRuleActive(checked === true)
+                  }
+                />
+                <span className="text-sm font-medium text-[#1A1A1A]">Active</span>
+              </label>
+              <span className="text-xs text-[#A89F91]">
+                Rule will start triggering immediately if active.
+              </span>
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 mt-4 pt-5 border-t border-[#F5F1EA]">
+            <button
+              onClick={() => setNewRuleOpen(false)}
+              className="rounded-lg border border-[#E8E2D6] bg-white px-4 py-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#FEFCF9] transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={createRule}
+              disabled={creatingRule}
+              className="inline-flex items-center gap-1.5 rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{ backgroundColor: "#C45A2D" }}
+            >
+              {creatingRule && <Loader2 className="h-4 w-4 animate-spin" />}
+              Create Rule
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

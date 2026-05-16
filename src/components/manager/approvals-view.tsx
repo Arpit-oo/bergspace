@@ -86,6 +86,19 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
         link: "/dashboard/goals",
       });
 
+      // Teams notification
+      try {
+        await fetch("/api/notifications/teams", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "goal_approved",
+            employeeName: sheet.employee?.full_name,
+            cycleName: sheet.cycle?.name,
+          }),
+        });
+      } catch {}
+
       toast.success("Goal sheet approved and locked");
       setSelectedSheet(null);
       setEditingGoals({});
@@ -123,6 +136,20 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
         message: `Your goal sheet was returned: ${returnReason}`,
         link: "/dashboard/goals",
       });
+
+      // Teams notification
+      try {
+        await fetch("/api/notifications/teams", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "goal_returned",
+            employeeName: sheet.employee?.full_name,
+            cycleName: sheet.cycle?.name,
+            reason: returnReason,
+          }),
+        });
+      } catch {}
 
       toast.success("Goal sheet returned to employee");
       setReturnDialogOpen(false);

@@ -1,0 +1,9 @@
+.env.local
+.env
+node_modules
+/.git
+/.github
+/.vscode
+dist
+build
+README.md

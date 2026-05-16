@@ -314,6 +314,20 @@ export function GoalSheetView({
         });
       }
 
+      // Teams notification
+      try {
+        await fetch("/api/notifications/teams", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "goal_submitted",
+            employeeName: profile.full_name,
+            cycleName: cycle.name,
+            goalCount: goals.length,
+          }),
+        });
+      } catch {}
+
       setSheet((prev) =>
         prev
           ? { ...prev, status: "submitted" as const, submitted_at: new Date().toISOString() }

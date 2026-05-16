@@ -20,9 +20,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { templateId, employeeIds, cycleId } = await request.json();
+  const body = await request.json();
+  const { templateId, employeeIds } = body;
+  let { cycleId } = body;
 
-  if (!templateId || !employeeIds?.length || !cycleId) {
+  if (!templateId || !employeeIds?.length) {
     return NextResponse.json(
       { error: "Missing required fields" },
       { status: 400 }
@@ -30,6 +32,22 @@ export async function POST(request: Request) {
   }
 
   const admin = createAdminClient();
+
+  // If cycleId is not provided, fetch the active cycle
+  if (!cycleId) {
+    const { data: activeCycle } = await admin
+      .from("goal_cycles")
+      .select("id")
+      .eq("is_active", true)
+      .single();
+    cycleId = activeCycle?.id;
+  }
+  if (!cycleId) {
+    return NextResponse.json(
+      { error: "No active cycle" },
+      { status: 400 }
+    );
+  }
 
   // Get template
   const { data: template } = await admin
