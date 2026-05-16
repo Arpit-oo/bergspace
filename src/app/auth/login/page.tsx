@@ -136,6 +136,29 @@ export default function LoginPage() {
             Sign in with Microsoft
           </button>
 
+          {/* Google SSO */}
+          <button
+            type="button"
+            onClick={async () => {
+              const { error } = await supabase.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                  redirectTo: `${window.location.origin}/api/auth/callback`,
+                },
+              });
+              if (error) toast.error(error.message);
+            }}
+            className="mt-2 flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border border-border bg-white text-sm font-medium text-foreground transition-colors hover:bg-muted"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M15.68 8.18c0-.57-.05-1.12-.15-1.64H8v3.1h4.31a3.68 3.68 0 0 1-1.6 2.42v2.01h2.59c1.51-1.39 2.38-3.44 2.38-5.89Z" fill="#4285F4"/>
+              <path d="M8 16c2.16 0 3.97-.72 5.3-1.94l-2.59-2.01c-.72.48-1.63.76-2.71.76-2.09 0-3.86-1.41-4.49-3.31H.84v2.08A8 8 0 0 0 8 16Z" fill="#34A853"/>
+              <path d="M3.51 9.5a4.81 4.81 0 0 1 0-3.01V4.42H.84a8 8 0 0 0 0 7.16l2.67-2.08Z" fill="#FBBC05"/>
+              <path d="M8 3.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A7.97 7.97 0 0 0 8 0 8 8 0 0 0 .84 4.42l2.67 2.08C4.14 4.59 5.91 3.18 8 3.18Z" fill="#EA4335"/>
+            </svg>
+            Sign in with Google
+          </button>
+
           {/* Create account link */}
           <p className="mt-6 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}

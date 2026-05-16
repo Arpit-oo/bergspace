@@ -41,6 +41,8 @@ export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [markingAll, setMarkingAll] = useState(false);
+  const [telegramLinked, setTelegramLinked] = useState(false);
+  const [linkCode, setLinkCode] = useState<string | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -66,6 +68,26 @@ export default function NotificationsPage() {
   useEffect(() => {
     fetchNotifications();
   }, [fetchNotifications]);
+
+  // Check if telegram is linked
+  useEffect(() => {
+    async function checkTelegram() {
+      const { data } = await supabase.from("telegram_links").select("id").limit(1);
+      if (data && data.length > 0) setTelegramLinked(true);
+    }
+    checkTelegram();
+  }, []);
+
+  async function generateLinkCode() {
+    const res = await fetch("/api/telegram/link-code", { method: "POST" });
+    const data = await res.json();
+    if (data.code) {
+      setLinkCode(data.code);
+      toast.success("Link code generated!");
+    } else {
+      toast.error("Failed to generate code");
+    }
+  }
 
   async function markAsRead(id: string) {
     const { error } = await supabase
@@ -117,6 +139,36 @@ export default function NotificationsPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Telegram Link section */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl p-6 mb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-semibold text-[#1A1A1A]">Telegram Notifications</h3>
+            <p className="text-sm text-[#8C8578] mt-1">Get goal updates and take actions directly from Telegram</p>
+          </div>
+          {telegramLinked ? (
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#3D9A5F]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3D9A5F]" />
+              Linked
+            </span>
+          ) : (
+            <button onClick={generateLinkCode} className="px-4 py-2 rounded-lg text-sm font-medium text-white" style={{backgroundColor:"#C45A2D"}}>
+              Link Telegram
+            </button>
+          )}
+        </div>
+        {linkCode && (
+          <div className="mt-4 p-4 bg-[#F5F1EA] rounded-lg">
+            <p className="text-sm text-[#5C564C]">Open Telegram → search <strong>@BergSpacebot</strong> → send:</p>
+            <div className="mt-2 flex items-center gap-3">
+              <code className="text-lg font-mono font-bold text-[#1A1A1A] bg-white px-4 py-2 rounded border border-[#E8E2D6]">/link {linkCode}</code>
+              <button onClick={() => {navigator.clipboard.writeText(`/link ${linkCode}`); toast.success("Copied!")}} className="text-xs text-[#8C8578] hover:text-[#1A1A1A]">Copy</button>
+            </div>
+            <p className="text-xs text-[#A89F91] mt-2">Code expires in 10 minutes</p>
+          </div>
+        )}
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Notifications</h1>
