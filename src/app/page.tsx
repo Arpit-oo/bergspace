@@ -1,9 +1,21 @@
 import Link from "next/link";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { CountUp } from "@/components/ui/count-up";
-import { AnimatedSparkline } from "@/components/ui/animated-sparkline";
-import { AnimatedBar } from "@/components/ui/animated-bars";
-import { LandingNav } from "@/components/ui/landing-nav";
+import dynamic from "next/dynamic";
+
+const ScrollReveal = dynamic(() =>
+  import("@/components/ui/scroll-reveal").then((m) => m.ScrollReveal)
+);
+const CountUp = dynamic(() =>
+  import("@/components/ui/count-up").then((m) => m.CountUp)
+);
+const AnimatedSparkline = dynamic(() =>
+  import("@/components/ui/animated-sparkline").then((m) => m.AnimatedSparkline)
+);
+const AnimatedBar = dynamic(() =>
+  import("@/components/ui/animated-bars").then((m) => m.AnimatedBar)
+);
+const LandingNav = dynamic(() =>
+  import("@/components/ui/landing-nav").then((m) => m.LandingNav)
+);
 
 /* ─── Mountain Logo ─── */
 function PeakMark({ size = 20 }: { size?: number }) {

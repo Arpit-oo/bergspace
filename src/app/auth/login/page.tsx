@@ -115,6 +115,16 @@ export default function LoginPage() {
           {/* Microsoft SSO */}
           <button
             type="button"
+            onClick={async () => {
+              const { error } = await supabase.auth.signInWithOAuth({
+                provider: "azure",
+                options: {
+                  scopes: "openid profile email",
+                  redirectTo: `${window.location.origin}/api/auth/callback`,
+                },
+              });
+              if (error) toast.error(error.message);
+            }}
             className="flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border border-border bg-white text-sm font-medium text-foreground transition-colors hover:bg-muted"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
