@@ -54,15 +54,15 @@ export default function HomePage() {
 
       {/* ─── Animations ─── */}
       <style dangerouslySetInnerHTML={{ __html: `
-        /* scroll reveal */
-        .sr { opacity: 0; transform: translateY(32px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
-        .sr-visible { opacity: 1 !important; transform: translateY(0) !important; }
-        .sr-d1 { transition-delay: .08s; }
-        .sr-d2 { transition-delay: .16s; }
-        .sr-d3 { transition-delay: .24s; }
-        .sr-d4 { transition-delay: .32s; }
-        .sr-d5 { transition-delay: .40s; }
-        .sr-d6 { transition-delay: .48s; }
+        /* scroll reveal — elements always visible, animation is cosmetic only */
+        @keyframes revealUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        .sr { animation: revealUp 0.7s cubic-bezier(.22,1,.36,1) both; }
+        .sr-d1 { animation-delay: .08s; }
+        .sr-d2 { animation-delay: .16s; }
+        .sr-d3 { animation-delay: .24s; }
+        .sr-d4 { animation-delay: .32s; }
+        .sr-d5 { animation-delay: .40s; }
+        .sr-d6 { animation-delay: .48s; }
 
         /* pulse */
         @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
