@@ -314,21 +314,17 @@ export function GoalSheetView({
         });
       }
 
-      // Teams + Email notifications
-      try {
-        await fetch("/api/notifications/teams", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "goal_submitted", employeeName: profile.full_name, cycleName: cycle.name, goalCount: goals.length }),
-        });
-        if (profile.manager_id) {
-          await fetch("/api/notifications/email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ type: "goal_submitted", recipientId: profile.manager_id, employeeName: profile.full_name, cycleName: cycle.name }),
-          });
-        }
-      } catch {}
+      // Teams + Email + Telegram notifications
+      if (profile.manager_id) {
+        const notifBody = { type: "goal_submitted", recipientId: profile.manager_id, employeeName: profile.full_name, cycleName: cycle.name, goalCount: goals.length, sheetId };
+        try {
+          await Promise.allSettled([
+            fetch("/api/notifications/teams", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+            fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+            fetch("/api/notifications/telegram", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+          ]);
+        } catch {}
+      }
 
       setSheet((prev) =>
         prev

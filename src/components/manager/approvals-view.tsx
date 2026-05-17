@@ -86,10 +86,14 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
         link: "/dashboard/goals",
       });
 
-      // Teams + Email
+      // Teams + Email + Telegram
       try {
-        await fetch("/api/notifications/teams", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "goal_approved", employeeName: sheet.employee?.full_name, cycleName: sheet.cycle?.name }) });
-        await fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "goal_approved", recipientId: sheet.employee_id, cycleName: sheet.cycle?.name }) });
+        const notifBody = { type: "goal_approved", recipientId: sheet.employee_id, employeeName: sheet.employee?.full_name, cycleName: sheet.cycle?.name };
+        await Promise.allSettled([
+          fetch("/api/notifications/teams", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+          fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+          fetch("/api/notifications/telegram", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+        ]);
       } catch {}
 
       toast.success("Goal sheet approved and locked");
@@ -130,19 +134,14 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
         link: "/dashboard/goals",
       });
 
-      // Teams notification
+      // Teams + Email + Telegram
       try {
-        await fetch("/api/notifications/teams", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "goal_returned",
-            employeeName: sheet.employee?.full_name,
-            cycleName: sheet.cycle?.name,
-            reason: returnReason,
-          }),
-        });
-        await fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "goal_returned", recipientId: sheet.employee_id, cycleName: sheet.cycle?.name, reason: returnReason }) });
+        const notifBody = { type: "goal_returned", recipientId: sheet.employee_id, employeeName: sheet.employee?.full_name, cycleName: sheet.cycle?.name, reason: returnReason };
+        await Promise.allSettled([
+          fetch("/api/notifications/teams", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+          fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+          fetch("/api/notifications/telegram", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(notifBody) }),
+        ]);
       } catch {}
 
       toast.success("Goal sheet returned to employee");

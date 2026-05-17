@@ -132,30 +132,18 @@ export function EmployeesView({
           link: "/dashboard",
         });
 
-        // Email notifications
+        // Email + Telegram + Teams for both parties
+        const managerProfile = managers.find(m => m.id === editManagerId);
         try {
-          // Email to new manager
-          await fetch("/api/notifications/email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ type: "manager_assigned", recipientId: editManagerId, employeeName: editingEmployee.full_name }),
-          });
-          // Email to employee
-          const managerProfile = managers.find(m => m.id === editManagerId);
-          await fetch("/api/notifications/email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ type: "employee_manager_changed", recipientId: editingEmployee.id, employeeName: managerProfile?.full_name || "your manager" }),
-          });
-        } catch {}
-
-        // Telegram notification
-        try {
-          await fetch("/api/notifications/teams", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ type: "goal_submitted", employeeName: editingEmployee.full_name, cycleName: "Team Assignment" }),
-          });
+          await Promise.allSettled([
+            // Manager gets: email + telegram + teams
+            fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "manager_assigned", recipientId: editManagerId, employeeName: editingEmployee.full_name }) }),
+            fetch("/api/notifications/telegram", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "manager_assigned", recipientId: editManagerId, employeeName: editingEmployee.full_name }) }),
+            fetch("/api/notifications/teams", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "shared_goal_assigned", employeeName: editingEmployee.full_name, cycleName: "Team Assignment" }) }),
+            // Employee gets: email + telegram
+            fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "employee_manager_changed", recipientId: editingEmployee.id, employeeName: managerProfile?.full_name || "your manager" }) }),
+            fetch("/api/notifications/telegram", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "employee_manager_changed", recipientId: editingEmployee.id, employeeName: managerProfile?.full_name || "your manager" }) }),
+          ]);
         } catch {}
       }
 
