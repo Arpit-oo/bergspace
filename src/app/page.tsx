@@ -192,7 +192,7 @@ export default function HomePage() {
             { target: 3, suffix: "", label: "User Roles" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-4xl font-extrabold tracking-tight md:text-5xl" style={{ color: "#1A1A1A", letterSpacing: "-0.02em" }}>
+              <div className="font-black tracking-tight" style={{ color: "#1A1A1A", letterSpacing: "-0.02em", fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 900 }}>
                 <CountUp target={stat.target} suffix={stat.suffix} />
               </div>
               <div className="mt-2 text-sm font-medium" style={{ color: "#8C8578" }}>{stat.label}</div>
@@ -210,9 +210,9 @@ export default function HomePage() {
       <section className="py-20 md:py-28" style={{ backgroundColor: "#FEFCF9" }}>
         <div className="mx-auto max-w-6xl px-6">
           <div className="sr mb-4">
-            <p className="text-sm font-bold uppercase tracking-widest" style={{ color: "#C45A2D" }}>from goals to results</p>
+            <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">from 2026 &apos;til today</p>
           </div>
-          <h2 className="sr sr-d1 mb-14 max-w-xl text-3xl font-extrabold tracking-tight md:text-5xl" style={{ letterSpacing: "-0.03em" }}>What BergSpace does</h2>
+          <h2 className="sr sr-d1 mb-14 max-w-xl text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>WHAT BERGSPACE DOES</h2>
 
           <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(12, 1fr)", gridAutoRows: "minmax(0, 1fr)" }}>
 
@@ -535,9 +535,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══════════════ MORE COMING STRIP ══════════════ */}
+      <div className="sr max-w-4xl mx-auto mt-16 rounded-2xl p-16 text-center" style={{ backgroundColor: "#F5F1EA" }}>
+        <div className="text-4xl mb-4">&#9749;</div>
+        <p className="font-black text-lg tracking-tight uppercase text-[#1A1A1A]">MORE FEATURES COMING, ONE SPRINT AT A TIME</p>
+      </div>
+
       {/* ══════════════ NOTEBOOK SECTION ══════════════ */}
       <section className="py-20 px-8 max-w-6xl mx-auto sr">
-        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-12 text-[#1A1A1A]">WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
+        <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">how it actually works</p>
+        <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-center mb-12 text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
         <div className="flex rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "440px" }}>
           {/* Left - terracotta panel with sticky notes */}
           <div className="w-[42%] relative p-8" style={{ backgroundColor: "#C45A2D" }}>
@@ -550,7 +557,7 @@ export default function HomePage() {
             <div className="absolute left-0 top-0 bottom-0 w-3" style={{ background: "repeating-linear-gradient(to bottom, #C45A2D 0 3px, transparent 3px 9px)" }}></div>
             <ol className="space-y-6 pl-4">
               {["Create goals with weighted targets & thrust areas", "Manager reviews, edits inline, approves or returns", "Goals lock — no more edits, full audit trail", "Quarterly check-ins: actual vs planned tracking", "Reports, analytics, escalations — all automatic"].map((step, i) => (
-                <li key={i} className="flex items-center gap-4 text-lg font-semibold text-[#1A1A1A]" style={{ fontFamily: "Georgia, serif" }}>
+                <li key={i} className="flex items-center gap-4 font-semibold text-[#1A1A1A]" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "26px" }}>
                   <span className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold shrink-0" style={{ borderColor: "#C45A2D", color: "#C45A2D" }}>{i + 1}</span>
                   {step}
                 </li>
@@ -579,10 +586,16 @@ export default function HomePage() {
       {/* ══════════════ FEATURES (DARK SECTION) ══════════════ */}
       <section id="features" className="relative overflow-hidden py-24 md:py-32" style={{ backgroundColor: "#1A2332" }}>
         <div className="dot-grid-bg absolute inset-0" />
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px" }}></div>
+        {/* Geometric shapes */}
+        <div className="absolute top-[10%] left-[8%] w-28 h-28 rounded-full border-2 opacity-[0.08] pointer-events-none" style={{ borderColor: "#C45A2D", animation: "drift 20s ease-in-out infinite alternate" }}></div>
+        <div className="absolute top-[60%] right-[12%] w-20 h-20 rounded-full border-2 opacity-[0.08] pointer-events-none" style={{ borderColor: "#F5C49A", animation: "drift 15s ease-in-out infinite alternate-reverse" }}></div>
+        <div className="absolute top-[25%] right-[20%] w-10 h-10 border-2 opacity-[0.06] pointer-events-none" style={{ borderColor: "#8FA3B8", transform: "rotate(15deg)", animation: "drift 18s ease-in-out infinite alternate" }}></div>
         <div className="relative mx-auto max-w-5xl px-6 text-center">
-          <p className="sr mb-3 text-sm font-bold uppercase tracking-widest" style={{ color: "#4EFFD4" }}>everything under the hood</p>
-          <h2 className="sr sr-d1 mx-auto mb-6 max-w-2xl text-3xl font-extrabold tracking-tight text-white md:text-5xl" style={{ letterSpacing: "-0.03em" }}>
-            Built for teams who need structure, not spreadsheets
+          <p className="sr mb-3" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block", color: "#4EFFD4" }}>everything under the hood</p>
+          <h2 className="sr sr-d1 mx-auto mb-6 max-w-2xl text-5xl md:text-7xl font-black tracking-tight text-white uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+            BUILT FOR TEAMS WHO NEED STRUCTURE
           </h2>
           <p className="sr sr-d2 mx-auto mb-10 max-w-lg text-base" style={{ color: "rgba(255,255,255,.45)" }}>
             Six modules. One platform. Zero spreadsheets.
@@ -608,8 +621,8 @@ export default function HomePage() {
       {/* ══════════════ FAQ SECTION ══════════════ */}
       <section className="py-20 px-8 max-w-5xl mx-auto sr">
         <div className="text-center mb-12">
-          <p className="text-sm text-[#8C8578] italic mb-3">the boring-but-important stuff</p>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">QUESTIONS?<br/>ANSWERS.</h2>
+          <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">the boring-but-important stuff</p>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>QUESTIONS?<br/>ANSWERS.</h2>
         </div>
         <FAQ />
       </section>
@@ -631,8 +644,9 @@ export default function HomePage() {
         <div className="absolute top-6 right-6 w-12 h-12 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #1A1A1A 0, #1A1A1A 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="absolute bottom-6 left-6 w-2 h-2 rounded-full pointer-events-none" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} aria-hidden="true" />
         <div className="mx-auto max-w-4xl px-6">
-          <h2 className="sr mb-12 text-center text-3xl font-extrabold tracking-tight md:text-4xl" style={{ letterSpacing: "-0.02em" }}>
-            Why teams switch to BergSpace
+          <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">the proof is in the table</p>
+          <h2 className="sr mb-12 text-center text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+            WHY TEAMS SWITCH
           </h2>
           <div className="sr sr-d1 overflow-x-auto rounded-2xl border" style={{ borderColor: "#E8E2D6" }}>
             <table className="comp-table w-full text-sm">
@@ -684,8 +698,9 @@ export default function HomePage() {
         <div className="absolute top-8 left-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="absolute bottom-8 right-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(-45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="mx-auto max-w-5xl px-6">
-          <h2 className="sr mb-14 text-center text-3xl font-extrabold tracking-tight md:text-4xl" style={{ letterSpacing: "-0.02em" }}>
-            Teams who stopped guessing
+          <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">real talk from real teams</p>
+          <h2 className="sr mb-14 text-center text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+            TEAMS WHO STOPPED GUESSING
           </h2>
           <div className="space-y-6">
             {[
@@ -733,17 +748,42 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ ABOUT / CREATOR ══════════════ */}
-      <section className="py-16 px-8" style={{ backgroundColor: "#F5F1EA" }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-2xl font-bold text-[#1A1A1A] mb-4">Built by Arpit Walia</h3>
-          <p className="text-[#5C564C] mb-6 max-w-2xl mx-auto">CS Engineering student at Thapar Institute (CGPA: 8.88), Samsung PRISM intern, MLSC Management Lead. Passionate about building products that bridge engineering and user needs.</p>
-          <div className="flex justify-center gap-4">
-            <a href="https://linkedin.com/in/arpit-walia" target="_blank" rel="noopener" className="px-4 py-2 rounded-full text-sm font-medium border border-[#E8E2D6] hover:bg-white transition-colors text-[#1A1A1A]">LinkedIn</a>
-            <a href="https://github.com/Arpit-oo" target="_blank" rel="noopener" className="px-4 py-2 rounded-full text-sm font-medium border border-[#E8E2D6] hover:bg-white transition-colors text-[#1A1A1A]">GitHub</a>
-            <a href="mailto:arpit13walia@gmail.com" className="px-4 py-2 rounded-full text-sm font-medium border border-[#E8E2D6] hover:bg-white transition-colors text-[#1A1A1A]">Email</a>
+      <section className="py-24 px-8 max-w-6xl mx-auto sr">
+        <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">the person behind the pixels</p>
+        <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-center mb-4 text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>BUILT WITH PASSION.<br/>SHIPPED WITH LOVE.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+          {/* Card 1 - About */}
+          <div className="rounded-2xl p-9 min-h-[320px] relative overflow-hidden" style={{ backgroundColor: "#F5F1EA" }}>
+            <div className="absolute top-5 right-[-20px] w-[55%] aspect-[4/5] bg-white border rounded-lg p-2 shadow-md" style={{ transform: "rotate(5deg)", borderColor: "#E8E2D6" }}>
+              <div className="w-full h-full rounded" style={{ background: "linear-gradient(135deg, #C45A2D, #1A2332)" }}></div>
+              <p className="text-center text-xs mt-1" style={{ fontFamily: "var(--font-caveat), cursive" }}>hackathon mode &middot; &apos;26</p>
+            </div>
+            <p className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-caveat), cursive", transform: "rotate(-14deg)", position: "absolute", top: "80px", left: "22%" }}>Hey!</p>
+            <div className="relative z-10 mt-auto pt-40">
+              <p className="text-[15px] text-[#5C564C] leading-relaxed max-w-[380px]">BergSpace was built for Atomberg&apos;s ATOMQUEST Hackathon 1.0 &mdash; because tracking goals in spreadsheets is like navigating mountains with a paper map.</p>
+              <p className="text-[15px] text-[#5C564C] leading-relaxed max-w-[380px] mt-3">So I built the system I always wanted: structured, intelligent, speaks plain English.</p>
+            </div>
           </div>
-          <p className="mt-8 text-xs text-[#A89F91]">Made with love by Arpit for ATOMQUEST Hackathon 1.0</p>
+          {/* Card 2 - Stickers + Links */}
+          <div className="rounded-2xl p-9 min-h-[320px] relative overflow-hidden" style={{ backgroundColor: "#F5F1EA" }}>
+            <div className="relative h-[220px]">
+              <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#A9D6FF", top: "10px", left: "12%", transform: "rotate(-10deg)", borderColor: "rgba(0,0,0,0.35)" }}>goals</div>
+              <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#9AE09A", top: "54px", left: "40%", transform: "rotate(6deg)", borderColor: "rgba(0,0,0,0.35)" }}>approvals</div>
+              <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#FFE066", top: "100px", left: "22%", transform: "rotate(-4deg)", borderColor: "rgba(0,0,0,0.35)" }}>check-ins</div>
+              <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#D7B4FF", top: "140px", left: "10%", transform: "rotate(-12deg)", borderColor: "rgba(0,0,0,0.35)" }}>telegram</div>
+              <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#FFB3A7", top: "150px", left: "44%", transform: "rotate(8deg)", borderColor: "rgba(0,0,0,0.35)" }}>AI</div>
+            </div>
+            <div className="absolute bottom-5 right-7 px-3 py-1 rounded-full text-white text-sm" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#1A1A1A", transform: "rotate(-6deg)" }}>Arpit</div>
+            <p className="text-[15px] text-[#5C564C] leading-relaxed">Arpit Walia &middot; CS @ Thapar (CGPA 8.88) &middot; Samsung PRISM Intern &middot; MLSC Lead</p>
+            <p className="text-[15px] text-[#5C564C] leading-relaxed mt-2">Our mission: to turn your goals into <strong>decisions that compound</strong>.</p>
+            <div className="flex gap-3 mt-4">
+              <a href="https://linkedin.com/in/arpit-walia" target="_blank" rel="noopener" className="px-3 py-1.5 rounded-full text-xs font-semibold border hover:bg-white transition-colors" style={{ borderColor: "#E8E2D6" }}>LinkedIn</a>
+              <a href="https://github.com/Arpit-oo" target="_blank" rel="noopener" className="px-3 py-1.5 rounded-full text-xs font-semibold border hover:bg-white transition-colors" style={{ borderColor: "#E8E2D6" }}>GitHub</a>
+              <a href="mailto:arpit13walia@gmail.com" className="px-3 py-1.5 rounded-full text-xs font-semibold border hover:bg-white transition-colors" style={{ borderColor: "#E8E2D6" }}>Email</a>
+            </div>
+          </div>
         </div>
+        <p className="text-center text-xs text-[#A89F91] mt-8" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "16px" }}>Made with love by Arpit for ATOMQUEST Hackathon 1.0</p>
       </section>
 
       {/* ══════════════ CTA ══════════════ */}
@@ -752,8 +792,8 @@ export default function HomePage() {
           <div className="sr mb-8 flex justify-center" style={{ color: "#C45A2D" }}>
             <PeakMark size={40} />
           </div>
-          <h2 className="sr sr-d1 text-3xl font-extrabold tracking-tight text-white md:text-5xl" style={{ letterSpacing: "-0.03em" }}>
-            Ready to align your team?
+          <h2 className="sr sr-d1 text-5xl md:text-7xl font-black tracking-tight text-white uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+            READY TO ALIGN<br/>YOUR TEAM?
           </h2>
           <p className="sr sr-d2 mx-auto mt-5 max-w-md text-base leading-relaxed" style={{ color: "#8C8578" }}>
             Join teams already using BergSpace to set goals, track progress, and drive real results across the organization.
