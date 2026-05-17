@@ -187,6 +187,21 @@ export function AnnouncementsView({ profile, users, departments }: Announcements
               <MessageSquare className="h-3.5 w-3.5 text-[#8C8578]" />
               <span className="text-sm text-[#1A1A1A]">Telegram</span>
             </label>
+            <label className="flex items-center gap-2 cursor-not-allowed opacity-50 relative group">
+              <Checkbox disabled checked={false} />
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="text-[#8C8578]">
+                <rect x="1" y="1" width="6.5" height="6.5" fill="#6264A7"/>
+                <rect x="8.5" y="1" width="6.5" height="6.5" fill="#6264A7"/>
+                <rect x="1" y="8.5" width="6.5" height="6.5" fill="#6264A7"/>
+                <rect x="8.5" y="8.5" width="6.5" height="6.5" fill="#6264A7"/>
+              </svg>
+              <span className="text-sm text-[#A89F91]">MS Teams</span>
+              <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-50">
+                <div className="bg-[#1A1A1A] text-white text-xs rounded-lg px-3 py-2 max-w-[240px] shadow-lg">
+                  Teams integration is ready but requires an organizational M365 admin to configure an Incoming Webhook. Contact your IT team to enable.
+                </div>
+              </div>
+            </label>
           </div>
         </div>
 

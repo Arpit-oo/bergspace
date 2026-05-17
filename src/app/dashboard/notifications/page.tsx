@@ -5,6 +5,13 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Notification } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 import {
   Bell,
@@ -43,6 +50,7 @@ export default function NotificationsPage() {
   const [markingAll, setMarkingAll] = useState(false);
   const [telegramLinked, setTelegramLinked] = useState(false);
   const [linkCode, setLinkCode] = useState<string | null>(null);
+  const [viewingNotification, setViewingNotification] = useState<Notification | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -222,7 +230,8 @@ export default function NotificationsPage() {
           return (
             <div
               key={notif.id}
-              className="border border-[#E8E2D6] rounded-xl bg-white p-4 hover:bg-[#FEFCF9] transition-colors"
+              className="border border-[#E8E2D6] rounded-xl bg-white p-4 hover:bg-[#FEFCF9] transition-colors cursor-pointer"
+              onClick={() => { markAsRead(notif.id); setViewingNotification(notif); }}
             >
               <div className="flex items-start gap-3">
                 {/* Unread dot indicator */}
@@ -272,6 +281,32 @@ export default function NotificationsPage() {
           );
         })}
       </div>
+
+      <Dialog open={!!viewingNotification} onOpenChange={(o) => !o && setViewingNotification(null)}>
+        <DialogContent className="max-w-xl p-6 bg-white border border-[#E8E2D6]">
+          {viewingNotification && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-lg font-semibold text-[#1A1A1A]">{viewingNotification.title}</DialogTitle>
+                <DialogDescription className="text-xs text-[#A89F91] font-mono">
+                  {new Date(viewingNotification.created_at).toLocaleString()}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4">
+                <p className="text-sm text-[#5C564C] leading-relaxed whitespace-pre-wrap">{viewingNotification.message}</p>
+              </div>
+              <div className="flex justify-end gap-3 pt-3 border-t border-[#E8E2D6]">
+                {viewingNotification.link && (
+                  <a href={viewingNotification.link} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white" style={{ backgroundColor: "#C45A2D" }}>
+                    View Details
+                  </a>
+                )}
+                <Button variant="outline" onClick={() => setViewingNotification(null)} className="border-[#E8E2D6]">Close</Button>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
