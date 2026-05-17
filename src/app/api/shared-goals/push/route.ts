@@ -129,7 +129,7 @@ export async function POST(request: Request) {
       thrust_area_id: template.thrust_area_id,
       uom: template.uom,
       target_value: template.target_value,
-      weightage: 0,
+      weightage: 10,
       is_from_shared: true,
       shared_template_id: templateId,
       sort_order: (count || 0) + 1,
