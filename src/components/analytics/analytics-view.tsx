@@ -240,10 +240,12 @@ export function AnalyticsView({
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={(props: PieLabelRenderProps) =>
-                      `${props.name ?? ""} (${(((props.percent as number | undefined) ?? 0) * 100).toFixed(0)}%)`
+                    label={({ name, percent }: PieLabelRenderProps) =>
+                      `${name ?? ""} ${(((percent as number | undefined) ?? 0) * 100).toFixed(0)}%`
                     }
-                    outerRadius={100}
+                    innerRadius={60}
+                    outerRadius={90}
+                    paddingAngle={2}
                     dataKey="value"
                   >
                     {thrustAreaData.map((_, index) => (
@@ -275,10 +277,12 @@ export function AnalyticsView({
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={(props: PieLabelRenderProps) =>
-                      `${props.name ?? ""} (${(((props.percent as number | undefined) ?? 0) * 100).toFixed(0)}%)`
+                    label={({ name, percent }: PieLabelRenderProps) =>
+                      `${name ?? ""} ${(((percent as number | undefined) ?? 0) * 100).toFixed(0)}%`
                     }
-                    outerRadius={100}
+                    innerRadius={60}
+                    outerRadius={90}
+                    paddingAngle={2}
                     dataKey="value"
                   >
                     {uomData.map((_, index) => (
@@ -305,7 +309,7 @@ export function AnalyticsView({
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={deptCompletionData}>
+              <BarChart data={deptCompletionData} barSize={32}>
                 <CartesianGrid {...gridProps} />
                 <XAxis dataKey="name" tick={axisTickStyle} />
                 <YAxis unit="%" tick={axisTickStyle} />
@@ -316,12 +320,14 @@ export function AnalyticsView({
                   fill="#C08B30"
                   name="Submission Rate %"
                   radius={[4, 4, 0, 0]}
+                  label={{ position: "top", fill: "#8C8578", fontSize: 12 }}
                 />
                 <Bar
                   dataKey="completion"
                   fill="#3D9A5F"
                   name="Approval Rate %"
                   radius={[4, 4, 0, 0]}
+                  label={{ position: "top", fill: "#8C8578", fontSize: 12 }}
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -341,7 +347,7 @@ export function AnalyticsView({
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={managerEffectiveness}>
+              <BarChart data={managerEffectiveness} barSize={32}>
                 <CartesianGrid {...gridProps} />
                 <XAxis dataKey="name" tick={axisTickStyle} />
                 <YAxis unit="%" tick={axisTickStyle} domain={[0, 100]} />
@@ -352,6 +358,7 @@ export function AnalyticsView({
                   fill="#8B5FC7"
                   name="Check-in Completion %"
                   radius={[4, 4, 0, 0]}
+                  label={{ position: "top", fill: "#8C8578", fontSize: 12 }}
                 />
               </BarChart>
             </ResponsiveContainer>

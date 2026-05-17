@@ -26,6 +26,7 @@ import {
   ClipboardList,
   ChevronDown,
   Search,
+  Eye,
 } from "lucide-react";
 
 interface NavItem {
@@ -79,6 +80,7 @@ const navGroups: NavGroup[] = [
     label: "Settings",
     items: [
       { label: "Settings", href: "/dashboard/settings", icon: Settings, roles: ["admin"] },
+      { label: "Accessibility", href: "/dashboard/accessibility", icon: Eye, roles: ["employee", "manager", "admin"] },
     ],
   },
 ];

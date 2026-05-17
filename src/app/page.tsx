@@ -213,7 +213,7 @@ export default function HomePage() {
           <div className="sr mb-4">
             <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">from 2026 &apos;til today</p>
           </div>
-          <h2 className="sr sr-d1 mb-14 font-black tracking-tight uppercase text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
+          <h2 className="sr sr-d1 mb-14 font-black tracking-tight uppercase text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>WHAT BERGSPACE DOES</h2>
 
           <div className="sr" style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "40px 24px", maxWidth: "1400px", margin: "0 auto", padding: "0 32px" }}>
 
@@ -617,7 +617,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ FAQ SECTION ══════════════ */}
-      <section className="py-20 px-8 md:px-12 max-w-3xl mx-auto sr">
+      <section className="py-20 px-8 md:px-12 max-w-3xl mx-auto sr" style={{ backgroundImage: "radial-gradient(circle, #E8E2D6 1px, transparent 1px)", backgroundSize: "28px 28px" }}>
         <div className="text-center mb-12">
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">the boring-but-important stuff</p>
           <h2 className="font-black tracking-tight uppercase text-[#1A1A1A] text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>QUESTIONS?<br/>ANSWERS.</h2>
@@ -634,6 +634,11 @@ export default function HomePage() {
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} />
           <div className="h-[1px] flex-1" style={{ backgroundColor: "#E8E2D6" }} />
         </div>
+      </div>
+
+      {/* Terracotta line separator before comparison */}
+      <div className="flex justify-center py-4">
+        <div className="w-12 h-[3px] rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.4 }} />
       </div>
 
       {/* ══════════════ COMPARISON TABLE ══════════════ */}
@@ -685,16 +690,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Mountain icon between sections */}
+      <div className="flex justify-center py-6" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="opacity-[0.12]">
+          <path d="M2 19.2 L8.4 8.2 L11.3 13 L15.3 6 L22 19.2 Z" stroke="#1A1A1A" strokeWidth="1.2" strokeLinejoin="round" />
+          <path d="M14.05 8.2 L15.3 6 L16.55 8.2 L15.85 8.9 L15.3 8.3 L14.75 8.9 Z" fill="#1A1A1A" stroke="none" />
+          <path d="M7.5 9.7 L8.4 8.2 L9.3 9.7 L8.8 10.2 L8.4 9.7 L8 10.2 Z" fill="#1A1A1A" stroke="none" />
+        </svg>
+      </div>
+
       {/* Geometric accent — before testimonials */}
       <div className="relative">
         <div className="absolute left-[18%] -top-3 w-4 h-4 rounded-full opacity-[0.06] pointer-events-none" style={{ backgroundColor: "#3B7DD8", animation: "drift 19s ease-in-out infinite alternate" }} aria-hidden="true" />
       </div>
 
       {/* ══════════════ TESTIMONIALS ══════════════ */}
-      <section id="roles" className="relative py-20 md:py-24" style={{ backgroundColor: "#F5F1EA", backgroundImage: "radial-gradient(circle, #E8E2D6 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
+      <section id="roles" className="relative overflow-hidden py-20 md:py-24" style={{ backgroundColor: "#F5F1EA", backgroundImage: "radial-gradient(circle, #E8E2D6 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
         {/* Corner decorative elements */}
         <div className="absolute top-8 left-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="absolute bottom-8 right-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(-45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
+        {/* Floating geometric shapes */}
+        <div className="absolute left-[5%] top-[20%] w-14 h-14 rounded-full border-2 opacity-[0.06] pointer-events-none" style={{ borderColor: "#C45A2D" }} />
+        <div className="absolute right-[8%] bottom-[30%] w-8 h-8 border-2 opacity-[0.05] pointer-events-none" style={{ borderColor: "#1A1A1A", transform: "rotate(45deg)" }} />
         <div className="mx-auto px-8 md:px-12" style={{ maxWidth: "1100px" }}>
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">real talk from real teams</p>
           <h2 className="sr mb-14 text-center font-black tracking-tight uppercase" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>

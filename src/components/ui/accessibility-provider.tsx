@@ -8,7 +8,7 @@ interface AccessibilitySettings {
 }
 
 const defaults: AccessibilitySettings = {
-  fontSize: "normal",
+  fontSize: "large",
   reduceAnimations: false,
   highContrast: false,
 };

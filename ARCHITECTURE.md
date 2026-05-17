@@ -1,131 +1,85 @@
 # BergSpace — Architecture
 
-## System Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Client (Browser)                      │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              Next.js 16 App Router (SSR)              │   │
-│  │                                                       │   │
-│  │  ┌─────────────┐ ┌──────────────┐ ┌──────────────┐  │   │
-│  │  │  Employee    │ │   Manager    │ │    Admin     │  │   │
-│  │  │  Dashboard   │ │  Dashboard   │ │  Dashboard   │  │   │
-│  │  ├─────────────┤ ├──────────────┤ ├──────────────┤  │   │
-│  │  │• My Goals   │ │• Team Goals  │ │• All Users   │  │   │
-│  │  │• My Checkins│ │• Approvals   │ │• Goal Cycles │  │   │
-│  │  │• Notifs     │ │• Check-ins   │ │• Escalations │  │   │
-│  │  │             │ │• Shared Goals│ │• Reports     │  │   │
-│  │  │             │ │• Reports     │ │• Analytics   │  │   │
-│  │  │             │ │              │ │• Audit Log   │  │   │
-│  │  │             │ │              │ │• Settings    │  │   │
-│  │  └─────────────┘ └──────────────┘ └──────────────┘  │   │
-│  │                                                       │   │
-│  │  UI: shadcn/ui + Tailwind CSS + Recharts             │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                              │                               │
-│                     Supabase JS Client                       │
-│                    (@supabase/ssr)                           │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ HTTPS
-                               ▼
-┌──────────────────────────────────────────────────────────────┐
-│                    Supabase Platform                          │
-│                                                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
-│  │   Auth        │  │   PostgREST  │  │  Edge Functions  │  │
-│  │              │  │   (Data API)  │  │  (Email/Webhooks)│  │
-│  │• Email/Pass  │  │              │  │                   │  │
-│  │• Entra SSO   │  │• Auto CRUD   │  │• Notification     │  │
-│  │• JWT Tokens  │  │• RLS Enforced│  │  delivery         │  │
-│  └──────┬───────┘  └──────┬───────┘  └───────────────────┘  │
-│         │                 │                                   │
-│         ▼                 ▼                                   │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              PostgreSQL 17 Database                    │   │
-│  │                                                       │   │
-│  │  Tables:                                              │   │
-│  │  ┌────────────┐ ┌──────────────┐ ┌────────────────┐  │   │
-│  │  │ profiles   │ │ goal_sheets  │ │ goals          │  │   │
-│  │  │ departments│ │ goal_cycles  │ │ achievements   │  │   │
-│  │  │ thrust_    │ │ shared_goal_ │ │ checkins       │  │   │
-│  │  │   areas    │ │   templates  │ │ audit_log      │  │   │
-│  │  │            │ │              │ │ escalation_    │  │   │
-│  │  │            │ │              │ │   rules/log    │  │   │
-│  │  │            │ │              │ │ notifications  │  │   │
-│  │  └────────────┘ └──────────────┘ └────────────────┘  │   │
-│  │                                                       │   │
-│  │  Security: Row Level Security (40+ policies)          │   │
-│  │  Triggers: Auto profile creation, shared goal sync,   │   │
-│  │            updated_at timestamps                       │   │
-│  │  Functions: compute_progress_score()                   │   │
-│  └──────────────────────────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────┐
-│                    External Integrations                      │
-│                                                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
-│  │ Microsoft    │  │ Microsoft    │  │ Vercel           │  │
-│  │ Entra ID     │  │ Teams        │  │ (Hosting)        │  │
-│  │ (SSO)        │  │ (Webhooks)   │  │                  │  │
-│  └──────────────┘  └──────────────┘  └──────────────────┘  │
-└──────────────────────────────────────────────────────────────┘
-```
-
 ## Tech Stack
+- **Frontend:** Next.js 16 (App Router), TypeScript, Tailwind CSS
+- **UI:** shadcn/ui (Base UI), Plus Jakarta Sans, Caveat, DM Mono
+- **Charts:** Recharts
+- **Backend:** Supabase (PostgreSQL 17, Auth, RLS, Edge Functions)
+- **AI:** OpenAI GPT-4o-mini (SMART goal validation)
+- **Bot:** Telegram Bot API
+- **Deploy:** Vercel
+- **Region:** ap-south-1 (Mumbai)
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| Frontend | Next.js 16 (App Router) | SSR, routing, server components |
-| UI | shadcn/ui + Tailwind CSS | Component library + styling |
-| Charts | Recharts | Analytics dashboards |
-| Export | SheetJS (xlsx) | CSV/Excel report generation |
-| Auth | Supabase Auth | Email/password + Entra SSO |
-| Database | PostgreSQL 17 (Supabase) | Data storage with RLS |
-| API | PostgREST (Supabase) | Auto-generated REST API |
-| Hosting | Vercel | Edge deployment |
-| Region | ap-south-1 (Mumbai) | Low latency for India |
-
-## Data Flow
-
-### Goal Lifecycle
+## Directory Structure
 ```
-Employee creates goal sheet (Draft)
-    → Fills goals with weightage validation (sum=100%, min 10%, max 8)
-    → Submits for approval (Submitted) → Manager notified
-    → Manager reviews:
-        ├─ Approves → Sheet locked, goals immutable (Approved)
-        └─ Returns with reason → Employee edits (Returned → Draft)
-    → Admin can unlock if needed (Audit logged)
+src/
+├── app/
+│   ├── page.tsx                    # Landing page
+│   ├── layout.tsx                  # Root layout (fonts, toaster)
+│   ├── middleware.ts               # Auth middleware
+│   ├── auth/
+│   │   ├── login/page.tsx          # Login (email + Microsoft SSO)
+│   │   └── signup/page.tsx         # Registration
+│   ├── api/
+│   │   ├── auth/callback/          # OAuth callback
+│   │   ├── telegram/               # Bot webhook + setup + link codes
+│   │   ├── validate-goals/         # AI SMART validator
+│   │   ├── shared-goals/push/      # Shared goals (admin client)
+│   │   └── notifications/teams/    # Teams webhook sender
+│   └── dashboard/
+│       ├── layout.tsx              # Dashboard shell wrapper
+│       ├── page.tsx                # Role-based dashboard home
+│       ├── goals/                  # Employee goal CRUD
+│       ├── my-checkins/            # Employee check-in logging
+│       ├── team/                   # Manager team overview
+│       ├── approvals/              # Manager approval workflow
+│       ├── checkins/               # Manager check-in review
+│       ├── shared-goals/           # Shared goal templates
+│       ├── employees/              # Admin employee directory + editor
+│       ├── cycles/                 # Admin goal cycle management
+│       ├── escalations/            # Admin escalation rules + log
+│       ├── reports/                # Reports + CSV/Excel export
+│       ├── analytics/              # Charts + dashboards
+│       ├── audit/                  # Audit trail viewer
+│       ├── notifications/          # In-app notifications
+│       ├── accessibility/          # Accessibility settings
+│       └── settings/               # Admin SSO + integrations config
+├── components/
+│   ├── dashboard/shell.tsx         # Sidebar + topbar layout
+│   ├── goals/                      # Goal sheet view + SMART validator
+│   ├── manager/                    # Team, approvals, checkins views
+│   ├── admin/                      # Employees, cycles, escalations, settings
+│   ├── reports/                    # Report tables + charts
+│   ├── analytics/                  # Analytics charts
+│   ├── shared-goals/               # Shared goal management
+│   └── ui/                         # shadcn + custom components
+├── lib/
+│   ├── supabase/                   # Client, server, admin, middleware
+│   ├── types.ts                    # TypeScript interfaces
+│   ├── constants.ts                # Business rules
+│   ├── telegram.ts                 # Bot API helpers
+│   ├── telegram-notify.ts          # High-level notification senders
+│   ├── notifications.ts            # Teams webhook + notification helpers
+│   └── ai-validator.ts            # OpenAI SMART goal validation
+└── scripts/
+    └── seed-users.ts               # Demo data seeding
 ```
 
-### Shared Goal Flow
-```
-Admin/Manager creates shared goal template
-    → Pushes to selected employees
-    → Creates goals on their sheets (is_from_shared=true)
-    → Recipients can only modify weightage
-    → Primary owner's achievement syncs to all linked goals (DB trigger)
-```
+## Database (15 tables)
+profiles, departments, thrust_areas, goal_cycles, goal_sheets, goals,
+shared_goal_templates, achievements, checkins, audit_log,
+escalation_rules, escalation_log, notifications,
+telegram_links, telegram_link_codes
 
-### Quarterly Check-in Flow
-```
-Admin configures quarterly windows (open/close dates)
-    → Window opens → Employees log actual vs planned
-    → Manager reviews planned vs actual
-    → Manager adds structured check-in comment
-    → System computes progress score (weighted by goal weightage)
-```
+## Security
+- Row Level Security on every table (45+ policies)
+- Employees see own data, managers see team, admins see all
+- Post-approval goals locked (is_locked flag)
+- All post-lock changes audit-logged
+- Service role key never exposed to client
 
-## Security Model
-
-- **Row Level Security (RLS)** on every table
-- Employees see only their own data
-- Managers see their direct reports' data
-- Admins see all data
-- Post-approval goals are immutable (locked via `is_locked` flag)
-- All post-lock changes logged in `audit_log`
-- Service role key never exposed to client (`SUPABASE_SERVICE_ROLE_KEY` server-only)
-- JWT-based auth with automatic token refresh
+## Key Flows
+1. Goal: Create → Validate (AI) → Submit → Approve/Return → Lock → Check-in
+2. Shared: Template → Push to employees → Read-only title → Achievement sync
+3. Escalation: Rules → Threshold check → Chain notification
+4. Telegram: Link account → Receive notifications → Approve/Check-in inline
