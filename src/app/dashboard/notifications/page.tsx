@@ -159,7 +159,17 @@ export default function NotificationsPage() {
         </div>
         {linkCode && (
           <div className="mt-4 p-4 bg-[#F5F1EA] rounded-lg">
-            <p className="text-sm text-[#5C564C]">Open Telegram → search <strong>@BergSpacebot</strong> → send:</p>
+            <p className="text-sm text-[#5C564C]">Open Telegram → search <strong>@BergSpacebot</strong></p>
+            <div className="mt-3 space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="shrink-0 w-5 h-5 rounded-full bg-[#1A1A1A] text-white text-[10px] font-bold flex items-center justify-center">1</span>
+                <p className="text-sm text-[#5C564C]">Send <code className="font-mono font-semibold bg-white px-2 py-0.5 rounded border border-[#E8E2D6]">/start</code> to the bot</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="shrink-0 w-5 h-5 rounded-full bg-[#1A1A1A] text-white text-[10px] font-bold flex items-center justify-center">2</span>
+                <p className="text-sm text-[#5C564C]">Then send the link code:</p>
+              </div>
+            </div>
             <div className="mt-2 flex items-center gap-3">
               <code className="text-lg font-mono font-bold text-[#1A1A1A] bg-white px-4 py-2 rounded border border-[#E8E2D6]">/link {linkCode}</code>
               <button onClick={() => {navigator.clipboard.writeText(`/link ${linkCode}`); toast.success("Copied!")}} className="text-xs text-[#8C8578] hover:text-[#1A1A1A]">Copy</button>
