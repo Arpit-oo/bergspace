@@ -20,5 +20,5 @@ export default async function AnnouncementsPage() {
   // Fetch departments
   const { data: departments } = await supabase.from("departments").select("*");
 
-  return <AnnouncementsView profile={profile} users={allUsers || []} departments={departments || []} />;
+  return <AnnouncementsView profile={profile} users={(allUsers || []) as any} departments={departments || []} />;
 }
