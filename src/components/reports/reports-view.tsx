@@ -295,7 +295,7 @@ export function ReportsView({
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {statCards.map((stat) => (
           <div key={stat.label} className="bg-white border border-[#E8E2D6] rounded-xl p-5">
             <div className="flex items-center gap-3">
@@ -390,6 +390,7 @@ export function ReportsView({
                   No goal sheets found for the selected filters.
                 </div>
               ) : (
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#F5F1EA]">
@@ -424,6 +425,7 @@ export function ReportsView({
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
           </div>
@@ -445,6 +447,7 @@ export function ReportsView({
                   No employees found for the selected filters.
                 </div>
               ) : (
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#F5F1EA]">
@@ -482,6 +485,7 @@ export function ReportsView({
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
 
@@ -491,6 +495,7 @@ export function ReportsView({
                 <div className="px-5 py-4 border-b border-[#E8E2D6]">
                   <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Manager Check-in Completion</h2>
                 </div>
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#F5F1EA]">
@@ -521,6 +526,7 @@ export function ReportsView({
                     })}
                   </tbody>
                 </table>
+                </div>
               </div>
             )}
           </div>
@@ -547,6 +553,7 @@ export function ReportsView({
                   {goals.length === 0 ? (
                     <p className="text-sm text-[#8C8578] py-4">No goals defined.</p>
                   ) : (
+                    <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead>
                         <tr className="border-b border-[#F5F1EA]">
@@ -587,6 +594,7 @@ export function ReportsView({
                         })}
                       </tbody>
                     </table>
+                    </div>
                   )}
                   {row && (
                     <div className="mt-4 p-3 bg-[#F5F1EA] rounded-lg">

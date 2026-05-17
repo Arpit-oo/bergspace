@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -27,6 +28,7 @@ import {
   ChevronDown,
   Search,
   Eye,
+  Menu,
 } from "lucide-react";
 
 interface NavItem {
@@ -102,6 +104,7 @@ export function DashboardShell({
   profile: Profile;
   children: React.ReactNode;
 }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
@@ -121,8 +124,31 @@ export function DashboardShell({
 
   return (
     <div className="flex h-screen overflow-hidden">
+      {/* Mobile topbar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 border-b border-[#E8E2D6] bg-white">
+        <button onClick={() => setMobileOpen(true)} className="p-1">
+          <Menu className="h-5 w-5 text-[#1A1A1A]" />
+        </button>
+        <div className="flex items-center gap-2 text-[#C45A2D]">
+          <PeakMark size={18} />
+          <span className="text-sm font-semibold text-[#1A1A1A]">BERGSPACE</span>
+        </div>
+        <Link href="/dashboard/notifications"><Bell className="h-5 w-5 text-[#8C8578]" /></Link>
+      </div>
+
+      {/* Mobile overlay */}
+      {mobileOpen && <div className="fixed inset-0 bg-black/30 z-40 md:hidden" onClick={() => setMobileOpen(false)} />}
+
       {/* Sidebar — dark, minimal */}
-      <aside className="w-[240px] shrink-0 flex flex-col bg-[#1A1714] text-[#A89F91] border-r border-[#2E2A24]">
+      <aside className={`
+        ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+        md:translate-x-0
+        fixed md:relative z-50 md:z-auto
+        w-[260px] md:w-[240px] shrink-0 flex flex-col
+        bg-[#1A1714] text-[#A89F91] border-r border-[#2E2A24]
+        transition-transform duration-200
+        h-screen
+      `}>
         {/* Logo */}
         <div className="h-14 flex items-center gap-2.5 px-5 border-b border-[#2E2A24]">
           <div className="text-[#C45A2D]">
@@ -164,6 +190,7 @@ export function DashboardShell({
                     <Link
                       key={item.href}
                       href={item.href}
+                      onClick={() => setMobileOpen(false)}
                       className={`
                         flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[14px] transition-all duration-150
                         ${active
@@ -220,9 +247,9 @@ export function DashboardShell({
       </aside>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-[#FEFCF9]">
+      <div className="flex-1 flex flex-col overflow-hidden bg-[#FEFCF9] pt-[52px] md:pt-0">
         {/* Top bar */}
-        <header className="h-14 shrink-0 flex items-center justify-between px-8 bg-white border-b border-[#E5E5E5]">
+        <header className="hidden md:flex h-14 shrink-0 items-center justify-between px-8 bg-white border-b border-[#E5E5E5]">
           <div className="flex items-center gap-3">
             <span className={`
               text-[11px] font-medium px-2 py-0.5 rounded-full
@@ -254,7 +281,7 @@ export function DashboardShell({
 
         {/* Content */}
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-[1200px] mx-auto px-8 py-8">
+          <div className="max-w-[1200px] mx-auto px-4 md:px-8 py-4 md:py-8">
             {children}
           </div>
         </main>

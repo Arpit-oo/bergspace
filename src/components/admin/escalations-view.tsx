@@ -394,7 +394,7 @@ export function EscalationsView({
       <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Escalations</h1>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {statCards.map((stat) => (
           <div key={stat.label} className="bg-white border border-[#E8E2D6] rounded-xl p-5">
             <div className="flex items-center gap-3">
@@ -447,6 +447,7 @@ export function EscalationsView({
                 No escalation rules configured.
               </div>
             ) : (
+              <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-[#F5F1EA]">
@@ -500,6 +501,7 @@ export function EscalationsView({
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
         )}
@@ -515,6 +517,7 @@ export function EscalationsView({
                 No escalations have been triggered.
               </div>
             ) : (
+              <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-[#F5F1EA]">
@@ -578,6 +581,7 @@ export function EscalationsView({
                   })}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
         )}
@@ -596,6 +600,7 @@ export function EscalationsView({
                   No managers with pending approvals older than 48 hours.
                 </div>
               ) : (
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#F5F1EA]">
@@ -638,6 +643,7 @@ export function EscalationsView({
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
 
@@ -652,6 +658,7 @@ export function EscalationsView({
                   No department data available.
                 </div>
               ) : (
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#F5F1EA]">
@@ -672,6 +679,7 @@ export function EscalationsView({
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
           </div>

@@ -215,7 +215,7 @@ export default function HomePage() {
           </div>
           <h2 className="sr sr-d1 mb-14 font-black tracking-tight uppercase text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>WHAT BERGSPACE DOES</h2>
 
-          <div className="sr" style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "40px 24px", maxWidth: "1400px", margin: "0 auto", padding: "0 32px" }}>
+          <div className="sr work-grid-responsive" style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "40px 24px", maxWidth: "1400px", margin: "0 auto", padding: "0 32px" }}>
 
             {/* ── Card 1: Navy — Goal Tracking Dashboard (FULL WIDTH) ── */}
             <div
@@ -544,9 +544,9 @@ export default function HomePage() {
       <section className="py-20 px-8 mx-auto sr" style={{ maxWidth: "1180px" }}>
         <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">how it actually works</p>
         <h2 className="font-black tracking-tight uppercase text-center mb-12 text-[#1A1A1A]" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>THE WORKFLOW,<br/>IN PLAIN ENGLISH</h2>
-        <div className="flex rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "480px" }}>
+        <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "480px" }}>
           {/* Left - terracotta panel with sticky notes */}
-          <div className="w-[45%] relative p-8" style={{ backgroundColor: "#C45A2D" }}>
+          <div className="w-full md:w-[45%] relative p-8 min-h-[200px]" style={{ backgroundColor: "#C45A2D" }}>
             <div className="absolute top-6 right-6 bg-white px-3 py-2 rounded-lg text-xs font-semibold shadow-md" style={{ transform: "rotate(6deg)" }}>When spreadsheets<br/>fail you &#8805;</div>
             <div className="absolute top-36 left-6 px-4 py-3 rounded-lg text-white text-sm font-extrabold" style={{ backgroundColor: "#1A2332", transform: "rotate(-6deg)" }}>MANUAL TRACKING:<br/>ZERO<div className="text-[9px] font-normal mt-1 opacity-70">we don&apos;t make your team<br/>chase updates anymore</div></div>
             <div className="absolute bottom-10 left-10 bg-white px-3 py-2 rounded-lg text-xs font-semibold shadow-md" style={{ transform: "rotate(4deg)" }}><div className="font-bold">Ships quarterly</div><div className="text-lg font-extrabold" style={{ color: "#C45A2D" }}>insights &#8594;</div></div>
@@ -830,7 +830,7 @@ export default function HomePage() {
       {/* ══════════════ FOOTER ══════════════ */}
       <footer style={{ backgroundColor: "#1A1714", borderTop: "1px solid #2A2520" }}>
         <div className="mx-auto max-w-6xl px-6 pt-16 pb-8">
-          <div className="grid gap-10 md:grid-cols-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 md:grid-cols-4">
             {/* Brand */}
             <div>
               <div className="flex items-center gap-2 mb-3">

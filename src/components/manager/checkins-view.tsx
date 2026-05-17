@@ -180,7 +180,7 @@ export function CheckinsView({
           </p>
         </div>
 
-        <div className="px-5 pb-5">
+        <div className="px-5 pb-5 overflow-x-auto">
           <table className="w-full mt-4">
             <thead>
               <tr>

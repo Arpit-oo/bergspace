@@ -463,6 +463,7 @@ export function SharedGoalsView({
                   );
                 }
                 return (
+                  <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-[#F5F1EA]">
@@ -483,6 +484,7 @@ export function SharedGoalsView({
                       ))}
                     </tbody>
                   </table>
+                  </div>
                 );
               })()}
             </div>

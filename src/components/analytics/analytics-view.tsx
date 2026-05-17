@@ -177,7 +177,7 @@ export function AnalyticsView({
       <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Analytics</h1>
 
       {/* Summary */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {summaryStats.map((stat) => (
           <div key={stat.label} className="bg-white border border-[#E8E2D6] rounded-xl p-5">
             <p className="text-4xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">

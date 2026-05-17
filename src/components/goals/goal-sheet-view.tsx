@@ -490,7 +490,7 @@ export function GoalSheetView({
             </div>
 
             {/* Form fields */}
-            <div className="grid grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               <div className="col-span-2">
                 <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
                   Title

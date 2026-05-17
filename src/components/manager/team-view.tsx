@@ -64,7 +64,7 @@ export function TeamView({
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {statCards.map((sc) => (
           <div
             key={sc.label}
@@ -87,7 +87,7 @@ export function TeamView({
             Team Members
           </h2>
         </div>
-        <div className="px-5 pb-5">
+        <div className="px-5 pb-5 overflow-x-auto">
           <table className="w-full mt-4">
             <thead>
               <tr>
