@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { sendEmail, goalSubmittedEmail, goalApprovedEmail, goalReturnedEmail, managerAssignedEmail, employeeManagerChangedEmail, sharedGoalAssignedEmail, checkinReminderEmail, escalationEmail } from "@/lib/email";
+import { sendEmail, goalSubmittedEmail, goalApprovedEmail, goalReturnedEmail, managerAssignedEmail, employeeManagerChangedEmail, sharedGoalAssignedEmail, checkinReminderEmail, escalationEmail, announcementEmail } from "@/lib/email";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { type, recipientId, employeeName, cycleName, reason } = body;
+  const { type, recipientId, employeeName, cycleName, reason, subject, message } = body;
 
   const admin = createAdminClient();
   const { data: recipient } = await admin
@@ -34,6 +34,8 @@ export async function POST(request: Request) {
     emailContent = checkinReminderEmail(cycleName);
   } else if (type === "escalation") {
     emailContent = escalationEmail(employeeName, reason || "no_submission");
+  } else if (type === "announcement") {
+    emailContent = announcementEmail(subject || "Announcement", message || "");
   }
 
   if (!emailContent) {

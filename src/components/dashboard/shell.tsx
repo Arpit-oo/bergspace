@@ -29,6 +29,7 @@ import {
   Search,
   Eye,
   Menu,
+  Megaphone,
 } from "lucide-react";
 
 interface NavItem {
@@ -60,6 +61,7 @@ const navGroups: NavGroup[] = [
       { label: "Approvals", href: "/dashboard/approvals", icon: CheckSquare, roles: ["manager"] },
       { label: "Check-ins", href: "/dashboard/checkins", icon: ClipboardList, roles: ["manager"] },
       { label: "Shared Goals", href: "/dashboard/shared-goals", icon: Share2, roles: ["manager", "admin"] },
+      { label: "Announcements", href: "/dashboard/announcements", icon: Megaphone, roles: ["manager", "admin"] },
     ],
   },
   {

@@ -45,6 +45,9 @@ export async function POST(request: Request) {
     } else if (type === "escalation") {
       const { text, keyboard } = buildNotificationMessage("Escalation Alert", `${employeeName || "An employee"} triggered an escalation.`, "/dashboard/escalations");
       await sendMessage(link.chat_id, text, keyboard);
+    } else if (type === "announcement") {
+      const { text, keyboard } = buildNotificationMessage("Announcement", employeeName || "You have a new announcement.", "/dashboard/notifications");
+      await sendMessage(link.chat_id, text, keyboard);
     } else {
       const { text, keyboard } = buildNotificationMessage(type || "Notification", employeeName || "You have a new notification.", "/dashboard/notifications");
       await sendMessage(link.chat_id, text, keyboard);
