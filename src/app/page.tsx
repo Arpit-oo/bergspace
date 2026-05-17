@@ -4,9 +4,6 @@ import dynamic from "next/dynamic";
 const ScrollReveal = dynamic(() =>
   import("@/components/ui/scroll-reveal").then((m) => m.ScrollReveal)
 );
-const CountUp = dynamic(() =>
-  import("@/components/ui/count-up").then((m) => m.CountUp)
-);
 const AnimatedSparkline = dynamic(() =>
   import("@/components/ui/animated-sparkline").then((m) => m.AnimatedSparkline)
 );
@@ -189,7 +186,7 @@ export default function HomePage() {
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div style={{ color: "#1A1A1A", letterSpacing: "-0.02em", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 800, lineHeight: 1 }}>
-                <CountUp target={stat.target} suffix={stat.suffix} />
+                {stat.target}{stat.suffix}
               </div>
               <div className="mt-2 font-medium" style={{ color: "#8C8578", fontSize: "13px" }}>{stat.label}</div>
             </div>
