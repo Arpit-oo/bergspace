@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   title: "BergSpace | Goal Setting & Tracking Portal",
   description:
     "In-house goal setting, tracking, and performance management portal for modern teams",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

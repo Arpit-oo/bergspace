@@ -32,5 +32,5 @@ export const GOAL_STATUS_COLORS: Record<string, string> = {
 };
 
 export const MAX_GOALS_PER_SHEET = 8;
-export const MIN_WEIGHTAGE = 5;
+export const MIN_WEIGHTAGE = 10;
 export const REQUIRED_TOTAL_WEIGHTAGE = 100;
