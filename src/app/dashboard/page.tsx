@@ -19,6 +19,11 @@ export default async function DashboardPage() {
 
   if (!profile) redirect("/auth/login");
 
+  // New users without department get role selection
+  if (!profile.department_id && profile.role === 'employee') {
+    redirect("/dashboard/select-role");
+  }
+
   const role = profile.role || "employee";
 
   const today = new Date().toLocaleDateString("en-US", {

@@ -69,6 +69,44 @@ export function goalApprovedEmail(cycleName: string) {
   };
 }
 
+export function managerAssignedEmail(employeeName: string, managerName: string) {
+  return {
+    subject: `New Team Member — ${employeeName}`,
+    html: `
+      <div style="font-family: system-ui, sans-serif; max-width: 500px; margin: 0 auto;">
+        <div style="padding: 24px 0; border-bottom: 1px solid #E8E2D6;">
+          <strong style="font-size: 18px;">BergSpace</strong>
+        </div>
+        <div style="padding: 24px 0;">
+          <h2 style="margin: 0 0 8px; font-size: 16px;">New Team Member Assigned</h2>
+          <p style="color: #5C564C; margin: 0 0 16px;"><strong>${employeeName}</strong> has been assigned to your team.</p>
+          <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard/team" style="display: inline-block; padding: 10px 20px; background: #C45A2D; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">View Team</a>
+        </div>
+        <div style="padding: 16px 0; border-top: 1px solid #E8E2D6; color: #8C8578; font-size: 12px;">BergSpace — Goal Setting & Tracking Portal</div>
+      </div>
+    `,
+  };
+}
+
+export function employeeManagerChangedEmail(managerName: string) {
+  return {
+    subject: `Manager Updated — ${managerName}`,
+    html: `
+      <div style="font-family: system-ui, sans-serif; max-width: 500px; margin: 0 auto;">
+        <div style="padding: 24px 0; border-bottom: 1px solid #E8E2D6;">
+          <strong style="font-size: 18px;">BergSpace</strong>
+        </div>
+        <div style="padding: 24px 0;">
+          <h2 style="margin: 0 0 8px; font-size: 16px;">Manager Updated</h2>
+          <p style="color: #5C564C; margin: 0 0 16px;">You have been assigned to <strong>${managerName}</strong> as your new manager.</p>
+          <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="display: inline-block; padding: 10px 20px; background: #C45A2D; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">Go to Dashboard</a>
+        </div>
+        <div style="padding: 16px 0; border-top: 1px solid #E8E2D6; color: #8C8578; font-size: 12px;">BergSpace — Goal Setting & Tracking Portal</div>
+      </div>
+    `,
+  };
+}
+
 export function goalReturnedEmail(cycleName: string, reason: string) {
   return {
     subject: `Goal Sheet Returned — ${cycleName}`,

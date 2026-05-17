@@ -115,7 +115,7 @@ export function EmployeesView({
 
       // Notify both parties when manager changes
       if (editManagerId && editManagerId !== editingEmployee.manager_id) {
-        // Notify new manager
+        // Notify new manager (in-app)
         await supabase.from("notifications").insert({
           user_id: editManagerId,
           type: "shared_goal_assigned",
@@ -123,7 +123,7 @@ export function EmployeesView({
           message: `${editingEmployee.full_name} has been assigned to your team.`,
           link: "/dashboard/team",
         });
-        // Notify employee
+        // Notify employee (in-app)
         await supabase.from("notifications").insert({
           user_id: editingEmployee.id,
           type: "shared_goal_assigned",
@@ -131,6 +131,32 @@ export function EmployeesView({
           message: `You have been assigned to a new manager.`,
           link: "/dashboard",
         });
+
+        // Email notifications
+        try {
+          // Email to new manager
+          await fetch("/api/notifications/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "manager_assigned", recipientId: editManagerId, employeeName: editingEmployee.full_name }),
+          });
+          // Email to employee
+          const managerProfile = managers.find(m => m.id === editManagerId);
+          await fetch("/api/notifications/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "employee_manager_changed", recipientId: editingEmployee.id, employeeName: managerProfile?.full_name || "your manager" }),
+          });
+        } catch {}
+
+        // Telegram notification
+        try {
+          await fetch("/api/notifications/teams", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "goal_submitted", employeeName: editingEmployee.full_name, cycleName: "Team Assignment" }),
+          });
+        } catch {}
       }
 
       toast.success(`${editingEmployee.full_name} updated successfully`);
