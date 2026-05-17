@@ -388,7 +388,7 @@ export function GoalSheetView({
       </div>
 
       {/* Return reason banner */}
-      {sheet?.status === "returned" && sheet.return_reason && (
+      {sheet?.status === "returned" && (
         <div className="flex gap-3 items-start rounded-xl bg-red-50 border border-red-100 px-4 py-3">
           <AlertCircle className="h-4 w-4 text-[#D94F3D] shrink-0 mt-0.5" />
           <div>
@@ -396,7 +396,7 @@ export function GoalSheetView({
               Returned by Manager
             </p>
             <p className="text-sm text-[#D94F3D]/80 mt-1">
-              {sheet.return_reason}
+              {sheet.return_reason || "Your goal sheet was returned by your manager. Edit your goals and resubmit."}
             </p>
           </div>
         </div>
@@ -592,7 +592,7 @@ export function GoalSheetView({
           </button>
 
           <div className="flex gap-3">
-            {sheet && (sheet.status === "draft" || sheet.status === "returned") && (
+            {sheet && (sheet.status === "draft" || sheet.status === "returned" || sheet.status === "submitted") && (
               <button
                 onClick={() => setDeleteDialogOpen(true)}
                 disabled={loading}

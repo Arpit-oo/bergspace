@@ -6,6 +6,8 @@ export async function POST(request: Request) {
   const body = await request.json();
   const { type, recipientId, employeeName, cycleName, goalCount, sheetId, reason } = body;
 
+  console.log("[telegram-notify] Request:", JSON.stringify(body));
+
   if (!recipientId) return NextResponse.json({ sent: false, reason: "no recipientId" });
 
   const admin = createAdminClient();
@@ -16,6 +18,8 @@ export async function POST(request: Request) {
     .select("chat_id")
     .eq("user_id", recipientId)
     .maybeSingle();
+
+  console.log("[telegram-notify]", { type, recipientId, hasLink: !!link?.chat_id });
 
   if (!link?.chat_id) return NextResponse.json({ sent: false, reason: "not linked" });
 

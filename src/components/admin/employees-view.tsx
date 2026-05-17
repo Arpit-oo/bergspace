@@ -355,7 +355,7 @@ export function EmployeesView({
                       <span className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-medium ${
                         sheet.status === "approved" ? "bg-green-50 text-green-700" :
                         sheet.status === "submitted" ? "bg-blue-50 text-blue-700" :
-                        sheet.status === "rejected" ? "bg-red-50 text-red-700" :
+                        sheet.status === "returned" ? "bg-red-50 text-red-700" :
                         "bg-[#F5F1EA] text-[#5C564C]"
                       }`}>
                         {sheet.status?.toUpperCase() || "DRAFT"}

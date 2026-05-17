@@ -181,9 +181,13 @@ export function SmartValidatorDialog({
               <div key={goal.index} className={`border rounded-xl bg-white overflow-hidden ${goal.passed ? "border-green-200" : reviewedIndices.has(goal.index) ? "border-[#E8E2D6]" : "border-yellow-200"}`}>
                 <div className="px-5 py-3 border-b border-[#F5F1EA] flex items-center justify-between">
                   <h3 className="text-sm font-semibold text-[#1A1A1A]">Goal {goal.index + 1}: {goal.title}</h3>
-                  <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded ${getScoreColor(goal.score)}`}>
-                    {goal.score}/5
-                  </span>
+                  {reviewedIndices.has(goal.index) ? (
+                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-green-50 text-green-700">Improved</span>
+                  ) : (
+                    <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded ${getScoreColor(goal.score)}`}>
+                      {goal.score}/5
+                    </span>
+                  )}
                 </div>
                 <div className="px-5 py-4 space-y-3">
                   <div className="flex flex-wrap gap-3">
