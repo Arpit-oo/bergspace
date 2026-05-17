@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendEmail, sharedGoalAssignedEmail } from "@/lib/email";
+import { buildTeamsCard, sendTeamsNotification } from "@/lib/notifications";
 
 export async function POST(request: Request) {
   // Verify the requesting user is a manager/admin
@@ -150,6 +152,24 @@ export async function POST(request: Request) {
       message: `A shared goal "${template.title}" has been added to your goal sheet.`,
       link: "/dashboard/goals",
     });
+
+    // Email notification
+    try {
+      const { data: empProfile } = await admin.from("profiles").select("email").eq("id", empId).single();
+      if (empProfile?.email) {
+        const { subject, html } = sharedGoalAssignedEmail(template.title);
+        await sendEmail(empProfile.email, subject, html);
+      }
+    } catch {}
+
+    // Teams notification
+    try {
+      const webhookUrl = process.env.TEAMS_WEBHOOK_URL;
+      if (webhookUrl) {
+        const card = buildTeamsCard("Shared Goal Assigned", `"${template.title}" assigned`, [{ name: "Goal", value: template.title }], `${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard/goals`);
+        await sendTeamsNotification(webhookUrl, card);
+      }
+    } catch {}
 
     results.push(empId);
   }

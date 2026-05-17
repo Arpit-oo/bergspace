@@ -41,6 +41,20 @@ export async function POST(request: Request) {
       ],
       `${process.env.NEXT_PUBLIC_APP_URL || ""}/dashboard/goals`
     );
+  } else if (type === "shared_goal_assigned") {
+    card = buildTeamsCard(
+      "Shared Goal Assigned",
+      `"${employeeName}" has been pushed as a shared goal`,
+      [{ name: "Goal", value: employeeName || "" }],
+      `${process.env.NEXT_PUBLIC_APP_URL || ""}/dashboard/goals`
+    );
+  } else if (type === "escalation") {
+    card = buildTeamsCard(
+      "Escalation Alert",
+      `Escalation triggered for ${employeeName}`,
+      [{ name: "Employee", value: employeeName || "" }, { name: "Type", value: reason || "" }],
+      `${process.env.NEXT_PUBLIC_APP_URL || ""}/dashboard/escalations`
+    );
   }
 
   if (card) {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendEmail, goalSubmittedEmail, goalApprovedEmail, goalReturnedEmail, managerAssignedEmail, employeeManagerChangedEmail } from "@/lib/email";
+import { sendEmail, goalSubmittedEmail, goalApprovedEmail, goalReturnedEmail, managerAssignedEmail, employeeManagerChangedEmail, sharedGoalAssignedEmail, checkinReminderEmail, escalationEmail } from "@/lib/email";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
@@ -28,6 +28,12 @@ export async function POST(request: Request) {
     emailContent = managerAssignedEmail(employeeName, cycleName);
   } else if (type === "employee_manager_changed") {
     emailContent = employeeManagerChangedEmail(employeeName);
+  } else if (type === "shared_goal_assigned") {
+    emailContent = sharedGoalAssignedEmail(employeeName);
+  } else if (type === "checkin_reminder") {
+    emailContent = checkinReminderEmail(cycleName);
+  } else if (type === "escalation") {
+    emailContent = escalationEmail(employeeName, reason || "no_submission");
   }
 
   if (!emailContent) {
