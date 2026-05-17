@@ -16,6 +16,9 @@ const AnimatedBar = dynamic(() =>
 const LandingNav = dynamic(() =>
   import("@/components/ui/landing-nav").then((m) => m.LandingNav)
 );
+const FAQ = dynamic(() =>
+  import("@/components/ui/faq").then((m) => m.FAQ)
+);
 
 /* ─── Mountain Logo ─── */
 function PeakMark({ size = 20 }: { size?: number }) {
@@ -496,6 +499,30 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
+                {/* Goal 2 */}
+                <div className="flex-1">
+                  <div className="mt-3 p-3 rounded-lg" style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px solid rgba(42,31,69,0.15)" }}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold" style={{ color: "#6E5BA2" }}>Goal 2</span>
+                      <span className="font-mono text-xs font-bold" style={{ color: "#3D9A5F" }}>5/5</span>
+                    </div>
+                    <p className="text-sm font-medium" style={{ color: "#2A1F45" }}>Reduce customer churn rate from 8% to 4% by Q2 end through proactive outreach program</p>
+                    <div className="flex gap-1 mt-2">
+                      {["S","M","A","R","T"].map(c => <span key={c} className="w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center" style={{ backgroundColor: "#E6ECDE", color: "#3D9A5F" }}>&#10003;</span>)}
+                    </div>
+                  </div>
+                  {/* Goal 3 - failing */}
+                  <div className="mt-3 p-3 rounded-lg" style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px solid rgba(42,31,69,0.15)" }}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-semibold" style={{ color: "#6E5BA2" }}>Goal 3</span>
+                      <span className="font-mono text-xs font-bold" style={{ color: "#D94F3D" }}>2/5</span>
+                    </div>
+                    <p className="text-sm font-medium" style={{ color: "#2A1F45" }}>Improve team morale</p>
+                    <div className="flex gap-1 mt-2">
+                      {["S","M","A","R","T"].map((c,i) => <span key={c} className="w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center" style={{ backgroundColor: i < 2 ? "#FDF0EE" : "#E6ECDE", color: i < 2 ? "#D94F3D" : "#3D9A5F" }}>{i < 2 ? "✗" : "✓"}</span>)}
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="mt-4 flex items-center gap-2 text-sm font-bold">
                 <span>AI SMART Validator</span>
@@ -507,6 +534,42 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ══════════════ NOTEBOOK SECTION ══════════════ */}
+      <section className="py-20 px-8 max-w-6xl mx-auto sr">
+        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-center mb-12 text-[#1A1A1A]">WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
+        <div className="flex rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "440px" }}>
+          {/* Left - terracotta panel with sticky notes */}
+          <div className="w-[42%] relative p-8" style={{ backgroundColor: "#C45A2D" }}>
+            <div className="absolute top-6 right-6 bg-white px-3 py-2 rounded-lg text-xs font-semibold shadow-md" style={{ transform: "rotate(6deg)" }}>When spreadsheets<br/>fail you &#8805;</div>
+            <div className="absolute top-36 left-6 px-4 py-3 rounded-lg text-white text-sm font-extrabold" style={{ backgroundColor: "#1A2332", transform: "rotate(-6deg)" }}>MANUAL TRACKING:<br/>ZERO<div className="text-[9px] font-normal mt-1 opacity-70">we don&apos;t make your team<br/>chase updates anymore</div></div>
+            <div className="absolute bottom-10 left-10 bg-white px-3 py-2 rounded-lg text-xs font-semibold shadow-md" style={{ transform: "rotate(4deg)" }}><div className="font-bold">Ships quarterly</div><div className="text-lg font-extrabold" style={{ color: "#C45A2D" }}>insights &#8594;</div></div>
+          </div>
+          {/* Right - dotted paper with steps */}
+          <div className="flex-1 p-10 relative" style={{ backgroundColor: "#FDFBF3", backgroundImage: "radial-gradient(circle, #D4CFC5 1px, transparent 1.5px)", backgroundSize: "18px 18px" }}>
+            <div className="absolute left-0 top-0 bottom-0 w-3" style={{ background: "repeating-linear-gradient(to bottom, #C45A2D 0 3px, transparent 3px 9px)" }}></div>
+            <ol className="space-y-6 pl-4">
+              {["Create goals with weighted targets & thrust areas", "Manager reviews, edits inline, approves or returns", "Goals lock — no more edits, full audit trail", "Quarterly check-ins: actual vs planned tracking", "Reports, analytics, escalations — all automatic"].map((step, i) => (
+                <li key={i} className="flex items-center gap-4 text-lg font-semibold text-[#1A1A1A]" style={{ fontFamily: "Georgia, serif" }}>
+                  <span className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold shrink-0" style={{ borderColor: "#C45A2D", color: "#C45A2D" }}>{i + 1}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* Decorative separator */}
+      <div className="relative max-w-5xl mx-auto px-8">
+        <div className="flex items-center justify-center gap-3 py-2">
+          <div className="h-[1px] flex-1" style={{ backgroundColor: "#E8E2D6" }} />
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.1 }} />
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} />
+          <div className="h-[1px] flex-1" style={{ backgroundColor: "#E8E2D6" }} />
+        </div>
+      </div>
 
       {/* Geometric accent — before features */}
       <div className="relative">
@@ -542,8 +605,31 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══════════════ FAQ SECTION ══════════════ */}
+      <section className="py-20 px-8 max-w-5xl mx-auto sr">
+        <div className="text-center mb-12">
+          <p className="text-sm text-[#8C8578] italic mb-3">the boring-but-important stuff</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">QUESTIONS?<br/>ANSWERS.</h2>
+        </div>
+        <FAQ />
+      </section>
+
+      {/* Decorative separator */}
+      <div className="relative max-w-5xl mx-auto px-8">
+        <div className="flex items-center justify-center gap-3 py-2">
+          <div className="h-[1px] flex-1" style={{ backgroundColor: "#E8E2D6" }} />
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} />
+          <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.1 }} />
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} />
+          <div className="h-[1px] flex-1" style={{ backgroundColor: "#E8E2D6" }} />
+        </div>
+      </div>
+
       {/* ══════════════ COMPARISON TABLE ══════════════ */}
-      <section className="py-20 md:py-28" style={{ backgroundColor: "#FEFCF9" }}>
+      <section className="relative py-20 md:py-28" style={{ backgroundColor: "#FEFCF9", backgroundImage: "radial-gradient(circle, #E8E2D6 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
+        {/* Corner decorative elements */}
+        <div className="absolute top-6 right-6 w-12 h-12 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #1A1A1A 0, #1A1A1A 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
+        <div className="absolute bottom-6 left-6 w-2 h-2 rounded-full pointer-events-none" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} aria-hidden="true" />
         <div className="mx-auto max-w-4xl px-6">
           <h2 className="sr mb-12 text-center text-3xl font-extrabold tracking-tight md:text-4xl" style={{ letterSpacing: "-0.02em" }}>
             Why teams switch to BergSpace
@@ -593,7 +679,10 @@ export default function HomePage() {
       </div>
 
       {/* ══════════════ TESTIMONIALS ══════════════ */}
-      <section id="roles" className="py-20 md:py-24" style={{ backgroundColor: "#F5F1EA" }}>
+      <section id="roles" className="relative py-20 md:py-24" style={{ backgroundColor: "#F5F1EA", backgroundImage: "radial-gradient(circle, #E8E2D6 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
+        {/* Corner decorative elements */}
+        <div className="absolute top-8 left-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
+        <div className="absolute bottom-8 right-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(-45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="mx-auto max-w-5xl px-6">
           <h2 className="sr mb-14 text-center text-3xl font-extrabold tracking-tight md:text-4xl" style={{ letterSpacing: "-0.02em" }}>
             Teams who stopped guessing
@@ -640,6 +729,20 @@ export default function HomePage() {
               </blockquote>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════ ABOUT / CREATOR ══════════════ */}
+      <section className="py-16 px-8" style={{ backgroundColor: "#F5F1EA" }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl font-bold text-[#1A1A1A] mb-4">Built by Arpit Walia</h3>
+          <p className="text-[#5C564C] mb-6 max-w-2xl mx-auto">CS Engineering student at Thapar Institute (CGPA: 8.88), Samsung PRISM intern, MLSC Management Lead. Passionate about building products that bridge engineering and user needs.</p>
+          <div className="flex justify-center gap-4">
+            <a href="https://linkedin.com/in/arpit-walia" target="_blank" rel="noopener" className="px-4 py-2 rounded-full text-sm font-medium border border-[#E8E2D6] hover:bg-white transition-colors text-[#1A1A1A]">LinkedIn</a>
+            <a href="https://github.com/Arpit-oo" target="_blank" rel="noopener" className="px-4 py-2 rounded-full text-sm font-medium border border-[#E8E2D6] hover:bg-white transition-colors text-[#1A1A1A]">GitHub</a>
+            <a href="mailto:arpit13walia@gmail.com" className="px-4 py-2 rounded-full text-sm font-medium border border-[#E8E2D6] hover:bg-white transition-colors text-[#1A1A1A]">Email</a>
+          </div>
+          <p className="mt-8 text-xs text-[#A89F91]">Made with love by Arpit for ATOMQUEST Hackathon 1.0</p>
         </div>
       </section>
 
