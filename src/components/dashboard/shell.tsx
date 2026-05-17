@@ -30,6 +30,7 @@ import {
   Eye,
   Menu,
   Megaphone,
+  RefreshCw,
 } from "lucide-react";
 
 interface NavItem {
@@ -272,6 +273,13 @@ export function DashboardShell({
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => router.refresh()}
+              className="h-8 w-8 flex items-center justify-center rounded-md hover:bg-[#F5F1EA] transition-colors text-[#8C8578] hover:text-[#1A1A1A]"
+              title="Refresh"
+            >
+              <RefreshCw className="h-4 w-4" strokeWidth={1.75} />
+            </button>
             <Link
               href="/dashboard/notifications"
               className="h-8 w-8 flex items-center justify-center rounded-md hover:bg-[#F5F5F5] transition-colors text-[#737373] hover:text-[#171717]"

@@ -14,13 +14,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "sonner";
 import { Plus, Loader2, Calendar, Power } from "lucide-react";
 
@@ -300,16 +293,15 @@ export function CyclesView({ cycles, userId }: CyclesViewProps) {
             <div className="grid grid-cols-3 gap-3">
               <div className="flex flex-col gap-1">
                 <Label className="text-sm font-medium text-[#1A1A1A]">Preset</Label>
-                <Select value={preset} onValueChange={handlePresetChange}>
-                  <SelectTrigger className="border-[#E8E2D6] text-sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="calendar_year">Calendar Year</SelectItem>
-                    <SelectItem value="fiscal_apr_mar">Fiscal (Apr-Mar)</SelectItem>
-                    <SelectItem value="custom">Custom</SelectItem>
-                  </SelectContent>
-                </Select>
+                <select
+                  value={preset}
+                  onChange={(e) => handlePresetChange(e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+                >
+                  <option value="calendar_year">Calendar Year</option>
+                  <option value="fiscal_apr_mar">Fiscal (Apr-Mar)</option>
+                  <option value="custom">Custom</option>
+                </select>
               </div>
               <div className="flex flex-col gap-1">
                 <Label className="text-sm font-medium text-[#1A1A1A]">Year</Label>
@@ -322,17 +314,16 @@ export function CyclesView({ cycles, userId }: CyclesViewProps) {
               </div>
               <div className="flex flex-col gap-1">
                 <Label className="text-sm font-medium text-[#1A1A1A]">Quarter</Label>
-                <Select value={String(quarter)} onValueChange={handleQuarterChange}>
-                  <SelectTrigger className="border-[#E8E2D6] text-sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">Q1</SelectItem>
-                    <SelectItem value="2">Q2</SelectItem>
-                    <SelectItem value="3">Q3</SelectItem>
-                    <SelectItem value="4">Q4</SelectItem>
-                  </SelectContent>
-                </Select>
+                <select
+                  value={String(quarter)}
+                  onChange={(e) => handleQuarterChange(e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+                >
+                  <option value="1">Q1</option>
+                  <option value="2">Q2</option>
+                  <option value="3">Q3</option>
+                  <option value="4">Q4</option>
+                </select>
               </div>
             </div>
 

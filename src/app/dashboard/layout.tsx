@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { DashboardShell } from "@/components/dashboard/shell";
@@ -25,7 +26,11 @@ export default async function DashboardLayout({
 
   return (
     <AccessibilityProvider>
-      <DashboardShell profile={profile}>{children}</DashboardShell>
+      <DashboardShell profile={profile}>
+        <Suspense fallback={<div className="flex items-center justify-center py-20"><div className="h-6 w-6 border-2 border-[#E8E2D6] border-t-[#C45A2D] rounded-full animate-spin" /></div>}>
+          {children}
+        </Suspense>
+      </DashboardShell>
     </AccessibilityProvider>
   );
 }

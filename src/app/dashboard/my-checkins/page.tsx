@@ -8,13 +8,6 @@ import { UOM_LABELS } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "sonner";
 import { Loader2, Save, Lock, Clock } from "lucide-react";
 
@@ -321,22 +314,16 @@ export default function MyCheckinsPage() {
                   <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
                     Status
                   </Label>
-                  <Select
+                  <select
                     value={edit?.status || goal.status}
-                    onValueChange={(value: string | null) => {
-                      if (value) updateEdit(goal.id, "status", value);
-                    }}
+                    onChange={(e) => updateEdit(goal.id, "status", e.target.value)}
                     disabled={!isWithinWindow}
+                    className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D] disabled:opacity-50"
                   >
-                    <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="not_started">Not Started</SelectItem>
-                      <SelectItem value="on_track">On Track</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <option value="not_started">Not Started</option>
+                    <option value="on_track">On Track</option>
+                    <option value="completed">Completed</option>
+                  </select>
                 </div>
                 <div>
                   <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">

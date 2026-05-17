@@ -14,13 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -703,26 +696,17 @@ export function EscalationsView({
               <Label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">
                 Trigger Type
               </Label>
-              <Select
+              <select
                 value={newRuleTrigger}
-                onValueChange={(v: string | null) =>
-                  setNewRuleTrigger((v ?? "no_submission") as EscalationTriggerType)
+                onChange={(e) =>
+                  setNewRuleTrigger(e.target.value as EscalationTriggerType)
                 }
-                items={[
-                  { value: "no_submission", label: "No Submission" },
-                  { value: "no_approval", label: "No Approval" },
-                  { value: "missed_checkin", label: "Missed Check-in" },
-                ]}
+                className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
               >
-                <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="no_submission">No Submission</SelectItem>
-                  <SelectItem value="no_approval">No Approval</SelectItem>
-                  <SelectItem value="missed_checkin">Missed Check-in</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="no_submission">No Submission</option>
+                <option value="no_approval">No Approval</option>
+                <option value="missed_checkin">Missed Check-in</option>
+              </select>
             </div>
 
             <div>

@@ -3,16 +3,9 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import { Profile, Department } from "@/lib/types";
+import { Profile, Department, GoalSheet, Goal } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -50,7 +43,7 @@ export function EmployeesView({
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [goalSheetDialogOpen, setGoalSheetDialogOpen] = useState(false);
-  const [selectedEmployeeSheets, setSelectedEmployeeSheets] = useState<any[]>([]);
+  const [selectedEmployeeSheets, setSelectedEmployeeSheets] = useState<GoalSheet[]>([]);
   const [selectedEmployeeName, setSelectedEmployeeName] = useState("");
   const [expandedSheets, setExpandedSheets] = useState<Set<string>>(new Set());
   const router = useRouter();
@@ -63,7 +56,7 @@ export function EmployeesView({
     setEditManagerId(emp.manager_id || "");
   }
 
-  async function viewGoalSheets(emp: any) {
+  async function viewGoalSheets(emp: Profile) {
     const { data } = await supabase
       .from("goal_sheets")
       .select("*, goals(id, title, weightage, status, target_value, uom), cycle:goal_cycles(name)")
@@ -386,7 +379,7 @@ export function EmployeesView({
                           </tr>
                         </thead>
                         <tbody>
-                          {sheet.goals.map((goal: any) => (
+                          {sheet.goals.map((goal: Goal) => (
                             <tr key={goal.id} className="border-b border-[#F5F1EA] last:border-0">
                               <td className="px-5 py-2.5 text-sm text-[#1A1A1A]">{goal.title}</td>
                               <td className="px-5 py-2.5 text-sm font-mono tabular-nums text-[#5C564C]">{goal.weightage}%</td>
@@ -394,7 +387,7 @@ export function EmployeesView({
                               <td className="px-5 py-2.5">
                                 <span className={`inline-block px-2 py-0.5 rounded text-[11px] font-medium ${
                                   goal.status === "completed" ? "bg-green-50 text-green-700" :
-                                  goal.status === "in_progress" ? "bg-blue-50 text-blue-700" :
+                                  goal.status === "on_track" ? "bg-blue-50 text-blue-700" :
                                   "bg-[#F5F1EA] text-[#5C564C]"
                                 }`}>
                                   {goal.status || "pending"}
@@ -442,81 +435,54 @@ export function EmployeesView({
                   <Label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">
                     Role
                   </Label>
-                  <Select
-                    value={editRole || undefined}
-                    onValueChange={(v: string | null) =>
-                      setEditRole(v ?? "employee")
-                    }
-                    items={[
-                      { value: "employee", label: "Employee" },
-                      { value: "manager", label: "Manager" },
-                      { value: "admin", label: "Admin" },
-                    ]}
+                  <select
+                    value={editRole}
+                    onChange={(e) => setEditRole(e.target.value)}
+                    className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
                   >
-                    <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="employee">Employee</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
-                      <SelectItem value="admin">Admin</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <option value="">Select role</option>
+                    <option value="employee">Employee</option>
+                    <option value="manager">Manager</option>
+                    <option value="admin">Admin</option>
+                  </select>
                 </div>
 
                 <div>
                   <Label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">
                     Department
                   </Label>
-                  <Select
-                    value={editDepartmentId || undefined}
-                    onValueChange={(v: string | null) =>
-                      setEditDepartmentId(v ?? "")
-                    }
-                    items={departments.map((d) => ({
-                      value: d.id,
-                      label: d.name,
-                    }))}
+                  <select
+                    value={editDepartmentId}
+                    onChange={(e) => setEditDepartmentId(e.target.value)}
+                    className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
                   >
-                    <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                      <SelectValue placeholder="Select department" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {departments.map((d) => (
-                        <SelectItem key={d.id} value={d.id}>
-                          {d.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <option value="">Select department</option>
+                    {departments.map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
                   <Label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">
                     Manager
                   </Label>
-                  <Select
-                    value={editManagerId || undefined}
-                    onValueChange={(v: string | null) =>
-                      setEditManagerId(v ?? "")
-                    }
-                    items={managers
-                      .filter((m) => m.id !== editingEmployee.id)
-                      .map((m) => ({ value: m.id, label: m.full_name }))}
+                  <select
+                    value={editManagerId}
+                    onChange={(e) => setEditManagerId(e.target.value)}
+                    className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
                   >
-                    <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                      <SelectValue placeholder="Select manager" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {managers
-                        .filter((m) => m.id !== editingEmployee.id)
-                        .map((m) => (
-                          <SelectItem key={m.id} value={m.id}>
-                            {m.full_name}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
+                    <option value="">Select manager</option>
+                    {managers
+                      .filter((m) => m.id !== editingEmployee.id)
+                      .map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.full_name}
+                        </option>
+                      ))}
+                  </select>
                 </div>
               </div>
 

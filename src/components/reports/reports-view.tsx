@@ -11,13 +11,6 @@ import {
 import { UOM_LABELS, SHEET_STATUS_LABELS, SHEET_STATUS_COLORS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -262,35 +255,26 @@ export function ReportsView({
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Reports</h1>
         <div className="flex items-center gap-3">
-          <Select
+          <select
             value={selectedDeptId}
-            onValueChange={(v: string | null) => setSelectedDeptId(v ?? "all")}
-            items={[{ value: "all", label: "All Departments" }, ...departments.map((d) => ({ value: d.id, label: d.name }))]}
+            onChange={(e) => setSelectedDeptId(e.target.value)}
+            className="w-[180px] h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
           >
-            <SelectTrigger className="w-[180px] border-[#E8E2D6] text-sm">
-              <SelectValue placeholder="All Departments" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Departments</SelectItem>
-              {departments.map((d) => (
-                <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select
-            value={selectedCycleId || undefined}
-            onValueChange={(v: string | null) => setSelectedCycleId(v ?? "")}
-            items={cycles.map((c) => ({ value: c.id, label: `${c.name}${c.is_active ? " (Active)" : ""}` }))}
+            <option value="all">All Departments</option>
+            {departments.map((d) => (
+              <option key={d.id} value={d.id}>{d.name}</option>
+            ))}
+          </select>
+          <select
+            value={selectedCycleId}
+            onChange={(e) => setSelectedCycleId(e.target.value)}
+            className="w-[200px] h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
           >
-            <SelectTrigger className="w-[200px] border-[#E8E2D6] text-sm">
-              <SelectValue placeholder="Select Cycle" />
-            </SelectTrigger>
-            <SelectContent>
-              {cycles.map((c) => (
-                <SelectItem key={c.id} value={c.id}>{c.name} {c.is_active ? "(Active)" : ""}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <option value="">Select Cycle</option>
+            {cycles.map((c) => (
+              <option key={c.id} value={c.id}>{c.name}{c.is_active ? " (Active)" : ""}</option>
+            ))}
+          </select>
         </div>
       </div>
 
