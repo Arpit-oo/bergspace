@@ -183,8 +183,8 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ STATS STRIP ══════════════ */}
-      <section className="sr" style={{ backgroundColor: "#F5F1EA" }}>
-        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 px-6 py-16 md:grid-cols-4">
+      <section className="sr relative" style={{ backgroundColor: "#F5F1EA" }}>
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 px-8 md:px-12 py-16 md:grid-cols-4">
           {[
             { target: 100, suffix: "%", label: "Weighted Goals" },
             { target: 8, suffix: "", label: "Max per Sheet" },
@@ -192,13 +192,14 @@ export default function HomePage() {
             { target: 3, suffix: "", label: "User Roles" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-black tracking-tight" style={{ color: "#1A1A1A", letterSpacing: "-0.02em", fontSize: "clamp(36px, 5vw, 56px)", fontWeight: 900 }}>
+              <div style={{ color: "#1A1A1A", letterSpacing: "-0.02em", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 800, lineHeight: 1 }}>
                 <CountUp target={stat.target} suffix={stat.suffix} />
               </div>
-              <div className="mt-2 text-sm font-medium" style={{ color: "#8C8578" }}>{stat.label}</div>
+              <div className="mt-2 font-medium" style={{ color: "#8C8578", fontSize: "13px" }}>{stat.label}</div>
             </div>
           ))}
         </div>
+        <span className="absolute bottom-4 right-[12%] hidden md:inline-block" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "18px", color: "#8C8578", transform: "rotate(-4deg)" }}>and growing every week</span>
       </section>
 
       {/* Geometric accent — before work grid */}
@@ -208,7 +209,7 @@ export default function HomePage() {
 
       {/* ══════════════ WORK GRID — THE MAIN EVENT ══════════════ */}
       <section className="py-20 md:py-28" style={{ backgroundColor: "#FEFCF9" }}>
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-8 md:px-12">
           <div className="sr mb-4">
             <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">from 2026 &apos;til today</p>
           </div>
@@ -265,7 +266,7 @@ export default function HomePage() {
 
             {/* ── Card 2: Cream — Approval Flow ── */}
             <div
-              className="sr sr-d2 tilt-card col-span-12 md:col-span-5 rounded-2xl p-7 flex flex-col"
+              className="sr sr-d2 tilt-card col-span-12 md:col-span-5 rounded-2xl p-8 flex flex-col"
               style={{ backgroundColor: "#EDE5D4", color: "#1A1A1A", minHeight: 440, transform: "rotate(2.2deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-5" style={{ color: "#8C8578" }}>Approval Flow</div>
@@ -308,8 +309,8 @@ export default function HomePage() {
 
             {/* ── Card 3: Terracotta — Achievement Metric (tall) ── */}
             <div
-              className="sr sr-d3 tilt-card col-span-12 md:col-span-4 rounded-2xl p-7 flex flex-col items-center justify-center text-center relative overflow-hidden"
-              style={{ backgroundColor: "#C45A2D", color: "white", minHeight: 480, transform: "rotate(1.4deg)" }}
+              className="sr sr-d3 tilt-card col-span-12 md:col-span-4 rounded-2xl p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
+              style={{ backgroundColor: "#C45A2D", color: "white", minHeight: 440, transform: "rotate(1.4deg)" }}
             >
               {/* dotted bg */}
               <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)", backgroundSize: "20px 20px" }} />
@@ -367,7 +368,7 @@ export default function HomePage() {
 
             {/* ── Card 5: Violet — Heatmap ── */}
             <div
-              className="sr sr-d5 tilt-card col-span-12 md:col-span-5 rounded-2xl p-7 flex flex-col"
+              className="sr sr-d5 tilt-card col-span-12 md:col-span-5 rounded-2xl p-8 flex flex-col"
               style={{ backgroundColor: "#2A1B4A", color: "#E0D4F5", minHeight: 380, transform: "rotate(2deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-4 opacity-60">Department completion rates</div>
@@ -429,7 +430,7 @@ export default function HomePage() {
 
             {/* ── Card 6: Forest — Escalation Feed ── */}
             <div
-              className="sr sr-d5 tilt-card col-span-12 md:col-span-7 rounded-2xl p-7 flex flex-col"
+              className="sr sr-d5 tilt-card col-span-12 md:col-span-7 rounded-2xl p-8 flex flex-col"
               style={{ backgroundColor: "#0F2A14", color: "#C8E6C9", minHeight: 380, transform: "rotate(-1.6deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-5 opacity-60">Anomaly feed &middot; Last 30 days</div>
@@ -464,8 +465,8 @@ export default function HomePage() {
 
             {/* ── Card 7: Lavender — AI Validator ── */}
             <div
-              className="sr sr-d6 tilt-card col-span-12 rounded-2xl p-7 md:p-8 flex flex-col"
-              style={{ backgroundColor: "#E8E0F0", color: "#1A1A1A", minHeight: 340, transform: "rotate(1deg)" }}
+              className="sr sr-d6 tilt-card col-span-12 rounded-2xl p-8 flex flex-col"
+              style={{ backgroundColor: "#E8E0F0", color: "#1A1A1A", transform: "rotate(1deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: "#6E5BA2" }}>SMART Goal Validator</div>
               <div className="flex flex-col md:flex-row gap-6 flex-1">
@@ -542,12 +543,12 @@ export default function HomePage() {
       </div>
 
       {/* ══════════════ NOTEBOOK SECTION ══════════════ */}
-      <section className="py-20 px-8 max-w-6xl mx-auto sr">
+      <section className="py-20 px-8 mx-auto sr" style={{ maxWidth: "1080px" }}>
         <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">how it actually works</p>
         <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-center mb-12 text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
-        <div className="flex rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "440px" }}>
+        <div className="flex rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "480px" }}>
           {/* Left - terracotta panel with sticky notes */}
-          <div className="w-[42%] relative p-8" style={{ backgroundColor: "#C45A2D" }}>
+          <div className="w-[45%] relative p-8" style={{ backgroundColor: "#C45A2D" }}>
             <div className="absolute top-6 right-6 bg-white px-3 py-2 rounded-lg text-xs font-semibold shadow-md" style={{ transform: "rotate(6deg)" }}>When spreadsheets<br/>fail you &#8805;</div>
             <div className="absolute top-36 left-6 px-4 py-3 rounded-lg text-white text-sm font-extrabold" style={{ backgroundColor: "#1A2332", transform: "rotate(-6deg)" }}>MANUAL TRACKING:<br/>ZERO<div className="text-[9px] font-normal mt-1 opacity-70">we don&apos;t make your team<br/>chase updates anymore</div></div>
             <div className="absolute bottom-10 left-10 bg-white px-3 py-2 rounded-lg text-xs font-semibold shadow-md" style={{ transform: "rotate(4deg)" }}><div className="font-bold">Ships quarterly</div><div className="text-lg font-extrabold" style={{ color: "#C45A2D" }}>insights &#8594;</div></div>
@@ -585,19 +586,18 @@ export default function HomePage() {
 
       {/* ══════════════ FEATURES (DARK SECTION) ══════════════ */}
       <section id="features" className="relative overflow-hidden py-24 md:py-32" style={{ backgroundColor: "#1A2332" }}>
-        <div className="dot-grid-bg absolute inset-0" />
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px" }}></div>
         {/* Geometric shapes */}
         <div className="absolute top-[10%] left-[8%] w-28 h-28 rounded-full border-2 opacity-[0.08] pointer-events-none" style={{ borderColor: "#C45A2D", animation: "drift 20s ease-in-out infinite alternate" }}></div>
         <div className="absolute top-[60%] right-[12%] w-20 h-20 rounded-full border-2 opacity-[0.08] pointer-events-none" style={{ borderColor: "#F5C49A", animation: "drift 15s ease-in-out infinite alternate-reverse" }}></div>
         <div className="absolute top-[25%] right-[20%] w-10 h-10 border-2 opacity-[0.06] pointer-events-none" style={{ borderColor: "#8FA3B8", transform: "rotate(15deg)", animation: "drift 18s ease-in-out infinite alternate" }}></div>
-        <div className="relative mx-auto max-w-5xl px-6 text-center">
+        <div className="relative mx-auto max-w-5xl px-8 md:px-12 text-center">
           <p className="sr mb-3" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block", color: "#4EFFD4" }}>everything under the hood</p>
           <h2 className="sr sr-d1 mx-auto mb-6 max-w-2xl text-5xl md:text-7xl font-black tracking-tight text-white uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
             BUILT FOR TEAMS WHO NEED STRUCTURE
           </h2>
-          <p className="sr sr-d2 mx-auto mb-10 max-w-lg text-base" style={{ color: "rgba(255,255,255,.45)" }}>
+          <p className="sr sr-d2 mx-auto mb-10 max-w-lg" style={{ color: "rgba(255,255,255,.45)", fontSize: "16px" }}>
             Six modules. One platform. Zero spreadsheets.
           </p>
           <div className="sr sr-d3 flex flex-wrap justify-center gap-2.5">
@@ -619,7 +619,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ FAQ SECTION ══════════════ */}
-      <section className="py-20 px-8 max-w-5xl mx-auto sr">
+      <section className="py-20 px-8 md:px-12 max-w-3xl mx-auto sr">
         <div className="text-center mb-12">
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">the boring-but-important stuff</p>
           <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>QUESTIONS?<br/>ANSWERS.</h2>
@@ -643,7 +643,7 @@ export default function HomePage() {
         {/* Corner decorative elements */}
         <div className="absolute top-6 right-6 w-12 h-12 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #1A1A1A 0, #1A1A1A 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="absolute bottom-6 left-6 w-2 h-2 rounded-full pointer-events-none" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} aria-hidden="true" />
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-5xl px-8 md:px-12">
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">the proof is in the table</p>
           <h2 className="sr mb-12 text-center text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
             WHY TEAMS SWITCH
@@ -673,7 +673,7 @@ export default function HomePage() {
                         <span style={{ color: "#8C8578" }}>{row.old}</span>
                       </span>
                     </td>
-                    <td>
+                    <td style={{ backgroundColor: "rgba(196, 90, 45, 0.06)" }}>
                       <span className="inline-flex items-center gap-2" style={{ color: "#22C55E" }}>
                         <CheckIcon />
                         <span style={{ color: "#1A1A1A" }} className="font-medium">{row.berg}</span>
@@ -697,7 +697,7 @@ export default function HomePage() {
         {/* Corner decorative elements */}
         <div className="absolute top-8 left-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="absolute bottom-8 right-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(-45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-8 md:px-12">
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">real talk from real teams</p>
           <h2 className="sr mb-14 text-center text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
             TEAMS WHO STOPPED GUESSING
@@ -716,22 +716,22 @@ export default function HomePage() {
                 name: "Marcus T.",
                 role: "CEO, Flowbase",
                 avatarBg: "linear-gradient(135deg,#6366F1,#4F46E5)",
-                ml: "md:ml-16",
+                ml: "md:ml-24",
               },
               {
                 quote: "We went from spreadsheet chaos to structured performance management in one afternoon. The SMART validator alone is worth it.",
                 name: "Priya N.",
                 role: "Head of HR, Stackr",
                 avatarBg: "linear-gradient(135deg,#EC4899,#BE185D)",
-                ml: "md:ml-8",
+                ml: "md:ml-12",
               },
             ].map((q, i) => (
               <blockquote
                 key={q.name}
                 className={`sr ${i === 0 ? "sr-d1" : i === 1 ? "sr-d2" : "sr-d3"} ${q.ml} rounded-2xl border bg-white p-7`}
-                style={{ borderColor: "#E8E2D6", maxWidth: 640 }}
+                style={{ borderColor: "#E8E2D6", maxWidth: 680 }}
               >
-                <p className="text-base leading-relaxed font-medium" style={{ color: "#1A1A1A" }}>
+                <p className="text-xl md:text-2xl leading-relaxed font-medium" style={{ color: "#1A1A1A" }}>
                   &ldquo;{q.quote}&rdquo;
                 </p>
                 <div className="mt-5 flex items-center gap-3">
@@ -748,24 +748,20 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ ABOUT / CREATOR ══════════════ */}
-      <section className="py-24 px-8 max-w-6xl mx-auto sr">
+      <section className="py-24 px-8 md:px-12 max-w-6xl mx-auto sr">
         <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">the person behind the pixels</p>
         <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-center mb-4 text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>BUILT WITH PASSION.<br/>SHIPPED WITH LOVE.</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           {/* Card 1 - About */}
-          <div className="rounded-2xl p-9 min-h-[320px] relative overflow-hidden" style={{ backgroundColor: "#F5F1EA" }}>
-            <div className="absolute top-5 right-[-20px] w-[55%] aspect-[4/5] bg-white border rounded-lg p-2 shadow-md" style={{ transform: "rotate(5deg)", borderColor: "#E8E2D6" }}>
-              <div className="w-full h-full rounded" style={{ background: "linear-gradient(135deg, #C45A2D, #1A2332)" }}></div>
-              <p className="text-center text-xs mt-1" style={{ fontFamily: "var(--font-caveat), cursive" }}>hackathon mode &middot; &apos;26</p>
-            </div>
-            <p className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-caveat), cursive", transform: "rotate(-14deg)", position: "absolute", top: "80px", left: "22%" }}>Hey!</p>
-            <div className="relative z-10 mt-auto pt-40">
-              <p className="text-[15px] text-[#5C564C] leading-relaxed max-w-[380px]">BergSpace was built for Atomberg&apos;s ATOMQUEST Hackathon 1.0 &mdash; because tracking goals in spreadsheets is like navigating mountains with a paper map.</p>
-              <p className="text-[15px] text-[#5C564C] leading-relaxed max-w-[380px] mt-3">So I built the system I always wanted: structured, intelligent, speaks plain English.</p>
+          <div className="rounded-2xl p-9 min-h-[360px] relative overflow-hidden flex flex-col" style={{ backgroundColor: "#F5F1EA" }}>
+            <p className="text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-caveat), cursive", transform: "rotate(-6deg)" }}>Hey!</p>
+            <div className="relative z-10 flex-1 flex flex-col justify-center">
+              <p className="text-[16px] text-[#5C564C] leading-relaxed">BergSpace was built for Atomberg&apos;s ATOMQUEST Hackathon 1.0 &mdash; because tracking goals in spreadsheets is like navigating mountains with a paper map.</p>
+              <p className="text-[16px] text-[#5C564C] leading-relaxed mt-3">So I built the system I always wanted: structured, intelligent, speaks plain English.</p>
             </div>
           </div>
           {/* Card 2 - Stickers + Links */}
-          <div className="rounded-2xl p-9 min-h-[320px] relative overflow-hidden" style={{ backgroundColor: "#F5F1EA" }}>
+          <div className="rounded-2xl p-9 min-h-[360px] relative overflow-hidden" style={{ backgroundColor: "#F5F1EA" }}>
             <div className="relative h-[220px]">
               <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#A9D6FF", top: "10px", left: "12%", transform: "rotate(-10deg)", borderColor: "rgba(0,0,0,0.35)" }}>goals</div>
               <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#9AE09A", top: "54px", left: "40%", transform: "rotate(6deg)", borderColor: "rgba(0,0,0,0.35)" }}>approvals</div>
@@ -774,8 +770,8 @@ export default function HomePage() {
               <div className="absolute px-4 py-2 rounded-lg font-bold text-lg shadow-md border" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#FFB3A7", top: "150px", left: "44%", transform: "rotate(8deg)", borderColor: "rgba(0,0,0,0.35)" }}>AI</div>
             </div>
             <div className="absolute bottom-5 right-7 px-3 py-1 rounded-full text-white text-sm" style={{ fontFamily: "var(--font-caveat), cursive", backgroundColor: "#1A1A1A", transform: "rotate(-6deg)" }}>Arpit</div>
-            <p className="text-[15px] text-[#5C564C] leading-relaxed">Arpit Walia &middot; CS @ Thapar (CGPA 8.88) &middot; Samsung PRISM Intern &middot; MLSC Lead</p>
-            <p className="text-[15px] text-[#5C564C] leading-relaxed mt-2">Our mission: to turn your goals into <strong>decisions that compound</strong>.</p>
+            <p className="text-[16px] text-[#5C564C] leading-relaxed">Arpit Walia &middot; CS @ Thapar (CGPA 8.88) &middot; Samsung PRISM Intern &middot; MLSC Lead</p>
+            <p className="text-[16px] text-[#5C564C] leading-relaxed mt-2">Our mission: to turn your goals into <strong>decisions that compound</strong>.</p>
             <div className="flex gap-3 mt-4">
               <a href="https://linkedin.com/in/arpit-walia" target="_blank" rel="noopener" className="px-3 py-1.5 rounded-full text-xs font-semibold border hover:bg-white transition-colors" style={{ borderColor: "#E8E2D6" }}>LinkedIn</a>
               <a href="https://github.com/Arpit-oo" target="_blank" rel="noopener" className="px-3 py-1.5 rounded-full text-xs font-semibold border hover:bg-white transition-colors" style={{ borderColor: "#E8E2D6" }}>GitHub</a>
