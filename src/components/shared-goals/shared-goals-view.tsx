@@ -40,6 +40,7 @@ import {
   Users,
   Eye,
 } from "lucide-react";
+import { SmartValidatorDialog } from "@/components/goals/smart-validator-dialog";
 
 interface LinkedGoal {
   id: string;
@@ -99,6 +100,8 @@ export function SharedGoalsView({
   const [form, setForm] = useState<TemplateForm>({ ...emptyForm });
   const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [aiValidatorOpen, setAiValidatorOpen] = useState(false);
+  const [pendingTemplate, setPendingTemplate] = useState<TemplateForm | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -140,42 +143,12 @@ export function SharedGoalsView({
     if (!form.title.trim()) { toast.error("Title is required"); return; }
     if (!form.target_value || parseFloat(form.target_value) <= 0) { toast.error("Target value must be greater than 0"); return; }
     if (!activeCycle) { toast.error("No active cycle"); return; }
-    setLoading(true);
-    try {
-      // Validate with AI SMART check
-      try {
-        const valRes = await fetch("/api/validate-goals", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ goals: [{ title: form.title, description: form.description }] }),
-        });
-        const valData = await valRes.json();
-        if (valData.goals?.[0] && !valData.goals[0].passed) {
-          toast.warning(`AI suggests: ${valData.goals[0].suggestion}`);
-        }
-      } catch {}
+    setPendingTemplate({ ...form });
+    setAiValidatorOpen(true);
+  }
 
-      const { error } = await supabase.from("shared_goal_templates").insert({
-        title: form.title,
-        description: form.description || null,
-        thrust_area_id: form.thrust_area_id || null,
-        uom: form.uom,
-        target_value: parseFloat(form.target_value),
-        department_id: form.department_id || null,
-        created_by: profile.id,
-        cycle_id: activeCycle.id,
-      });
-      if (error) throw error;
-      toast.success("Shared goal template created");
-      setCreateDialogOpen(false);
-      setForm({ ...emptyForm });
-      router.refresh();
-    } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : "Failed to create template";
-      toast.error(msg);
-    } finally {
-      setLoading(false);
-    }
+  function resetForm() {
+    setForm({ ...emptyForm });
   }
 
   async function pushToEmployees() {
@@ -509,6 +482,45 @@ export function SharedGoalsView({
           )}
         </DialogContent>
       </Dialog>
+
+      {/* AI SMART Validator Dialog */}
+      <SmartValidatorDialog
+        goals={pendingTemplate ? [{ title: pendingTemplate.title, description: pendingTemplate.description }] : []}
+        open={aiValidatorOpen}
+        onClose={() => { setAiValidatorOpen(false); setPendingTemplate(null); }}
+        onAcceptSuggestion={(_, newTitle, newDesc) => {
+          if (pendingTemplate) {
+            setPendingTemplate({ ...pendingTemplate, title: newTitle, description: newDesc || pendingTemplate.description });
+            updateForm("title", newTitle);
+            if (newDesc) updateForm("description", newDesc);
+          }
+        }}
+        onProceed={async () => {
+          setAiValidatorOpen(false);
+          const t = pendingTemplate || form;
+          setLoading(true);
+          try {
+            const { error } = await supabase.from("shared_goal_templates").insert({
+              title: t.title,
+              description: t.description || null,
+              thrust_area_id: t.thrust_area_id || null,
+              uom: t.uom,
+              target_value: parseFloat(t.target_value),
+              department_id: t.department_id || null,
+              created_by: profile.id,
+              cycle_id: activeCycle!.id,
+            });
+            if (error) throw error;
+            toast.success("Template created");
+            setCreateDialogOpen(false);
+            setPendingTemplate(null);
+            resetForm();
+            router.refresh();
+          } catch (e: unknown) {
+            toast.error(e instanceof Error ? e.message : "Failed");
+          } finally { setLoading(false); }
+        }}
+      />
     </div>
   );
 }

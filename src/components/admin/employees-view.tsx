@@ -21,7 +21,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Loader2, Pencil, Search } from "lucide-react";
+import { Loader2, Pencil, Search, FileText, Trash2, ChevronDown, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ManagerInfo {
   id: string;
@@ -48,6 +49,10 @@ export function EmployeesView({
   const [editManagerId, setEditManagerId] = useState("");
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [goalSheetDialogOpen, setGoalSheetDialogOpen] = useState(false);
+  const [selectedEmployeeSheets, setSelectedEmployeeSheets] = useState<any[]>([]);
+  const [selectedEmployeeName, setSelectedEmployeeName] = useState("");
+  const [expandedSheets, setExpandedSheets] = useState<Set<string>>(new Set());
   const router = useRouter();
   const supabase = createClient();
 
@@ -56,6 +61,41 @@ export function EmployeesView({
     setEditRole(emp.role);
     setEditDepartmentId(emp.department_id || "");
     setEditManagerId(emp.manager_id || "");
+  }
+
+  async function viewGoalSheets(emp: any) {
+    const { data } = await supabase
+      .from("goal_sheets")
+      .select("*, goals(id, title, weightage, status, target_value, uom), cycle:goal_cycles(name)")
+      .eq("employee_id", emp.id)
+      .order("created_at", { ascending: false });
+    setSelectedEmployeeSheets(data || []);
+    setSelectedEmployeeName(emp.full_name);
+    setExpandedSheets(new Set());
+    setGoalSheetDialogOpen(true);
+  }
+
+  async function deleteGoalSheet(sheetId: string) {
+    const res = await fetch("/api/admin/delete-sheet", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sheetId }),
+    });
+    if (res.ok) {
+      toast.success("Goal sheet deleted");
+      setSelectedEmployeeSheets(prev => prev.filter(s => s.id !== sheetId));
+    } else {
+      toast.error("Failed to delete");
+    }
+  }
+
+  function toggleSheetExpand(sheetId: string) {
+    setExpandedSheets(prev => {
+      const next = new Set(prev);
+      if (next.has(sheetId)) next.delete(sheetId);
+      else next.add(sheetId);
+      return next;
+    });
   }
 
   async function saveEmployee() {
@@ -218,15 +258,27 @@ export function EmployeesView({
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEditDialog(emp);
-                      }}
-                      className="p-1.5 rounded-md text-[#A89F91] hover:text-[#1A1A1A] hover:bg-[#F5F1EA] transition-colors"
-                    >
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          viewGoalSheets(emp);
+                        }}
+                        className="p-1.5 rounded-md text-[#A89F91] hover:text-[#3B7DD8] hover:bg-blue-50 transition-colors"
+                        title="View Goals"
+                      >
+                        <FileText className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openEditDialog(emp);
+                        }}
+                        className="p-1.5 rounded-md text-[#A89F91] hover:text-[#1A1A1A] hover:bg-[#F5F1EA] transition-colors"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -246,6 +298,111 @@ export function EmployeesView({
           </table>
         </div>
       </div>
+
+      {/* View Goal Sheets Dialog */}
+      <Dialog open={goalSheetDialogOpen} onOpenChange={setGoalSheetDialogOpen}>
+        <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] overflow-y-auto p-8 bg-white border border-[#E8E2D6] rounded-xl">
+          <DialogHeader>
+            <DialogTitle className="text-base font-semibold text-[#1A1A1A]">
+              Goal Sheets -- {selectedEmployeeName}
+            </DialogTitle>
+            <DialogDescription className="text-sm text-[#8C8578]">
+              {selectedEmployeeSheets.length} goal sheet(s) found
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 mt-4">
+            {selectedEmployeeSheets.length === 0 ? (
+              <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">
+                No goal sheets found for this employee.
+              </div>
+            ) : (
+              selectedEmployeeSheets.map((sheet) => (
+                <div key={sheet.id} className="border border-[#E8E2D6] rounded-xl overflow-hidden">
+                  <div
+                    className="px-5 py-3 flex items-center justify-between bg-[#FEFCF9] cursor-pointer hover:bg-[#F5F1EA] transition-colors"
+                    onClick={() => toggleSheetExpand(sheet.id)}
+                  >
+                    <div className="flex items-center gap-3">
+                      {expandedSheets.has(sheet.id) ? (
+                        <ChevronDown className="h-4 w-4 text-[#A89F91]" />
+                      ) : (
+                        <ChevronRight className="h-4 w-4 text-[#A89F91]" />
+                      )}
+                      <div>
+                        <span className="text-sm font-medium text-[#1A1A1A]">
+                          {sheet.cycle?.name || "Unknown Cycle"}
+                        </span>
+                        <span className="ml-3 text-xs text-[#A89F91]">
+                          {sheet.goals?.length || 0} goal(s)
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                        sheet.status === "approved" ? "bg-green-50 text-green-700" :
+                        sheet.status === "submitted" ? "bg-blue-50 text-blue-700" :
+                        sheet.status === "rejected" ? "bg-red-50 text-red-700" :
+                        "bg-[#F5F1EA] text-[#5C564C]"
+                      }`}>
+                        {sheet.status?.toUpperCase() || "DRAFT"}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (confirm("Are you sure you want to delete this goal sheet?")) {
+                            deleteGoalSheet(sheet.id);
+                          }
+                        }}
+                        className="p-1.5 rounded-md text-[#A89F91] hover:text-[#D94F3D] hover:bg-red-50 transition-colors"
+                        title="Delete Goal Sheet"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                  {expandedSheets.has(sheet.id) && sheet.goals && sheet.goals.length > 0 && (
+                    <div className="border-t border-[#E8E2D6]">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-[#F5F1EA]">
+                            <th className="px-5 py-2 text-left text-xs font-medium uppercase tracking-wider text-[#A89F91]">Title</th>
+                            <th className="px-5 py-2 text-left text-xs font-medium uppercase tracking-wider text-[#A89F91]">Weightage</th>
+                            <th className="px-5 py-2 text-left text-xs font-medium uppercase tracking-wider text-[#A89F91]">Target</th>
+                            <th className="px-5 py-2 text-left text-xs font-medium uppercase tracking-wider text-[#A89F91]">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {sheet.goals.map((goal: any) => (
+                            <tr key={goal.id} className="border-b border-[#F5F1EA] last:border-0">
+                              <td className="px-5 py-2.5 text-sm text-[#1A1A1A]">{goal.title}</td>
+                              <td className="px-5 py-2.5 text-sm font-mono tabular-nums text-[#5C564C]">{goal.weightage}%</td>
+                              <td className="px-5 py-2.5 text-sm font-mono tabular-nums text-[#5C564C]">{goal.target_value} {goal.uom}</td>
+                              <td className="px-5 py-2.5">
+                                <span className={`inline-block px-2 py-0.5 rounded text-[11px] font-medium ${
+                                  goal.status === "completed" ? "bg-green-50 text-green-700" :
+                                  goal.status === "in_progress" ? "bg-blue-50 text-blue-700" :
+                                  "bg-[#F5F1EA] text-[#5C564C]"
+                                }`}>
+                                  {goal.status || "pending"}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                  {expandedSheets.has(sheet.id) && (!sheet.goals || sheet.goals.length === 0) && (
+                    <div className="px-5 py-4 text-sm text-[#A89F91] text-center border-t border-[#E8E2D6]">
+                      No goals in this sheet.
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Edit Employee Dialog */}
       <Dialog

@@ -51,7 +51,10 @@ export function SmartValidatorDialog({
   const [validation, setValidation] = useState<SmartValidation | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [reviewedIndices, setReviewedIndices] = useState<Set<number>>(new Set());
+  const [checkingStep, setCheckingStep] = useState(-1);
+  const criteria = ["Specific", "Measurable", "Achievable", "Relevant", "Time-bound"];
   const hasValidated = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Validate only ONCE when dialog opens — not on every re-render
   const prevOpen = useRef(false);
@@ -62,6 +65,17 @@ export function SmartValidatorDialog({
     setValidation(null);
     setError(null);
     setReviewedIndices(new Set());
+    setCheckingStep(-1);
+
+    let step = 0;
+    intervalRef.current = setInterval(() => {
+      setCheckingStep(step);
+      step++;
+      if (step >= 5 && intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }, 600);
 
     fetch("/api/validate-goals", {
       method: "POST",
@@ -74,7 +88,14 @@ export function SmartValidatorDialog({
       })
       .then((data: SmartValidation) => setValidation(data))
       .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        setCheckingStep(-1);
+        setLoading(false);
+      });
   }
   if (!open && prevOpen.current) {
     prevOpen.current = false;
@@ -108,9 +129,24 @@ export function SmartValidatorDialog({
         </DialogHeader>
 
         {loading && (
-          <div className="flex flex-col items-center justify-center py-12 gap-3">
-            <Loader2 className="h-8 w-8 animate-spin" style={{ color: "#C45A2D" }} />
-            <p className="text-sm text-[#A89F91]">Analyzing goals...</p>
+          <div className="py-8 space-y-3">
+            <div className="flex items-center gap-2 mb-4">
+              <Loader2 className="h-5 w-5 animate-spin" style={{ color: "#C45A2D" }} />
+              <p className="text-sm font-medium text-[#1A1A1A]">Evaluating against SMART criteria...</p>
+            </div>
+            {criteria.map((c, i) => (
+              <div key={c} className="flex items-center gap-3 transition-opacity duration-300" style={{ opacity: i <= checkingStep ? 1 : 0.3 }}>
+                {i < checkingStep ? (
+                  <CheckCircle2 className="h-5 w-5 text-[#3D9A5F]" />
+                ) : i === checkingStep ? (
+                  <Loader2 className="h-5 w-5 animate-spin" style={{ color: "#C45A2D" }} />
+                ) : (
+                  <div className="h-5 w-5 rounded-full border-2 border-[#E8E2D6]" />
+                )}
+                <span className={`text-sm font-medium ${i <= checkingStep ? "text-[#1A1A1A]" : "text-[#A89F91]"}`}>{c}</span>
+                {i < checkingStep && <span className="text-xs text-[#3D9A5F] ml-auto">Checked</span>}
+              </div>
+            ))}
           </div>
         )}
 

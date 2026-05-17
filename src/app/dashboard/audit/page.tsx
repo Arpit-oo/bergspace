@@ -1,6 +1,38 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
+const TABLE_LABELS: Record<string, string> = {
+  goals: "Goal",
+  goal_sheets: "Goal Sheet",
+  profiles: "Employee Profile",
+  escalation_rules: "Escalation Rule",
+  goal_cycles: "Goal Cycle",
+  achievements: "Achievement",
+  checkins: "Check-in",
+};
+
+const FIELD_LABELS: Record<string, string> = {
+  target_value: "Target Value",
+  weightage: "Weightage (%)",
+  is_locked: "Lock Status",
+  status: "Status",
+  department_id: "Department",
+  manager_id: "Manager",
+  role: "Role",
+  days_threshold: "Days Threshold",
+  title: "Title",
+  description: "Description",
+  actual_value: "Actual Achievement",
+};
+
+function humanizeValue(fieldName: string, value: string | null): string | null {
+  if (value === null) return null;
+  if (fieldName === "is_locked") {
+    return value === "true" ? "Locked" : "Unlocked";
+  }
+  return value;
+}
+
 export default async function AuditPage() {
   const supabase = await createClient();
   const {
@@ -61,16 +93,16 @@ export default async function AuditPage() {
                   </td>
                   <td className="px-4 py-3">
                     <span className="font-mono text-[11px] text-[#5C564C] border border-[#E8E2D6] rounded px-1.5 py-0.5">
-                      {entry.table_name}
+                      {TABLE_LABELS[entry.table_name] || entry.table_name}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-mono text-sm text-[#1A1A1A]">
-                    {entry.field_name}
+                  <td className="px-4 py-3 text-sm text-[#1A1A1A]">
+                    {FIELD_LABELS[entry.field_name] || entry.field_name}
                   </td>
                   <td className="px-4 py-3">
                     {entry.old_value !== null ? (
                       <span className="inline-block font-mono text-[11px] bg-red-50 text-red-700 px-2 py-0.5 rounded">
-                        {entry.old_value}
+                        {humanizeValue(entry.field_name, entry.old_value)}
                       </span>
                     ) : (
                       <span className="text-[#A89F91]">{"—"}</span>
@@ -82,7 +114,7 @@ export default async function AuditPage() {
                   <td className="px-4 py-3">
                     {entry.new_value !== null ? (
                       <span className="inline-block font-mono text-[11px] bg-green-50 text-green-700 px-2 py-0.5 rounded">
-                        {entry.new_value}
+                        {humanizeValue(entry.field_name, entry.new_value)}
                       </span>
                     ) : (
                       <span className="text-[#A89F91]">{"—"}</span>
