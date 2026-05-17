@@ -340,21 +340,24 @@ export function SharedGoalsView({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium text-[#1A1A1A] mb-1 block">Thrust Area</Label>
-                <Select value={form.thrust_area_id || undefined} onValueChange={(v: string | null) => updateForm("thrust_area_id", v ?? "")} items={thrustAreas.map((ta) => ({ value: ta.id, label: ta.name }))}>
-                  <SelectTrigger className="border-[#E8E2D6] text-sm"><SelectValue placeholder="Select area" /></SelectTrigger>
-                  <SelectContent>
-                    {thrustAreas.map((ta) => <SelectItem key={ta.id} value={ta.id}>{ta.name}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+                <select
+                  value={form.thrust_area_id}
+                  onChange={(e) => updateForm("thrust_area_id", e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+                >
+                  <option value="">Select thrust area</option>
+                  {thrustAreas.map((ta) => <option key={ta.id} value={ta.id}>{ta.name}</option>)}
+                </select>
               </div>
               <div>
                 <Label className="text-sm font-medium text-[#1A1A1A] mb-1 block">Unit of Measurement</Label>
-                <Select value={form.uom} onValueChange={(v: string | null) => updateForm("uom", (v ?? "numeric") as string)} items={Object.entries(UOM_LABELS).map(([key, label]) => ({ value: key, label }))}>
-                  <SelectTrigger className="border-[#E8E2D6] text-sm"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(UOM_LABELS).map(([key, label]) => <SelectItem key={key} value={key}>{label}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+                <select
+                  value={form.uom}
+                  onChange={(e) => updateForm("uom", e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+                >
+                  {Object.entries(UOM_LABELS).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
+                </select>
               </div>
               <div>
                 <Label className="text-sm font-medium text-[#1A1A1A] mb-1 block">Target Value</Label>
@@ -362,12 +365,14 @@ export function SharedGoalsView({
               </div>
               <div>
                 <Label className="text-sm font-medium text-[#1A1A1A] mb-1 block">Department (optional)</Label>
-                <Select value={form.department_id || undefined} onValueChange={(v: string | null) => updateForm("department_id", v ?? "")} items={departments.map((d) => ({ value: d.id, label: d.name }))}>
-                  <SelectTrigger className="border-[#E8E2D6] text-sm"><SelectValue placeholder="All departments" /></SelectTrigger>
-                  <SelectContent>
-                    {departments.map((d) => <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+                <select
+                  value={form.department_id}
+                  onChange={(e) => updateForm("department_id", e.target.value)}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+                >
+                  <option value="">All Departments</option>
+                  {departments.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
+                </select>
               </div>
             </div>
             <div className="flex justify-end gap-3">
