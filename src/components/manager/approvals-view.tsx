@@ -86,17 +86,10 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
         link: "/dashboard/goals",
       });
 
-      // Teams notification
+      // Teams + Email
       try {
-        await fetch("/api/notifications/teams", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "goal_approved",
-            employeeName: sheet.employee?.full_name,
-            cycleName: sheet.cycle?.name,
-          }),
-        });
+        await fetch("/api/notifications/teams", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "goal_approved", employeeName: sheet.employee?.full_name, cycleName: sheet.cycle?.name }) });
+        await fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "goal_approved", recipientId: sheet.employee_id, cycleName: sheet.cycle?.name }) });
       } catch {}
 
       toast.success("Goal sheet approved and locked");
@@ -149,6 +142,7 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
             reason: returnReason,
           }),
         });
+        await fetch("/api/notifications/email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "goal_returned", recipientId: sheet.employee_id, cycleName: sheet.cycle?.name, reason: returnReason }) });
       } catch {}
 
       toast.success("Goal sheet returned to employee");

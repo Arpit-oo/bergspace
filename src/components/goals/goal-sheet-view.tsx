@@ -314,18 +314,20 @@ export function GoalSheetView({
         });
       }
 
-      // Teams notification
+      // Teams + Email notifications
       try {
         await fetch("/api/notifications/teams", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "goal_submitted",
-            employeeName: profile.full_name,
-            cycleName: cycle.name,
-            goalCount: goals.length,
-          }),
+          body: JSON.stringify({ type: "goal_submitted", employeeName: profile.full_name, cycleName: cycle.name, goalCount: goals.length }),
         });
+        if (profile.manager_id) {
+          await fetch("/api/notifications/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "goal_submitted", recipientId: profile.manager_id, employeeName: profile.full_name, cycleName: cycle.name }),
+          });
+        }
       } catch {}
 
       setSheet((prev) =>
