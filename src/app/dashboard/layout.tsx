@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { DashboardShell } from "@/components/dashboard/shell";
+import { AccessibilityProvider } from "@/components/ui/accessibility-provider";
 
 export default async function DashboardLayout({
   children,
@@ -22,5 +23,9 @@ export default async function DashboardLayout({
 
   if (!profile) redirect("/auth/login");
 
-  return <DashboardShell profile={profile}>{children}</DashboardShell>;
+  return (
+    <AccessibilityProvider>
+      <DashboardShell profile={profile}>{children}</DashboardShell>
+    </AccessibilityProvider>
+  );
 }

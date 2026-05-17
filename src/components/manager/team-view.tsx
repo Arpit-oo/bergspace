@@ -70,7 +70,7 @@ export function TeamView({
             key={sc.label}
             className="bg-white border border-[#E8E2D6] rounded-xl px-5 py-4"
           >
-            <p className="text-3xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
+            <p className="text-4xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
               {sc.value}
             </p>
             <p className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mt-2">
@@ -83,7 +83,7 @@ export function TeamView({
       {/* Team table */}
       <div className="bg-white border border-[#E8E2D6] rounded-xl">
         <div className="px-5 pt-5 pb-0">
-          <h2 className="text-sm font-semibold text-[#1A1A1A]">
+          <h2 className="text-base font-semibold text-[#1A1A1A]">
             Team Members
           </h2>
         </div>

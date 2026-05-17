@@ -400,7 +400,7 @@ export function EscalationsView({
             <div className="flex items-center gap-3">
               <stat.icon className="h-5 w-5" style={{ color: stat.color }} />
               <div>
-                <p className="text-3xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
+                <p className="text-4xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
                   {stat.value}
                 </p>
                 <p className="text-xs text-[#A89F91] uppercase tracking-wider mt-1">{stat.label}</p>
@@ -432,7 +432,7 @@ export function EscalationsView({
         {activeTab === "rules" && (
           <div className="bg-white border border-[#E8E2D6] border-t-0 rounded-b-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
-              <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Escalation Rules</h2>
+              <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Escalation Rules</h2>
               <Button
                 onClick={() => setNewRuleOpen(true)}
                 className="gap-1.5 text-white border-0 text-xs"
@@ -508,7 +508,7 @@ export function EscalationsView({
         {activeTab === "log" && (
           <div className="bg-white border border-[#E8E2D6] border-t-0 rounded-b-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-[#E8E2D6]">
-              <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Escalation Log</h2>
+              <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Escalation Log</h2>
             </div>
             {logEntries.length === 0 ? (
               <div className="text-center text-[#A89F91] text-sm py-8 mx-4 my-4 border border-dashed border-[#E8E2D6] rounded-xl">
@@ -531,7 +531,7 @@ export function EscalationsView({
                         <td className="px-4 py-3">
                           <div>
                             <p className="text-sm font-medium text-[#1A1A1A]">{entry.employee?.full_name || "Unknown"}</p>
-                            <p className="text-[11px] text-[#A89F91]">{entry.employee?.email || ""}</p>
+                            <p className="text-xs text-[#A89F91]">{entry.employee?.email || ""}</p>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-sm text-[#5C564C]">{entry.employee?.department?.name || "—"}</td>
@@ -551,7 +551,7 @@ export function EscalationsView({
                             </span>
                           )}
                         </td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-[#A89F91] tabular-nums">
+                        <td className="px-4 py-3 font-mono text-xs text-[#A89F91] tabular-nums">
                           {new Date(entry.created_at).toLocaleDateString()}
                         </td>
                         <td className="px-4 py-3 text-right">
@@ -568,7 +568,7 @@ export function EscalationsView({
                             </Button>
                           )}
                           {entry.resolved && entry.resolved_at && (
-                            <span className="font-mono text-[11px] text-[#A89F91] tabular-nums">
+                            <span className="font-mono text-xs text-[#A89F91] tabular-nums">
                               {new Date(entry.resolved_at).toLocaleDateString()}
                             </span>
                           )}
@@ -589,7 +589,7 @@ export function EscalationsView({
             <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
               <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-[#C08B30]" />
-                <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Bottleneck Managers</h2>
+                <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Bottleneck Managers</h2>
               </div>
               {bottleneckManagers.length === 0 ? (
                 <div className="text-center text-[#A89F91] text-sm py-8 mx-4 my-4 border border-dashed border-[#E8E2D6] rounded-xl">
@@ -610,7 +610,7 @@ export function EscalationsView({
                         <td className="px-4 py-3">
                           <div>
                             <p className="text-sm font-medium text-[#1A1A1A]">{mgr.name}</p>
-                            <p className="text-[11px] text-[#A89F91]">{mgr.email}</p>
+                            <p className="text-xs text-[#A89F91]">{mgr.email}</p>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-right">
@@ -645,7 +645,7 @@ export function EscalationsView({
             <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
               <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center gap-2">
                 <Activity className="h-5 w-5" style={{ color: "#C45A2D" }} />
-                <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Department Health</h2>
+                <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Department Health</h2>
               </div>
               {departmentHealth.length === 0 ? (
                 <div className="text-center text-[#A89F91] text-sm py-8 mx-4 my-4 border border-dashed border-[#E8E2D6] rounded-xl">

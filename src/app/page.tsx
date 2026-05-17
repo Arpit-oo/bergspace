@@ -209,25 +209,25 @@ export default function HomePage() {
 
       {/* ══════════════ WORK GRID — THE MAIN EVENT ══════════════ */}
       <section className="py-20 md:py-28" style={{ backgroundColor: "#FEFCF9" }}>
-        <div className="mx-auto max-w-7xl px-8 md:px-12">
+        <div className="mx-auto px-8 md:px-12" style={{ maxWidth: "1400px" }}>
           <div className="sr mb-4">
             <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">from 2026 &apos;til today</p>
           </div>
-          <h2 className="sr sr-d1 mb-14 max-w-xl text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>WHAT BERGSPACE DOES</h2>
+          <h2 className="sr sr-d1 mb-14 font-black tracking-tight uppercase text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
 
-          <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(12, 1fr)", gridAutoRows: "minmax(0, 1fr)" }}>
+          <div className="sr" style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "40px 24px", maxWidth: "1400px", margin: "0 auto", padding: "0 32px" }}>
 
-            {/* ── Card 1: Navy — Goal Tracking Dashboard (wide) ── */}
+            {/* ── Card 1: Navy — Goal Tracking Dashboard (FULL WIDTH) ── */}
             <div
-              className="sr sr-d1 tilt-card col-span-12 md:col-span-7 rounded-2xl p-7 md:p-8 flex flex-col"
-              style={{ backgroundColor: "#1A2332", color: "#E8E2D6", minHeight: 440, transform: "rotate(-1.8deg)" }}
+              className="sr sr-d1 tilt-card rounded-2xl p-8 md:p-10 flex flex-col"
+              style={{ gridColumn: "1 / span 12", backgroundColor: "#1A2332", color: "#E8E2D6", minHeight: 520, transform: "rotate(-1.8deg)" }}
             >
               <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider opacity-60 mb-4">
                 <span>Q2 2026 Goals</span>
                 <span className="rounded-full px-2.5 py-0.5" style={{ backgroundColor: "rgba(78,255,212,.15)", color: "#4EFFD4" }}>Live</span>
               </div>
-              <div className="text-5xl font-extrabold mb-1 tracking-tight" style={{ color: "#4EFFD4" }}>+34% <span className="text-lg font-bold opacity-60" style={{ color: "#E8E2D6" }}>&uarr;</span></div>
-              <p className="text-sm opacity-50 mb-6">Completion rate vs last quarter</p>
+              <div className="font-extrabold mb-1 tracking-tight" style={{ color: "#4EFFD4", fontSize: "56px" }}>+34% <span className="text-lg font-bold opacity-60" style={{ color: "#E8E2D6" }}>&uarr;</span></div>
+              <p className="opacity-50 mb-6" style={{ fontSize: "26px", fontWeight: 900 }}>Your goal tracking picture, clearer than ever</p>
               {/* animated progress bars */}
               <div className="space-y-4 flex-1">
                 {[
@@ -246,7 +246,7 @@ export default function HomePage() {
               </div>
               {/* mini area chart — animated */}
               <div className="mt-4">
-                <svg viewBox="0 0 600 80" preserveAspectRatio="none" style={{ width: "100%", height: 60 }}>
+                <svg viewBox="0 0 600 80" preserveAspectRatio="none" style={{ width: "100%", height: 240 }}>
                   <defs>
                     <linearGradient id="areaTeal" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#4EFFD4" stopOpacity=".25" />
@@ -264,10 +264,10 @@ export default function HomePage() {
               <div className="text-xs opacity-40 mt-0.5">Progress &middot; Metrics &middot; Real-time</div>
             </div>
 
-            {/* ── Card 2: Cream — Approval Flow ── */}
+            {/* ── Card 2: Cream — Approval Flow (LEFT) ── */}
             <div
-              className="sr sr-d2 tilt-card col-span-12 md:col-span-5 rounded-2xl p-8 flex flex-col"
-              style={{ backgroundColor: "#EDE5D4", color: "#1A1A1A", minHeight: 440, transform: "rotate(2.2deg)" }}
+              className="sr sr-d2 tilt-card rounded-2xl p-8 flex flex-col"
+              style={{ gridColumn: "1 / span 5", backgroundColor: "#EDE5D4", color: "#1A1A1A", minHeight: 440, transform: "rotate(2.2deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-5" style={{ color: "#8C8578" }}>Approval Flow</div>
               {/* flow steps */}
@@ -307,10 +307,10 @@ export default function HomePage() {
               <div className="text-xs mt-0.5" style={{ color: "#8C8578" }}>Review &middot; Sign-off &middot; Audit Trail</div>
             </div>
 
-            {/* ── Card 3: Terracotta — Achievement Metric (tall) ── */}
+            {/* ── Card 3: Terracotta — Achievement Metric (RIGHT) ── */}
             <div
-              className="sr sr-d3 tilt-card col-span-12 md:col-span-4 rounded-2xl p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
-              style={{ backgroundColor: "#C45A2D", color: "white", minHeight: 440, transform: "rotate(1.4deg)" }}
+              className="sr sr-d3 tilt-card rounded-2xl p-8 flex flex-col items-center justify-center text-center relative overflow-hidden"
+              style={{ gridColumn: "7 / span 6", backgroundColor: "#C45A2D", color: "white", minHeight: 440, transform: "rotate(1.4deg)" }}
             >
               {/* dotted bg */}
               <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle, white 1.5px, transparent 1.5px)", backgroundSize: "20px 20px" }} />
@@ -332,10 +332,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* ── Card 4: Sand — Weekly Check-in ── */}
+            {/* ── Card 4: Sand — Weekly Check-in (LEFT WIDER) ── */}
             <div
-              className="sr sr-d4 tilt-card col-span-12 md:col-span-8 rounded-2xl p-7 md:p-8 flex flex-col"
-              style={{ backgroundColor: "#F0E8D8", color: "#1A1A1A", minHeight: 480, transform: "rotate(-1.2deg)" }}
+              className="sr sr-d4 tilt-card rounded-2xl p-8 flex flex-col"
+              style={{ gridColumn: "1 / span 7", backgroundColor: "#F0E8D8", color: "#1A1A1A", minHeight: 480, transform: "rotate(-1.2deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-5" style={{ color: "#8C8578" }}>Weekly Intelligence Brief</div>
               <div className="space-y-5 flex-1">
@@ -366,10 +366,10 @@ export default function HomePage() {
               <div className="text-xs mt-0.5" style={{ color: "#8C8578" }}>KPIs &middot; Sparklines &middot; Trends</div>
             </div>
 
-            {/* ── Card 5: Violet — Heatmap ── */}
+            {/* ── Card 5: Violet — Heatmap (RIGHT) ── */}
             <div
-              className="sr sr-d5 tilt-card col-span-12 md:col-span-5 rounded-2xl p-8 flex flex-col"
-              style={{ backgroundColor: "#2A1B4A", color: "#E0D4F5", minHeight: 380, transform: "rotate(2deg)" }}
+              className="sr sr-d5 tilt-card rounded-2xl p-8 flex flex-col"
+              style={{ gridColumn: "6 / span 7", backgroundColor: "#2A1B4A", color: "#E0D4F5", minHeight: 380, transform: "rotate(2deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-4 opacity-60">Department completion rates</div>
               {/* heatmap grid with department labels */}
@@ -428,10 +428,10 @@ export default function HomePage() {
               <div className="text-xs opacity-40 mt-0.5">Heatmaps &middot; Segments &middot; Patterns</div>
             </div>
 
-            {/* ── Card 6: Forest — Escalation Feed ── */}
+            {/* ── Card 6: Forest — Escalation Feed (LEFT) ── */}
             <div
-              className="sr sr-d5 tilt-card col-span-12 md:col-span-7 rounded-2xl p-8 flex flex-col"
-              style={{ backgroundColor: "#0F2A14", color: "#C8E6C9", minHeight: 380, transform: "rotate(-1.6deg)" }}
+              className="sr sr-d5 tilt-card rounded-2xl p-8 flex flex-col"
+              style={{ gridColumn: "2 / span 5", backgroundColor: "#0F2A14", color: "#C8E6C9", minHeight: 380, transform: "rotate(-1.6deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-5 opacity-60">Anomaly feed &middot; Last 30 days</div>
               <div className="flex-1 relative">
@@ -463,26 +463,25 @@ export default function HomePage() {
               <div className="text-xs opacity-40 mt-0.5">Alerts &middot; Anomalies &middot; Real-time</div>
             </div>
 
-            {/* ── Card 7: Lavender — AI Validator ── */}
+            {/* ── Card 7: Lavender — AI Validator (RIGHT) ── */}
             <div
-              className="sr sr-d6 tilt-card col-span-12 rounded-2xl p-8 flex flex-col"
-              style={{ backgroundColor: "#E8E0F0", color: "#1A1A1A", transform: "rotate(1deg)" }}
+              className="sr sr-d6 tilt-card rounded-2xl p-8 flex flex-col"
+              style={{ gridColumn: "7 / span 6", backgroundColor: "#E8E0F0", color: "#1A1A1A", transform: "rotate(1deg)" }}
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: "#6E5BA2" }}>SMART Goal Validator</div>
-              <div className="flex flex-col md:flex-row gap-6 flex-1">
-                <div className="flex-1">
+              <div className="flex flex-col md:flex-row gap-4 flex-1">
+                {/* Left: Main goal analysis */}
+                <div className="flex-1 flex flex-col gap-3">
                   <div className="rounded-xl p-4 text-sm leading-relaxed" style={{ backgroundColor: "rgba(255,255,255,.6)" }}>
                     <span className="text-xs font-bold uppercase tracking-wider block mb-2" style={{ color: "#8C8578" }}>Goal Input</span>
                     &ldquo;Increase quarterly revenue by 15% through expanding enterprise accounts, measured by ARR growth, to be achieved by Q3 2026.&rdquo;
                   </div>
-                </div>
-                <div className="md:w-72 shrink-0">
                   <div className="rounded-xl p-4" style={{ backgroundColor: "rgba(255,255,255,.6)" }}>
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-bold uppercase tracking-wider" style={{ color: "#6E5BA2" }}>Score</span>
                       <span className="text-2xl font-extrabold" style={{ color: "#6E5BA2" }}>4<span className="text-sm opacity-50">/5</span></span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="flex flex-wrap gap-x-4 gap-y-1">
                       {[
                         { label: "Specific", pass: true },
                         { label: "Measurable", pass: true },
@@ -490,7 +489,7 @@ export default function HomePage() {
                         { label: "Relevant", pass: true },
                         { label: "Time-bound", pass: false },
                       ].map((c) => (
-                        <div key={c.label} className="flex items-center gap-2 text-sm">
+                        <div key={c.label} className="flex items-center gap-1.5 text-sm">
                           <span style={{ color: c.pass ? "#22C55E" : "#EF4444" }}>
                             {c.pass ? <CheckIcon /> : <XIcon />}
                           </span>
@@ -500,9 +499,9 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                {/* Goal 2 */}
-                <div className="flex-1">
-                  <div className="mt-3 p-3 rounded-lg" style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px solid rgba(42,31,69,0.15)" }}>
+                {/* Right: Goal 2 + Goal 3 stacked */}
+                <div className="md:w-56 shrink-0 flex flex-col gap-3">
+                  <div className="p-3 rounded-lg flex-1" style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px solid rgba(42,31,69,0.15)" }}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-semibold" style={{ color: "#6E5BA2" }}>Goal 2</span>
                       <span className="font-mono text-xs font-bold" style={{ color: "#3D9A5F" }}>5/5</span>
@@ -512,8 +511,7 @@ export default function HomePage() {
                       {["S","M","A","R","T"].map(c => <span key={c} className="w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center" style={{ backgroundColor: "#E6ECDE", color: "#3D9A5F" }}>&#10003;</span>)}
                     </div>
                   </div>
-                  {/* Goal 3 - failing */}
-                  <div className="mt-3 p-3 rounded-lg" style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px solid rgba(42,31,69,0.15)" }}>
+                  <div className="p-3 rounded-lg flex-1" style={{ backgroundColor: "rgba(255,255,255,0.5)", border: "1px solid rgba(42,31,69,0.15)" }}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-semibold" style={{ color: "#6E5BA2" }}>Goal 3</span>
                       <span className="font-mono text-xs font-bold" style={{ color: "#D94F3D" }}>2/5</span>
@@ -537,15 +535,15 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ MORE COMING STRIP ══════════════ */}
-      <div className="sr max-w-4xl mx-auto mt-16 rounded-2xl p-16 text-center" style={{ backgroundColor: "#F5F1EA" }}>
+      <div className="sr mx-auto mt-16 rounded-2xl p-16 text-center" style={{ backgroundColor: "#F5F1EA", maxWidth: "1000px" }}>
         <div className="text-4xl mb-4">&#9749;</div>
         <p className="font-black text-lg tracking-tight uppercase text-[#1A1A1A]">MORE FEATURES COMING, ONE SPRINT AT A TIME</p>
       </div>
 
       {/* ══════════════ NOTEBOOK SECTION ══════════════ */}
-      <section className="py-20 px-8 mx-auto sr" style={{ maxWidth: "1080px" }}>
+      <section className="py-20 px-8 mx-auto sr" style={{ maxWidth: "1180px" }}>
         <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">how it actually works</p>
-        <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-center mb-12 text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>WHAT BERGSPACE DOES,<br/>IN PLAIN ENGLISH</h2>
+        <h2 className="font-black tracking-tight uppercase text-center mb-12 text-[#1A1A1A]" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>THE WORKFLOW,<br/>IN PLAIN ENGLISH</h2>
         <div className="flex rounded-2xl overflow-hidden shadow-lg" style={{ minHeight: "480px" }}>
           {/* Left - terracotta panel with sticky notes */}
           <div className="w-[45%] relative p-8" style={{ backgroundColor: "#C45A2D" }}>
@@ -594,7 +592,7 @@ export default function HomePage() {
         <div className="absolute top-[25%] right-[20%] w-10 h-10 border-2 opacity-[0.06] pointer-events-none" style={{ borderColor: "#8FA3B8", transform: "rotate(15deg)", animation: "drift 18s ease-in-out infinite alternate" }}></div>
         <div className="relative mx-auto max-w-5xl px-8 md:px-12 text-center">
           <p className="sr mb-3" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block", color: "#4EFFD4" }}>everything under the hood</p>
-          <h2 className="sr sr-d1 mx-auto mb-6 max-w-2xl text-5xl md:text-7xl font-black tracking-tight text-white uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+          <h2 className="sr sr-d1 mx-auto mb-6 max-w-2xl font-black tracking-tight text-white uppercase text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>
             BUILT FOR TEAMS WHO NEED STRUCTURE
           </h2>
           <p className="sr sr-d2 mx-auto mb-10 max-w-lg" style={{ color: "rgba(255,255,255,.45)", fontSize: "16px" }}>
@@ -622,7 +620,7 @@ export default function HomePage() {
       <section className="py-20 px-8 md:px-12 max-w-3xl mx-auto sr">
         <div className="text-center mb-12">
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">the boring-but-important stuff</p>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>QUESTIONS?<br/>ANSWERS.</h2>
+          <h2 className="font-black tracking-tight uppercase text-[#1A1A1A] text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>QUESTIONS?<br/>ANSWERS.</h2>
         </div>
         <FAQ />
       </section>
@@ -645,7 +643,7 @@ export default function HomePage() {
         <div className="absolute bottom-6 left-6 w-2 h-2 rounded-full pointer-events-none" style={{ backgroundColor: "#C45A2D", opacity: 0.15 }} aria-hidden="true" />
         <div className="mx-auto max-w-5xl px-8 md:px-12">
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">the proof is in the table</p>
-          <h2 className="sr mb-12 text-center text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+          <h2 className="sr mb-12 text-center font-black tracking-tight uppercase" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>
             WHY TEAMS SWITCH
           </h2>
           <div className="sr sr-d1 overflow-x-auto rounded-2xl border" style={{ borderColor: "#E8E2D6" }}>
@@ -697,9 +695,9 @@ export default function HomePage() {
         {/* Corner decorative elements */}
         <div className="absolute top-8 left-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
         <div className="absolute bottom-8 right-8 w-16 h-16 pointer-events-none opacity-[0.04]" style={{ background: "repeating-linear-gradient(-45deg, #C45A2D 0, #C45A2D 1px, transparent 1px, transparent 8px)" }} aria-hidden="true" />
-        <div className="mx-auto max-w-5xl px-8 md:px-12">
+        <div className="mx-auto px-8 md:px-12" style={{ maxWidth: "1100px" }}>
           <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="sr text-[#8C8578] mb-2 block text-center w-full">real talk from real teams</p>
-          <h2 className="sr mb-14 text-center text-5xl md:text-7xl font-black tracking-tight uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+          <h2 className="sr mb-14 text-center font-black tracking-tight uppercase" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>
             TEAMS WHO STOPPED GUESSING
           </h2>
           <div className="space-y-6">
@@ -728,10 +726,10 @@ export default function HomePage() {
             ].map((q, i) => (
               <blockquote
                 key={q.name}
-                className={`sr ${i === 0 ? "sr-d1" : i === 1 ? "sr-d2" : "sr-d3"} ${q.ml} rounded-2xl border bg-white p-7`}
-                style={{ borderColor: "#E8E2D6", maxWidth: 680 }}
+                className={`sr ${i === 0 ? "sr-d1" : i === 1 ? "sr-d2" : "sr-d3"} ${q.ml} rounded-2xl bg-white p-8`}
+                style={{ border: "1px solid #E8E2D6", maxWidth: 800, boxShadow: "0 2px 8px rgba(0,0,0,.04)" }}
               >
-                <p className="text-xl md:text-2xl leading-relaxed font-medium" style={{ color: "#1A1A1A" }}>
+                <p className="leading-relaxed" style={{ fontSize: "clamp(18px, 1.8vw, 22px)", fontWeight: 500, color: "#1A1A1A" }}>
                   &ldquo;{q.quote}&rdquo;
                 </p>
                 <div className="mt-5 flex items-center gap-3">
@@ -748,9 +746,9 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════ ABOUT / CREATOR ══════════════ */}
-      <section className="py-24 px-8 md:px-12 max-w-6xl mx-auto sr">
+      <section className="py-24 px-8 md:px-12 max-w-6xl mx-auto sr" style={{ backgroundImage: "radial-gradient(circle, #E8E2D6 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
         <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2 block text-center w-full">the person behind the pixels</p>
-        <h2 className="text-5xl md:text-7xl font-black tracking-tight uppercase text-center mb-4 text-[#1A1A1A]" style={{ lineHeight: 0.95, letterSpacing: "-0.025em" }}>BUILT WITH PASSION.<br/>SHIPPED WITH LOVE.</h2>
+        <h2 className="font-black tracking-tight uppercase text-center mb-4 text-[#1A1A1A]" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>BUILT WITH PASSION.<br/>SHIPPED WITH LOVE.</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           {/* Card 1 - About */}
           <div className="rounded-2xl p-9 min-h-[360px] relative overflow-hidden flex flex-col" style={{ backgroundColor: "#F5F1EA" }}>
@@ -788,7 +786,7 @@ export default function HomePage() {
           <div className="sr mb-8 flex justify-center" style={{ color: "#C45A2D" }}>
             <PeakMark size={40} />
           </div>
-          <h2 className="sr sr-d1 text-5xl md:text-7xl font-black tracking-tight text-white uppercase" style={{ letterSpacing: "-0.025em", lineHeight: 0.95 }}>
+          <h2 className="sr sr-d1 font-black tracking-tight text-white uppercase text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", letterSpacing: "-0.025em", lineHeight: 0.95, fontWeight: 900 }}>
             READY TO ALIGN<br/>YOUR TEAM?
           </h2>
           <p className="sr sr-d2 mx-auto mt-5 max-w-md text-base leading-relaxed" style={{ color: "#8C8578" }}>

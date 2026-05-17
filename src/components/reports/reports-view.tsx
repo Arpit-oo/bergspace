@@ -301,7 +301,7 @@ export function ReportsView({
             <div className="flex items-center gap-3">
               <stat.icon className="h-5 w-5" style={{ color: stat.color }} />
               <div>
-                <p className="text-3xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
+                <p className="text-4xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
                   {stat.value}
                 </p>
                 <p className="text-xs text-[#A89F91] uppercase tracking-wider mt-1">{stat.label}</p>
@@ -375,7 +375,7 @@ export function ReportsView({
 
             <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
               <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
-                <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Planned vs Actual Achievement</h2>
+                <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Planned vs Actual Achievement</h2>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" onClick={exportCSV} className="gap-1.5 border-[#E8E2D6] text-[#5C564C] text-xs">
                     <Download className="h-3 w-3" /> CSV
@@ -435,7 +435,7 @@ export function ReportsView({
             {/* Employee check-in completion */}
             <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
               <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
-                <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Employee Check-in Completion</h2>
+                <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Employee Check-in Completion</h2>
                 <Button variant="outline" size="sm" onClick={exportCheckinReport} className="gap-1.5 border-[#E8E2D6] text-[#5C564C] text-xs">
                   <Download className="h-3 w-3" /> Export
                 </Button>
@@ -489,7 +489,7 @@ export function ReportsView({
             {profile.role === "admin" && managerCheckinCompletion.length > 0 && (
               <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
                 <div className="px-5 py-4 border-b border-[#E8E2D6]">
-                  <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Manager Check-in Completion</h2>
+                  <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Manager Check-in Completion</h2>
                 </div>
                 <table className="w-full">
                   <thead>
@@ -551,7 +551,7 @@ export function ReportsView({
                       <thead>
                         <tr className="border-b border-[#F5F1EA]">
                           {["Goal", "Target", "Actual", "%", "Status"].map((h) => (
-                            <th key={h} className="px-2 py-2 text-left text-[10px] font-medium uppercase tracking-wider text-[#8C8578]">{h}</th>
+                            <th key={h} className="px-2 py-2 text-left text-xs font-medium uppercase tracking-wider text-[#8C8578]">{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -568,7 +568,7 @@ export function ReportsView({
                             <tr key={g.id} className="border-b border-[#F5F1EA]">
                               <td className="px-2 py-2">
                                 <p className="text-sm font-medium text-[#1A1A1A] leading-tight">{g.title}</p>
-                                <p className="text-[10px] text-[#8C8578]">Weight: {g.weightage}%</p>
+                                <p className="text-xs text-[#8C8578]">Weight: {g.weightage}%</p>
                               </td>
                               <td className="px-2 py-2 font-mono text-xs tabular-nums text-[#1A1A1A]">{g.target_value}</td>
                               <td className="px-2 py-2 font-mono text-xs tabular-nums text-[#1A1A1A]">{actual ?? "—"}</td>

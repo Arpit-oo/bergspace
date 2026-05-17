@@ -208,7 +208,7 @@ export function CyclesView({ cycles, userId }: CyclesViewProps) {
 
       <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-[#E8E2D6]">
-          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">All Cycles</h2>
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">All Cycles</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">

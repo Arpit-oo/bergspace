@@ -108,7 +108,7 @@ export function EmployeesView({
 
       <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
-          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">
             Employee Directory
           </h2>
           <div className="relative w-64">

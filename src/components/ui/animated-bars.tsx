@@ -19,7 +19,7 @@ export function AnimatedBar({ pct, color, delay = 0 }: { pct: number; color: str
   }, []);
 
   return (
-    <div ref={ref} className="h-2 rounded-full" style={{ backgroundColor: "rgba(255,255,255,.08)" }}>
+    <div ref={ref} className="rounded-full" style={{ backgroundColor: "rgba(255,255,255,.08)", height: "6px" }}>
       <div
         className="h-full rounded-full"
         style={{

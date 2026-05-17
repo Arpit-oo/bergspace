@@ -129,7 +129,18 @@
   }
   html {
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.6;
   }
+}
+
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+.high-contrast {
+  --foreground: #000000;
+  --muted-foreground: #333333;
+  --border: #999999;
 }

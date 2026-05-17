@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Notification } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { useAccessibility } from "@/components/ui/accessibility-provider";
 import { toast } from "sonner";
 import {
   Bell,
@@ -43,6 +44,7 @@ export default function NotificationsPage() {
   const [markingAll, setMarkingAll] = useState(false);
   const [telegramLinked, setTelegramLinked] = useState(false);
   const [linkCode, setLinkCode] = useState<string | null>(null);
+  const { settings, updateSetting } = useAccessibility();
   const router = useRouter();
   const supabase = createClient();
 
@@ -169,6 +171,58 @@ export default function NotificationsPage() {
         )}
       </div>
 
+      {/* Accessibility */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl p-6 mb-6">
+        <h3 className="text-base font-semibold text-[#1A1A1A] mb-4">Accessibility</h3>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-[#1A1A1A]">Text Size</p>
+              <p className="text-xs text-[#8C8578]">Adjust the font size across the portal</p>
+            </div>
+            <div className="flex gap-2">
+              {(["normal", "large", "extra-large"] as const).map(size => (
+                <button
+                  key={size}
+                  onClick={() => updateSetting("fontSize", size)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    settings.fontSize === size ? "bg-[#1A1A1A] text-white" : "bg-[#F5F1EA] text-[#5C564C] hover:bg-[#E8E2D6]"
+                  }`}
+                >
+                  {size === "normal" ? "A" : size === "large" ? "A+" : "A++"}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-[#1A1A1A]">Reduce Animations</p>
+              <p className="text-xs text-[#8C8578]">Minimize motion for motion-sensitive users</p>
+            </div>
+            <button
+              onClick={() => updateSetting("reduceAnimations", !settings.reduceAnimations)}
+              className="relative w-10 h-5 rounded-full transition-colors"
+              style={{ backgroundColor: settings.reduceAnimations ? "#C45A2D" : "#E8E2D6" }}
+            >
+              <div className="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform" style={{ left: settings.reduceAnimations ? "22px" : "2px" }} />
+            </button>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-[#1A1A1A]">High Contrast</p>
+              <p className="text-xs text-[#8C8578]">Increase contrast for better readability</p>
+            </div>
+            <button
+              onClick={() => updateSetting("highContrast", !settings.highContrast)}
+              className="relative w-10 h-5 rounded-full transition-colors"
+              style={{ backgroundColor: settings.highContrast ? "#C45A2D" : "#E8E2D6" }}
+            >
+              <div className="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform" style={{ left: settings.highContrast ? "22px" : "2px" }} />
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Notifications</h1>
@@ -225,7 +279,7 @@ export default function NotificationsPage() {
                     <p className={`text-sm text-[#1A1A1A] ${!notif.is_read ? "font-medium" : ""}`}>
                       {notif.title}
                     </p>
-                    <span className="font-mono text-[11px] text-[#A89F91] tabular-nums shrink-0">
+                    <span className="font-mono text-xs text-[#A89F91] tabular-nums shrink-0">
                       {time}
                     </span>
                   </div>

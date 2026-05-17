@@ -117,7 +117,7 @@ export default async function DashboardPage() {
                   style={{ backgroundColor: stat.color }}
                 />
                 <div>
-                  <p className="text-3xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
+                  <p className="text-4xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
                     {stat.value}
                   </p>
                   <p className="text-xs text-[#8C8578] uppercase tracking-wider mt-1">
@@ -149,7 +149,7 @@ export default async function DashboardPage() {
           {/* Recent Activity */}
           <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-[#E8E2D6]">
-              <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">
+              <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">
                 Recent Activity
               </h2>
             </div>
@@ -171,7 +171,7 @@ export default async function DashboardPage() {
                         {n.message}
                       </p>
                     </div>
-                    <span className="font-mono text-[10px] text-[#8C8578] tabular-nums shrink-0">
+                    <span className="font-mono text-xs text-[#8C8578] tabular-nums shrink-0">
                       {new Date(n.created_at).toLocaleDateString()}
                     </span>
                   </div>
@@ -183,7 +183,7 @@ export default async function DashboardPage() {
           {/* Team Status */}
           <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-[#E8E2D6]">
-              <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">
+              <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">
                 Team Status
               </h2>
             </div>
@@ -307,7 +307,7 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-2 gap-6">
           {/* Goal Sheet Status */}
           <div className="bg-white border border-[#E8E2D6] rounded-xl p-6">
-            <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A] mb-4">
+            <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A] mb-4">
               Goal Sheet Status
             </h2>
             <div className="flex items-center gap-3 mb-3">
@@ -335,7 +335,7 @@ export default async function DashboardPage() {
           {/* Current Cycle Info */}
           {activeCycle ? (
             <div className="bg-white border border-[#E8E2D6] rounded-xl p-6">
-              <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A] mb-4">
+              <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A] mb-4">
                 Current Cycle
               </h2>
               <p className="text-lg font-semibold text-[#1A1A1A]">
@@ -496,8 +496,8 @@ export default async function DashboardPage() {
                   <p
                     className={`font-semibold text-[#1A1A1A] leading-none ${
                       "isText" in stat && stat.isText
-                        ? "text-base"
-                        : "text-3xl font-mono tabular-nums"
+                        ? "text-lg"
+                        : "text-4xl font-mono tabular-nums"
                     }`}
                   >
                     {stat.value}
@@ -574,11 +574,11 @@ export default async function DashboardPage() {
                     key={entry.id}
                     className="border-b border-[#F5F1EA] last:border-b-0"
                   >
-                    <td className="px-5 py-2.5 font-mono text-[11px] text-[#8C8578] tabular-nums whitespace-nowrap">
+                    <td className="px-5 py-2.5 font-mono text-xs text-[#8C8578] tabular-nums whitespace-nowrap">
                       {new Date(entry.created_at).toLocaleString()}
                     </td>
                     <td className="px-5 py-2.5">
-                      <span className="font-mono text-[11px] text-[#5C564C] border border-[#E8E2D6] rounded px-1.5 py-0.5">
+                      <span className="font-mono text-xs text-[#5C564C] border border-[#E8E2D6] rounded px-1.5 py-0.5">
                         {entry.table_name}
                       </span>
                     </td>

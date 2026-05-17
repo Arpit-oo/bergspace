@@ -34,7 +34,7 @@ const PIE_COLORS = [
   "#F97316", "#06B6D4", "#84CC16", "#E879F9", "#FBBF24",
 ];
 
-const axisTickStyle = { fontSize: 11, fill: "#8C8578" };
+const axisTickStyle = { fontSize: 12, fill: "#8C8578" };
 const gridProps = { stroke: "#E8E2D6", strokeDasharray: "3 3" };
 
 function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ name: string; value: number; color: string }>; label?: string }) {
@@ -180,7 +180,7 @@ export function AnalyticsView({
       <div className="grid grid-cols-4 gap-4">
         {summaryStats.map((stat) => (
           <div key={stat.label} className="bg-white border border-[#E8E2D6] rounded-xl p-5">
-            <p className="text-3xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
+            <p className="text-4xl font-semibold font-mono tabular-nums text-[#1A1A1A] leading-none">
               {stat.value}
             </p>
             <p className="text-xs text-[#A89F91] uppercase tracking-wider mt-1">{stat.label}</p>
@@ -191,7 +191,7 @@ export function AnalyticsView({
       {/* QoQ Achievement Trends */}
       <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-[#E8E2D6]">
-          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Quarter-over-Quarter Achievement Trends</h2>
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Quarter-over-Quarter Achievement Trends</h2>
         </div>
         <div className="p-5">
           {qoqData.length === 0 ? (
@@ -225,7 +225,7 @@ export function AnalyticsView({
         {/* Thrust Area Distribution */}
         <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
           <div className="px-5 py-4 border-b border-[#E8E2D6]">
-            <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Goals by Thrust Area</h2>
+            <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Goals by Thrust Area</h2>
           </div>
           <div className="p-5">
             {thrustAreaData.length === 0 ? (
@@ -260,7 +260,7 @@ export function AnalyticsView({
         {/* UoM Distribution */}
         <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
           <div className="px-5 py-4 border-b border-[#E8E2D6]">
-            <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Goals by Unit of Measurement</h2>
+            <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Goals by Unit of Measurement</h2>
           </div>
           <div className="p-5">
             {uomData.length === 0 ? (
@@ -296,7 +296,7 @@ export function AnalyticsView({
       {/* Department Completion Rates */}
       <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-[#E8E2D6]">
-          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Department Completion Rates</h2>
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Department Completion Rates</h2>
         </div>
         <div className="p-5">
           {deptCompletionData.length === 0 ? (
@@ -332,7 +332,7 @@ export function AnalyticsView({
       {/* Manager Effectiveness */}
       <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-[#E8E2D6]">
-          <h2 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">Manager Effectiveness: Check-in Completion Rates</h2>
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Manager Effectiveness: Check-in Completion Rates</h2>
         </div>
         <div className="p-5">
           {managerEffectiveness.length === 0 ? (

@@ -301,7 +301,7 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
                       <span className="inline-flex items-center justify-center h-5 w-5 rounded bg-[#F5F1EA] text-[11px] font-semibold text-[#5C564C] font-mono shrink-0">
                         {i + 1}
                       </span>
-                      <span className="text-sm font-semibold text-[#1A1A1A]">
+                      <span className="text-base font-semibold text-[#1A1A1A]">
                         {goal.title}
                       </span>
                       {goal.is_from_shared && (
@@ -311,7 +311,7 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
                       )}
                     </div>
                     {goal.description && (
-                      <p className="text-xs text-[#5C564C] mb-3 ml-[30px]">
+                      <p className="text-sm text-[#5C564C] mb-3 ml-[30px]">
                         {goal.description}
                       </p>
                     )}

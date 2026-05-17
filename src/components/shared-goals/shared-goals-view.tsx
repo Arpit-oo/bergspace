@@ -407,7 +407,7 @@ export function SharedGoalsView({
                     />
                     <div>
                       <p className="text-sm font-medium text-[#1A1A1A]">{emp.full_name}</p>
-                      <p className="text-[11px] text-[#A89F91]">
+                      <p className="text-xs text-[#A89F91]">
                         {emp.department?.name || "—"}
                         {alreadyLinked && " -- Already assigned"}
                       </p>

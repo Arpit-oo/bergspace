@@ -172,7 +172,7 @@ export function CheckinsView({
       {/* Table card */}
       <div className="bg-white border border-[#E8E2D6] rounded-xl">
         <div className="px-5 pt-5 pb-0">
-          <h2 className="text-sm font-semibold text-[#1A1A1A]">
+          <h2 className="text-base font-semibold text-[#1A1A1A]">
             Approved Goal Sheets ({sheets.length})
           </h2>
           <p className="text-xs text-[#A89F91] mt-1">
@@ -314,7 +314,7 @@ export function CheckinsView({
                             <span className="inline-flex items-center justify-center h-5 w-5 rounded bg-[#F5F1EA] text-[11px] font-semibold text-[#5C564C] font-mono shrink-0">
                               {i + 1}
                             </span>
-                            <span className="text-sm font-semibold text-[#1A1A1A]">
+                            <span className="text-base font-semibold text-[#1A1A1A]">
                               {goal.title}
                             </span>
                           </div>
@@ -355,7 +355,7 @@ export function CheckinsView({
                           />
                         </div>
                         {achievement?.notes && (
-                          <p className="text-[11px] text-[#A89F91] italic mt-2 ml-7">
+                          <p className="text-xs text-[#A89F91] italic mt-2 ml-7">
                             Employee note: {achievement.notes}
                           </p>
                         )}
@@ -382,7 +382,7 @@ export function CheckinsView({
                     onChange={(e) => setProgressOverride(e.target.value)}
                     className="w-32 bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] font-mono tabular-nums focus:border-[#1A1A1A] focus:ring-0"
                   />
-                  <p className="text-[11px] text-[#A89F91] mt-1.5">
+                  <p className="text-xs text-[#A89F91] mt-1.5">
                     Auto-computed from actuals, override if needed.
                   </p>
                 </div>

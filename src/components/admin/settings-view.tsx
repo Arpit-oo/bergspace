@@ -133,7 +133,7 @@ export function SettingsView() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3D9A5F] shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-[#1A1A1A] truncate">{item.event}</p>
-                  <p className="text-[11px] text-[#A89F91]">{item.target}</p>
+                  <p className="text-xs text-[#A89F91]">{item.target}</p>
                 </div>
               </div>
             ))}
@@ -250,7 +250,7 @@ export function SettingsView() {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3D9A5F] shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-[#1A1A1A] truncate">{item.event}</p>
-                  <p className="text-[11px] text-[#A89F91]">{item.target}</p>
+                  <p className="text-xs text-[#A89F91]">{item.target}</p>
                 </div>
               </div>
             ))}

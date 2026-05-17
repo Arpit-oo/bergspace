@@ -259,7 +259,7 @@ export default function MyCheckinsPage() {
                   <span className="inline-flex items-center justify-center h-6 w-6 rounded-md bg-[#F5F1EA] text-xs font-semibold text-[#5C564C] font-mono shrink-0">
                     {i + 1}
                   </span>
-                  <span className="text-sm font-semibold text-[#1A1A1A]">
+                  <span className="text-base font-semibold text-[#1A1A1A]">
                     {goal.title}
                   </span>
                 </div>
@@ -267,7 +267,7 @@ export default function MyCheckinsPage() {
               </div>
 
               {goal.description && (
-                <p className="text-xs text-[#A89F91] mb-3">
+                <p className="text-sm text-[#A89F91] mb-3">
                   {goal.description}
                 </p>
               )}
@@ -296,7 +296,7 @@ export default function MyCheckinsPage() {
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <p className="text-[11px] text-[#A89F91] font-mono tabular-nums mb-4">
+              <p className="text-xs text-[#A89F91] font-mono tabular-nums mb-4">
                 {pct}% complete
               </p>
 

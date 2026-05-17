@@ -397,7 +397,7 @@ export function GoalSheetView({
             <p className="text-sm font-medium text-[#D94F3D]">
               Returned by Manager
             </p>
-            <p className="text-xs text-[#D94F3D]/80 mt-1">
+            <p className="text-sm text-[#D94F3D]/80 mt-1">
               {sheet.return_reason}
             </p>
           </div>
@@ -470,7 +470,7 @@ export function GoalSheetView({
                 <span className="inline-flex items-center justify-center h-6 w-6 rounded-md bg-[#F5F1EA] text-xs font-semibold text-[#5C564C] font-mono">
                   {index + 1}
                 </span>
-                <span className="text-sm font-semibold text-[#1A1A1A]">
+                <span className="text-base font-semibold text-[#1A1A1A]">
                   {goal.title || "Untitled Goal"}
                 </span>
                 {goal.is_from_shared && (
