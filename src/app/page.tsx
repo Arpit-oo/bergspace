@@ -615,15 +615,17 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ══════════════ FAQ SECTION (inside dark) ══════════════ */}
-        <div className="relative mx-auto max-w-3xl px-8 md:px-12 pt-24 pb-20 sr">
+      </section>
+
+      {/* ══════════════ FAQ SECTION ══════════════ */}
+      <section className="relative py-20 px-8 md:px-12 overflow-hidden sr">
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="relative max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block", color: "#F5C49A" }} className="mb-2">the boring-but-important stuff</p>
-            <h2 className="font-black tracking-tight uppercase text-white text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>QUESTIONS?<br/>ANSWERS.</h2>
+            <p style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "22px", transform: "rotate(-3deg)", display: "inline-block" }} className="text-[#8C8578] mb-2">the boring-but-important stuff</p>
+            <h2 className="font-black tracking-tight uppercase text-[#1A1A1A] text-center" style={{ fontSize: "clamp(38px, 6.5vw, 80px)", lineHeight: 0.95, letterSpacing: "-0.025em", fontWeight: 900 }}>QUESTIONS?<br/>ANSWERS.</h2>
           </div>
-          <div className="[&_button]:text-white [&_p]:text-[rgba(255,255,255,0.5)] [&_span]:text-[rgba(255,255,255,0.4)] [&>div]:border-[rgba(255,255,255,0.1)]">
-            <FAQ />
-          </div>
+          <FAQ />
         </div>
       </section>
 

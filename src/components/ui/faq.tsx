@@ -15,16 +15,16 @@ export function FAQ() {
   return (
     <div className="max-w-3xl mx-auto">
       {faqs.map((faq, i) => (
-        <div key={i} className="border-b" style={{ borderColor: "rgba(255,255,255,0.1)", ...(i === 0 ? { borderTop: "1px solid rgba(255,255,255,0.1)" } : {}) }}>
+        <div key={i} className="border-b border-[#E8E2D6]" style={i === 0 ? { borderTop: "1px solid #E8E2D6" } : {}}>
           <button
             onClick={() => setOpen(open === i ? null : i)}
             className="w-full flex items-center justify-between gap-4 py-5 text-left"
           >
-            <span className="font-semibold text-base text-white">{faq.q}</span>
-            <span className="text-xl shrink-0 transition-transform duration-300" style={{ color: "rgba(255,255,255,0.4)", transform: open === i ? "rotate(45deg)" : "none" }}>+</span>
+            <span className="font-semibold text-base text-[#1A1A1A]">{faq.q}</span>
+            <span className="text-xl text-[#8C8578] shrink-0 transition-transform duration-300" style={{ transform: open === i ? "rotate(45deg)" : "none" }}>+</span>
           </button>
           <div className="overflow-hidden transition-all duration-300" style={{ maxHeight: open === i ? "200px" : "0" }}>
-            <p className="pb-5 text-[15px] leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>{faq.a}</p>
+            <p className="pb-5 text-[15px] text-[#8C8578] leading-relaxed">{faq.a}</p>
           </div>
         </div>
       ))}
