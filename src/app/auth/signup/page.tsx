@@ -48,20 +48,37 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#FEFCF9] px-4 py-12">
-      {/* Background decorations */}
+      {/* Background — matches hero section */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Large mountain watermark */}
-        <svg className="absolute bottom-0 right-0 opacity-[0.03]" width="600" height="600" viewBox="0 0 24 24" fill="none">
+        {/* Sunray glow */}
+        <svg className="absolute top-[-120px] left-[-120px] w-[1400px] h-[900px] opacity-60" viewBox="0 0 1400 900">
+          <defs>
+            <radialGradient id="signupRayG" cx="15%" cy="15%" r="70%">
+              <stop offset="0%" stopColor="#F5C49A" stopOpacity="0.8"/>
+              <stop offset="60%" stopColor="#FEF3EE" stopOpacity="0"/>
+            </radialGradient>
+            <linearGradient id="signupRayL" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#F5C49A" stopOpacity="0.9"/>
+              <stop offset="100%" stopColor="#FEF3EE" stopOpacity="0"/>
+            </linearGradient>
+          </defs>
+          <circle cx="160" cy="150" r="540" fill="url(#signupRayG)"/>
+          <g fill="url(#signupRayL)">
+            <path d="M160 150 L1400 120 L1400 240 Z" opacity="0.65"/>
+            <path d="M160 150 L1400 280 L1400 420 Z" opacity="0.45"/>
+            <path d="M160 150 L1400 500 L1400 620 Z" opacity="0.25"/>
+          </g>
+        </svg>
+        {/* Mountain watermark */}
+        <svg className="absolute bottom-0 right-0 opacity-[0.04]" width="500" height="500" viewBox="0 0 24 24" fill="none">
           <path d="M2 19.2 L8.4 8.2 L11.3 13 L15.3 6 L22 19.2 Z" stroke="#1A1A1A" strokeWidth="0.3" strokeLinejoin="round" />
           <path d="M14.05 8.2 L15.3 6 L16.55 8.2 L15.85 8.9 L15.3 8.3 L14.75 8.9 Z" fill="#1A1A1A" />
           <path d="M7.5 9.7 L8.4 8.2 L9.3 9.7 L8.8 10.2 L8.4 9.7 L8 10.2 Z" fill="#1A1A1A" />
         </svg>
         {/* Floating shapes */}
-        <div className="absolute top-[15%] left-[10%] w-20 h-20 rounded-full border-2 opacity-[0.04]" style={{ borderColor: "#C45A2D" }} />
-        <div className="absolute top-[40%] right-[15%] w-12 h-12 border-2 opacity-[0.03]" style={{ borderColor: "#1A1A1A", transform: "rotate(45deg)" }} />
-        <div className="absolute bottom-[20%] left-[20%] w-16 h-16 rounded-full border-2 opacity-[0.04]" style={{ borderColor: "#3B7DD8" }} />
-        {/* Dot pattern */}
-        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <div className="absolute top-[15%] left-[10%] w-20 h-20 rounded-full border-2 opacity-[0.05]" style={{ borderColor: "#C45A2D" }} />
+        <div className="absolute top-[40%] right-[15%] w-12 h-12 border-2 opacity-[0.04]" style={{ borderColor: "#1A1A1A", transform: "rotate(45deg)" }} />
+        <div className="absolute bottom-[20%] left-[20%] w-16 h-16 rounded-full border-2 opacity-[0.05]" style={{ borderColor: "#3B7DD8" }} />
       </div>
       <div className="w-full max-w-[400px]">
         {/* Card */}

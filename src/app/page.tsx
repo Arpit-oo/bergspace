@@ -156,10 +156,6 @@ export default function HomePage() {
         <div className="absolute right-[25%] top-[60%] w-8 h-8 border-2 opacity-[0.06] pointer-events-none" style={{ borderColor: "#1A1A1A", transform: "rotate(45deg)", animation: "drift 15s ease-in-out infinite alternate-reverse" }} aria-hidden="true" />
         <div className="absolute left-[15%] bottom-[15%] w-12 h-12 rounded-full border-2 opacity-[0.05] pointer-events-none" style={{ borderColor: "#3B7DD8", animation: "drift 18s ease-in-out infinite alternate" }} aria-hidden="true" />
         <div className="relative mx-auto px-6 text-center" style={{ maxWidth: 1280 }}>
-          <div className="sr mb-6 inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 text-sm font-medium" style={{ borderColor: "#E8E2D6", color: "#8C8578", backgroundColor: "#F5F1EA" }}>
-            <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#C45A2D" }} />
-            Enterprise goal tracking, simplified
-          </div>
           <h1
             className="sr sr-d1 mx-auto font-extrabold leading-[0.88] tracking-tighter"
             style={{ fontSize: "clamp(72px, 14vw, 200px)", color: "#1A1A1A", letterSpacing: "-0.04em" }}
@@ -167,7 +163,7 @@ export default function HomePage() {
             BERGSPACE
           </h1>
           <div className="flex justify-center gap-4 mt-8 mb-6">
-            <a href="/auth/signup" style={{ backgroundColor: "#C45A2D" }} className="inline-flex items-center gap-2 text-white font-bold text-base px-8 py-3.5 rounded-full hover:opacity-90 transition-opacity">
+            <a href="/auth/login" style={{ backgroundColor: "#C45A2D" }} className="inline-flex items-center gap-2 text-white font-bold text-base px-8 py-3.5 rounded-full hover:opacity-90 transition-opacity">
               Get Started
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </a>
@@ -815,7 +811,7 @@ export default function HomePage() {
           </p>
           <div className="sr sr-d3 mt-10">
             <Link
-              href="/auth/signup"
+              href="/auth/login"
               className="inline-flex items-center gap-2.5 rounded-full px-10 py-4 text-base font-extrabold transition-opacity hover:opacity-90"
               style={{ backgroundColor: "#1A1A1A", border: "1px solid #3A352E", color: "#C45A2D" }}
             >
