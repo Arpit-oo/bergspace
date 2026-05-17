@@ -72,6 +72,27 @@ export function EmployeesView({
         .eq("id", editingEmployee.id);
 
       if (error) throw error;
+
+      // Notify both parties when manager changes
+      if (editManagerId && editManagerId !== editingEmployee.manager_id) {
+        // Notify new manager
+        await supabase.from("notifications").insert({
+          user_id: editManagerId,
+          type: "shared_goal_assigned",
+          title: "New Team Member",
+          message: `${editingEmployee.full_name} has been assigned to your team.`,
+          link: "/dashboard/team",
+        });
+        // Notify employee
+        await supabase.from("notifications").insert({
+          user_id: editingEmployee.id,
+          type: "shared_goal_assigned",
+          title: "Manager Updated",
+          message: `You have been assigned to a new manager.`,
+          link: "/dashboard",
+        });
+      }
+
       toast.success(`${editingEmployee.full_name} updated successfully`);
       setEditingEmployee(null);
       router.refresh();

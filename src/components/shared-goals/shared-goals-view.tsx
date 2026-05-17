@@ -142,6 +142,19 @@ export function SharedGoalsView({
     if (!activeCycle) { toast.error("No active cycle"); return; }
     setLoading(true);
     try {
+      // Validate with AI SMART check
+      try {
+        const valRes = await fetch("/api/validate-goals", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ goals: [{ title: form.title, description: form.description }] }),
+        });
+        const valData = await valRes.json();
+        if (valData.goals?.[0] && !valData.goals[0].passed) {
+          toast.warning(`AI suggests: ${valData.goals[0].suggestion}`);
+        }
+      } catch {}
+
       const { error } = await supabase.from("shared_goal_templates").insert({
         title: form.title,
         description: form.description || null,
@@ -308,7 +321,7 @@ export function SharedGoalsView({
 
       {/* Create Template Dialog */}
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent className="max-w-4xl w-[85vw] max-h-[90vh] overflow-y-auto p-8 bg-white border border-[#E8E2D6]">
+        <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] overflow-y-auto p-8 bg-white border border-[#E8E2D6]">
           <DialogHeader>
             <DialogTitle className="font-semibold tracking-tight text-[#1A1A1A]">Create Shared Goal Template</DialogTitle>
             <DialogDescription className="text-sm text-[#5C564C]">
@@ -372,7 +385,7 @@ export function SharedGoalsView({
 
       {/* Push to Employees Dialog */}
       <Dialog open={pushDialogOpen} onOpenChange={setPushDialogOpen}>
-        <DialogContent className="max-w-4xl w-[85vw] max-h-[90vh] overflow-y-auto p-8 bg-white border border-[#E8E2D6]">
+        <DialogContent className="max-w-6xl w-[95vw] max-h-[90vh] overflow-y-auto p-8 bg-white border border-[#E8E2D6]">
           <DialogHeader>
             <DialogTitle className="font-semibold tracking-tight text-[#1A1A1A]">Push to Employees</DialogTitle>
             <DialogDescription className="text-sm text-[#5C564C]">

@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Profile, GoalCycle } from "@/lib/types";
+import { RefreshCw } from "lucide-react";
 
 /* ── Status dot + label ── */
 function StatusDot({ status }: { status: string }) {
@@ -31,6 +33,8 @@ export function TeamView({
   teamSheets,
   activeCycle,
 }: TeamViewProps) {
+  const router = useRouter();
+
   const sheetMap = new Map(
     teamSheets.map((s) => [s.employee_id as string, s])
   );
@@ -53,9 +57,18 @@ export function TeamView({
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">
-          My Team
-        </h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">
+            My Team
+          </h1>
+          <button
+            onClick={() => router.refresh()}
+            className="p-2 rounded-lg hover:bg-[#F5F1EA] transition-colors text-[#8C8578]"
+            title="Refresh"
+          >
+            <RefreshCw className="h-4 w-4" />
+          </button>
+        </div>
         {activeCycle && (
           <span className="inline-flex items-center rounded-full border border-[#E8E2D6] bg-white px-2.5 py-0.5 text-[11px] font-medium text-[#5C564C]">
             {activeCycle.name}

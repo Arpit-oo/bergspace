@@ -117,7 +117,7 @@ export function DashboardShell({
     .slice(0, 2);
 
   async function handleSignOut() {
-    await supabase.auth.signOut();
+    await supabase.auth.signOut({ scope: 'global' });
     router.push("/auth/login");
     router.refresh();
   }
