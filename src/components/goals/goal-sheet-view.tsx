@@ -522,47 +522,28 @@ export function GoalSheetView({
                 <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
                   Thrust Area
                 </Label>
-                <Select
-                  value={goal.thrust_area_id || undefined}
-                  onValueChange={(v: string | null) =>
-                    updateGoal(index, "thrust_area_id", v ?? "")
-                  }
+                <select
+                  value={goal.thrust_area_id}
+                  onChange={(e) => updateGoal(index, "thrust_area_id", e.target.value)}
                   disabled={!canEdit || goal.is_from_shared}
-                  items={thrustAreas.map((ta) => ({ value: ta.id, label: ta.name }))}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D] disabled:opacity-50"
                 >
-                  <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                    <SelectValue placeholder="Select area" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {thrustAreas.map((ta) => (
-                      <SelectItem key={ta.id} value={ta.id}>
-                        {ta.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  <option value="">Select thrust area</option>
+                  {thrustAreas.map((ta) => <option key={ta.id} value={ta.id}>{ta.name}</option>)}
+                </select>
               </div>
               <div>
                 <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
                   Unit of Measurement
                 </Label>
-                <Select
-                  value={goal.uom || undefined}
-                  onValueChange={(v: string | null) => updateGoal(index, "uom", v ?? "")}
+                <select
+                  value={goal.uom}
+                  onChange={(e) => updateGoal(index, "uom", e.target.value)}
                   disabled={!canEdit || goal.is_from_shared}
-                  items={Object.entries(UOM_LABELS).map(([key, label]) => ({ value: key, label }))}
+                  className="w-full h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D] disabled:opacity-50"
                 >
-                  <SelectTrigger className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] focus:ring-0">
-                    <SelectValue placeholder="Select UoM" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(UOM_LABELS).map(([key, label]) => (
-                      <SelectItem key={key} value={key}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  {Object.entries(UOM_LABELS).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
+                </select>
               </div>
               <div>
                 <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
@@ -657,9 +638,9 @@ export function GoalSheetView({
               }))}
               open={validatorOpen}
               onClose={() => setValidatorOpen(false)}
-              onAcceptSuggestion={(index, newTitle) => {
+              onAcceptSuggestion={(index, newTitle, newDescription) => {
                 const updated = [...goals];
-                updated[index] = { ...updated[index], title: newTitle };
+                updated[index] = { ...updated[index], title: newTitle, description: newDescription || updated[index].description };
                 setGoals(updated);
               }}
               onProceed={() => {
