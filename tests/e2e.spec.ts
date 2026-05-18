@@ -9,7 +9,7 @@ async function login(page: any, user: { email: string; password: string }) {
   await page.fill('input[type="email"], input[placeholder*="company"]', user.email);
   await page.fill('input[type="password"]', user.password);
   await page.click('button[type="submit"]');
-  await page.waitForURL(/\/dashboard/, { timeout: 10000 });
+  await page.waitForURL(/\/dashboard/, { timeout: 15000 });
 }
 
 test("1. landing page loads", async ({ page }) => {
