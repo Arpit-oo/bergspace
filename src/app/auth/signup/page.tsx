@@ -76,9 +76,19 @@ export default function SignupPage() {
           <path d="M7.5 9.7 L8.4 8.2 L9.3 9.7 L8.8 10.2 L8.4 9.7 L8 10.2 Z" fill="#1A1A1A" />
         </svg>
         {/* Floating shapes */}
-        <div className="absolute top-[15%] left-[10%] w-20 h-20 rounded-full border-2 opacity-[0.05]" style={{ borderColor: "#C45A2D" }} />
-        <div className="absolute top-[40%] right-[15%] w-12 h-12 border-2 opacity-[0.04]" style={{ borderColor: "#1A1A1A", transform: "rotate(45deg)" }} />
-        <div className="absolute bottom-[20%] left-[20%] w-16 h-16 rounded-full border-2 opacity-[0.05]" style={{ borderColor: "#3B7DD8" }} />
+        <div className="absolute top-[15%] left-[10%] w-20 h-20 rounded-full border-2 opacity-[0.05]" style={{ borderColor: "#C45A2D", animation: "drift 20s ease-in-out infinite alternate" }} />
+        <div className="absolute top-[40%] right-[15%] w-12 h-12 border-2 opacity-[0.04]" style={{ borderColor: "#1A1A1A", transform: "rotate(45deg)", animation: "drift 15s ease-in-out infinite alternate-reverse" }} />
+        <div className="absolute bottom-[20%] left-[20%] w-16 h-16 rounded-full border-2 opacity-[0.05]" style={{ borderColor: "#3B7DD8", animation: "drift 18s ease-in-out infinite alternate" }} />
+        <div className="absolute top-[30%] right-[5%] w-32 h-px opacity-[0.06]" style={{ backgroundColor: "#C45A2D", transform: "rotate(-15deg)" }} />
+        <div className="absolute bottom-[35%] right-[25%] w-24 h-px opacity-[0.05]" style={{ backgroundColor: "#1A1A1A", transform: "rotate(20deg)" }} />
+        <svg className="absolute top-[10%] right-[5%] opacity-[0.025]" width="200" height="200" viewBox="0 0 24 24" fill="none">
+          <path d="M2 19.2 L8.4 8.2 L11.3 13 L15.3 6 L22 19.2 Z" stroke="#C45A2D" strokeWidth="0.4" strokeLinejoin="round" />
+        </svg>
+        <div className="absolute bottom-0 left-0 right-0 h-[40%] opacity-[0.02]" style={{ backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <svg className="absolute bottom-0 left-0 right-0 h-[200px] opacity-[0.04]" viewBox="0 0 1400 200" preserveAspectRatio="none">
+          <path d="M0 120 Q200 80 400 110 T800 90 T1200 120 T1400 100" stroke="#C45A2D" strokeWidth="1" fill="none" />
+          <path d="M0 150 Q200 120 400 140 T800 120 T1200 150 T1400 130" stroke="#1A1A1A" strokeWidth="0.8" fill="none" />
+        </svg>
       </div>
       <div className="w-full max-w-[400px]">
         {/* Card */}
