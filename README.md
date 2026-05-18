@@ -18,7 +18,17 @@ Microsoft SSO also available on login page.
 
 ## Architecture
 
-![BergSpace Architecture](./architecture.png)
+### System Overview
+![System Architecture](./architecture.png)
+
+### Entity Relationship Diagram
+![ER Diagram](./docs/architecture-er.png)
+
+### Goal Lifecycle Sequence
+![Sequence Diagram](./docs/architecture-sequence.png)
+
+### Combined View (ER + State Machine + Sequence)
+![Combined Diagram](./docs/architecture-combined.png)
 
 ---
 
@@ -42,7 +52,7 @@ Microsoft SSO also available on login page.
 - **Microsoft Teams** — adaptive card webhooks for all events
 - **Telegram Bot (@BergSpacebot)** — approve/return from chat, one-tap check-ins
 - **Escalation module** — configurable rules, chain, intervention dashboard
-- **Analytics** — QoQ trends, donut charts, bar charts, manager effectiveness
+- **Analytics** — QoQ trends, donut charts, bar charts, heatmaps, manager effectiveness
 
 ### Beyond Requirements
 - AI SMART Goal Validator (OpenAI GPT-4o-mini, sequential S-M-A-R-T animation)
@@ -70,6 +80,35 @@ Microsoft SSO also available on login page.
 
 ---
 
+## How to Use BergSpace
+
+### As an Employee
+1. **Login** → Dashboard shows goal status + current cycle info
+2. **My Goals** → Create goal sheet with thrust areas, targets, weightages
+3. **AI validates** your goals against SMART criteria before submission
+4. **Submit** → Manager gets notified (in-app + email + Telegram)
+5. **After approval** → Goals lock. Track progress in **My Check-ins** during quarterly window
+6. **Notifications** → View alerts, link Telegram bot for mobile updates
+
+### As a Manager
+1. **Dashboard** → Team stats, pending approvals, recent activity
+2. **Approvals** → Review submitted sheets, inline edit, approve or return with reason
+3. **Check-ins** → View team's planned vs actual, add comments, see progress scores
+4. **Shared Goals** → Create KPI templates, push to employees
+5. **Announcements** → Broadcast messages via in-app, email, Telegram
+6. **Telegram** → Approve/return goals directly from chat
+
+### As an Admin
+1. **Dashboard** → Org-wide stats, escalations, audit entries
+2. **Employees** → Edit roles, departments, managers. View/delete goal sheets
+3. **Goal Cycles** → Create quarterly windows with presets
+4. **Escalations** → Configure rules, view intervention dashboard
+5. **Reports** → Org-wide achievement + completion data with export
+6. **Analytics** → Charts, heatmaps, distribution analysis
+7. **Settings** → SSO config, email status, Telegram, Teams
+
+---
+
 ## Setup
 
 ```bash
@@ -94,7 +133,7 @@ npx playwright test
 
 15 tables · 45+ RLS policies · 4 DB triggers
 
-Key triggers: auto profile creation on signup, shared goal achievement sync, weighted progress score computation.
+Key triggers: auto profile creation, shared goal achievement sync, weighted progress scoring.
 
 ---
 

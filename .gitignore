@@ -18,6 +18,7 @@ test-results/
 # screenshots
 *.png
 !architecture.png
+!docs/*.png
 !src/app/favicon.svg
 
 # misc
