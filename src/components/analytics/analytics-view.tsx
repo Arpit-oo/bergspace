@@ -365,6 +365,92 @@ export function AnalyticsView({
           )}
         </div>
       </div>
+
+      {/* Goal Distribution by Status */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#E8E2D6]">
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Goal Distribution by Status</h2>
+        </div>
+        <div className="p-5">
+          {(() => {
+            const statusCounts = sheets.flatMap(s => s.goals || []).reduce((acc, g) => {
+              const s = g.status || "not_started";
+              acc[s] = (acc[s] || 0) + 1;
+              return acc;
+            }, {} as Record<string, number>);
+            const statusData = [
+              { name: "Completed", value: statusCounts["completed"] || 0, color: "#3D9A5F" },
+              { name: "On Track", value: statusCounts["on_track"] || 0, color: "#C08B30" },
+              { name: "Not Started", value: statusCounts["not_started"] || 0, color: "#A89F91" },
+            ].filter(d => d.value > 0);
+
+            return statusData.length === 0 ? (
+              <div className="text-center text-[#A89F91] text-sm py-8 border border-dashed border-[#E8E2D6] rounded-xl">No goal data.</div>
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie data={statusData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} paddingAngle={2} dataKey="value" label={({ name, percent }: PieLabelRenderProps) => `${name} ${((percent as number) * 100).toFixed(0)}%`}>
+                    {statusData.map((d, i) => <Cell key={i} fill={d.color} />)}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend wrapperStyle={{ fontSize: "12px" }} />
+                </PieChart>
+              </ResponsiveContainer>
+            );
+          })()}
+        </div>
+      </div>
+
+      {/* Completion Heatmap — Department × Quarter */}
+      <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#E8E2D6]">
+          <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Completion Rates Heatmap</h2>
+          <p className="text-xs text-[#A89F91] mt-1">Percentage of approved goal sheets per department per quarter</p>
+        </div>
+        <div className="p-5 overflow-x-auto">
+          {(() => {
+            const deptNames = departments.map(d => d.name);
+            const cycleNames = cycles.slice(0, 4).map(c => c.name);
+            const heatData: Record<string, Record<string, number>> = {};
+            deptNames.forEach(dept => {
+              heatData[dept] = {};
+              cycleNames.forEach(cycle => {
+                const deptObj = departments.find(d => d.name === dept);
+                const cycleObj = cycles.find(c => c.name === cycle);
+                if (!deptObj || !cycleObj) { heatData[dept][cycle] = 0; return; }
+                const deptEmps = employeeList.filter(p => p.department_id === deptObj.id && p.role === "employee");
+                const approved = sheets.filter(s => deptEmps.some(e => e.id === s.employee_id) && s.cycle_id === cycleObj.id && s.status === "approved").length;
+                heatData[dept][cycle] = deptEmps.length > 0 ? Math.round((approved / deptEmps.length) * 100) : 0;
+              });
+            });
+            return (
+              <table className="w-full">
+                <thead><tr>
+                  <th className="text-left text-xs font-medium uppercase tracking-wider text-[#A89F91] pb-3 pr-4 w-40">Department</th>
+                  {cycleNames.map(c => <th key={c} className="text-center text-xs font-medium uppercase tracking-wider text-[#A89F91] pb-3 px-3 font-mono">{c}</th>)}
+                </tr></thead>
+                <tbody>
+                  {deptNames.map(dept => (
+                    <tr key={dept} className="border-t border-[#F5F1EA]">
+                      <td className="py-3 pr-4 text-sm font-medium text-[#1A1A1A]">{dept}</td>
+                      {cycleNames.map(cycle => {
+                        const val = heatData[dept]?.[cycle] || 0;
+                        const bg = val >= 80 ? "bg-green-50 text-green-700" : val >= 50 ? "bg-yellow-50 text-yellow-700" : val > 0 ? "bg-red-50 text-red-700" : "bg-[#F5F1EA] text-[#A89F91]";
+                        return <td key={cycle} className="py-3 px-3 text-center"><span className={`inline-block font-mono text-xs font-bold px-3 py-1 rounded ${bg}`}>{val > 0 ? `${val}%` : "—"}</span></td>;
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            );
+          })()}
+          <div className="flex items-center gap-4 mt-4 text-xs text-[#A89F91]">
+            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-green-50 border border-green-200" /> ≥80%</span>
+            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-yellow-50 border border-yellow-200" /> 50-79%</span>
+            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-red-50 border border-red-200" /> &lt;50%</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
