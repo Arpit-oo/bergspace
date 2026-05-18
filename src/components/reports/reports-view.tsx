@@ -252,13 +252,13 @@ export function ReportsView({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Reports</h1>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
           <select
             value={selectedDeptId}
             onChange={(e) => setSelectedDeptId(e.target.value)}
-            className="w-[180px] h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+            className="w-full sm:w-[180px] h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
           >
             <option value="all">All Departments</option>
             {departments.map((d) => (
@@ -268,7 +268,7 @@ export function ReportsView({
           <select
             value={selectedCycleId}
             onChange={(e) => setSelectedCycleId(e.target.value)}
-            className="w-[200px] h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
+            className="w-full sm:w-[200px] h-10 rounded-lg border border-[#E8E2D6] bg-white px-3 text-sm text-[#1A1A1A] outline-none focus:border-[#C45A2D] focus:ring-1 focus:ring-[#C45A2D]"
           >
             <option value="">Select Cycle</option>
             {cycles.map((c) => (
@@ -297,7 +297,7 @@ export function ReportsView({
 
       {/* Tabs */}
       <div>
-        <div className="flex border-b border-[#E8E2D6]">
+        <div className="flex overflow-x-auto border-b border-[#E8E2D6]">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -358,9 +358,9 @@ export function ReportsView({
             )}
 
             <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
-              <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
+              <div className="px-5 py-4 border-b border-[#E8E2D6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">Planned vs Actual Achievement</h2>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" onClick={exportCSV} className="gap-1.5 border-[#E8E2D6] text-[#5C564C] text-xs">
                     <Download className="h-3 w-3" /> CSV
                   </Button>

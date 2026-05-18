@@ -290,7 +290,7 @@ export function CyclesView({ cycles, userId }: CyclesViewProps) {
           </DialogHeader>
 
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="flex flex-col gap-1">
                 <Label className="text-sm font-medium text-[#1A1A1A]">Preset</Label>
                 <select

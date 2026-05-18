@@ -320,7 +320,7 @@ export function CheckinsView({
                           </div>
                           <GoalStatusDot status={achievement?.status || goal.status} />
                         </div>
-                        <div className="grid grid-cols-4 gap-2 text-xs text-[#A89F91] mb-2 ml-7">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-[#A89F91] mb-2 ml-7">
                           <div>
                             UoM: <span className="text-[#5C564C]">{UOM_LABELS[goal.uom]}</span>
                           </div>

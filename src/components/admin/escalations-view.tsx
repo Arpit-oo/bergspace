@@ -405,12 +405,12 @@ export function EscalationsView({
 
       {/* Tabs */}
       <div>
-        <div className="flex border-b border-[#E8E2D6]">
+        <div className="flex overflow-x-auto border-b border-[#E8E2D6]">
           {tabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-5 py-2.5 text-sm transition-colors ${
+              className={`px-5 py-2.5 text-sm whitespace-nowrap transition-colors ${
                 activeTab === tab.key
                   ? "text-[#1A1A1A] font-medium border-b-2 border-[#1A1A1A]"
                   : "text-[#A89F91] border-b-2 border-transparent hover:text-[#5C564C]"

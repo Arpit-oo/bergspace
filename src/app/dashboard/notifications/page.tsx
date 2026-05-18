@@ -149,7 +149,7 @@ export default function NotificationsPage() {
     <div className="flex flex-col gap-6">
       {/* Telegram Link section */}
       <div className="bg-white border border-[#E8E2D6] rounded-xl p-6 mb-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
             <h3 className="text-base font-semibold text-[#1A1A1A]">Telegram Notifications</h3>
             <p className="text-sm text-[#8C8578] mt-1">Get goal updates and take actions directly from Telegram</p>
@@ -187,7 +187,7 @@ export default function NotificationsPage() {
         )}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-semibold tracking-tight text-[#1A1A1A]">Notifications</h1>
           {unreadCount > 0 && (

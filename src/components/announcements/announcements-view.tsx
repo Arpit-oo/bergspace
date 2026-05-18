@@ -171,7 +171,7 @@ export function AnnouncementsView({ profile, users, departments }: Announcements
         {/* Channels */}
         <div>
           <Label className="text-sm font-medium text-[#1A1A1A] mb-2 block">Channels</Label>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox checked={channels.inApp} onCheckedChange={(c) => setChannels(prev => ({ ...prev, inApp: !!c }))} />
               <Bell className="h-3.5 w-3.5 text-[#8C8578]" />
@@ -206,7 +206,7 @@ export function AnnouncementsView({ profile, users, departments }: Announcements
         </div>
 
         {/* Send */}
-        <div className="flex items-center justify-between pt-2 border-t border-[#E8E2D6]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-[#E8E2D6]">
           {loading ? (
             <p className="text-sm text-[#8C8578]">Sending to {sent}/{selectedIds.size} recipients...</p>
           ) : (

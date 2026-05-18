@@ -175,11 +175,11 @@ export function EmployeesView({
       </div>
 
       <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#E8E2D6] flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-[#E8E2D6] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <h2 className="text-base font-semibold tracking-tight text-[#1A1A1A]">
             Employee Directory
           </h2>
-          <div className="relative w-64">
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#A89F91]" />
             <Input
               value={searchQuery}
@@ -368,7 +368,7 @@ export function EmployeesView({
                     </div>
                   </div>
                   {expandedSheets.has(sheet.id) && sheet.goals && sheet.goals.length > 0 && (
-                    <div className="border-t border-[#E8E2D6]">
+                    <div className="border-t border-[#E8E2D6] overflow-x-auto">
                       <table className="w-full">
                         <thead>
                           <tr className="border-b border-[#F5F1EA]">

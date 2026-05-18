@@ -482,7 +482,7 @@ export function GoalSheetView({
 
             {/* Form fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-              <div className="col-span-2">
+              <div className="md:col-span-2">
                 <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
                   Title
                 </Label>
@@ -494,7 +494,7 @@ export function GoalSheetView({
                   className="bg-white border-[#E8E2D6] rounded-lg text-sm text-[#1A1A1A] placeholder:text-[#A89F91] focus:border-[#1A1A1A] focus:ring-0"
                 />
               </div>
-              <div className="col-span-2">
+              <div className="md:col-span-2">
                 <Label className="text-xs text-[#A89F91] uppercase tracking-wider font-medium mb-1.5 block">
                   Description
                 </Label>
@@ -575,16 +575,16 @@ export function GoalSheetView({
 
       {/* Actions */}
       {canEdit && (
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
           <button
             onClick={addGoal}
             disabled={goals.length >= MAX_GOALS_PER_SHEET}
-            className="inline-flex items-center gap-1.5 bg-white border border-[#E8E2D6] rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#FEFCF9] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="inline-flex items-center justify-center gap-1.5 bg-white border border-[#E8E2D6] rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#FEFCF9] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <Plus className="h-4 w-4" /> Add Goal
           </button>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             {sheet && (sheet.status === "draft" || sheet.status === "returned" || sheet.status === "submitted") && (
               <button
                 onClick={() => setDeleteDialogOpen(true)}

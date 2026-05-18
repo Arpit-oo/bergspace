@@ -109,9 +109,15 @@ export default function HomePage() {
 
         /* newsletter input */
         .nl-input { display: flex; gap: 0; }
-        .nl-input input { flex: 1; padding: 10px 14px; border: 1px solid #3A352E; background: transparent; color: #FEFCF9; border-radius: 10px 0 0 10px; font-size: 14px; outline: none; }
+        .nl-input input { flex: 1; padding: 10px 14px; border: 1px solid #3A352E; background: transparent; color: #FEFCF9; border-radius: 10px 0 0 10px; font-size: 14px; outline: none; min-width: 0; }
         .nl-input input::placeholder { color: #6B6458; }
-        .nl-input button { padding: 10px 18px; background: #C45A2D; color: white; border: none; border-radius: 0 10px 10px 0; font-weight: 700; font-size: 14px; cursor: pointer; }
+        .nl-input button { padding: 10px 18px; background: #C45A2D; color: white; border: none; border-radius: 0 10px 10px 0; font-weight: 700; font-size: 14px; cursor: pointer; white-space: nowrap; }
+
+        /* responsive work grid */
+        @media (max-width: 768px) {
+          .work-grid-responsive { grid-template-columns: 1fr !important; padding: 0 8px !important; }
+          .work-grid-responsive > div { grid-column: 1 / -1 !important; transform: none !important; min-height: auto !important; }
+        }
       ` }} />
 
       {/* ══════════════ PILL NAV ══════════════ */}
@@ -159,7 +165,7 @@ export default function HomePage() {
           >
             BERGSPACE
           </h1>
-          <div className="flex justify-center gap-4 mt-8 mb-6">
+          <div className="flex flex-wrap justify-center gap-4 mt-8 mb-6">
             <a href="/auth/login" style={{ backgroundColor: "#C45A2D" }} className="inline-flex items-center gap-2 text-white font-bold text-base px-8 py-3.5 rounded-full hover:opacity-90 transition-opacity">
               Get Started
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -264,7 +270,7 @@ export default function HomePage() {
             >
               <div className="text-xs font-bold uppercase tracking-wider mb-5" style={{ color: "#8C8578" }}>Approval Flow</div>
               {/* flow steps */}
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex flex-wrap items-center gap-3 mb-6">
                 {["Submitted", "Reviewing", "Approved"].map((step, i) => (
                   <div key={step} className="flex items-center gap-2">
                     <div className="rounded-full px-3 py-1.5 text-xs font-bold" style={{

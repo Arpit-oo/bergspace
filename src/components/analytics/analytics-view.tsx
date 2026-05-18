@@ -221,7 +221,7 @@ export function AnalyticsView({
       </div>
 
       {/* Pie Charts Row */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Thrust Area Distribution */}
         <div className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden">
           <div className="px-5 py-4 border-b border-[#E8E2D6]">

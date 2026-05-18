@@ -230,14 +230,14 @@ export function SharedGoalsView({
                 className="bg-white border border-[#E8E2D6] rounded-xl overflow-hidden"
               >
                 <div className="px-5 py-4 border-b border-[#E8E2D6]">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <h3 className="text-sm font-semibold tracking-tight text-[#1A1A1A]">{template.title}</h3>
                       <p className="text-sm text-[#A89F91] mt-0.5">
                         {template.description || "No description"}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="inline-block px-2 py-0.5 rounded text-xs text-[#5C564C] border border-[#E8E2D6]">
                         {UOM_LABELS[template.uom]}
                       </span>
@@ -252,8 +252,8 @@ export function SharedGoalsView({
                     </div>
                   </div>
                 </div>
-                <div className="px-5 py-3 flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-sm text-[#A89F91]">
+                <div className="px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-[#A89F91]">
                     {template.thrust_area && <span>Thrust: {template.thrust_area.name}</span>}
                     <span className="flex items-center gap-1">
                       <Users className="h-3 w-3" />
@@ -303,7 +303,7 @@ export function SharedGoalsView({
               <Label className="text-sm font-medium text-[#1A1A1A] mb-1 block">Description</Label>
               <Textarea value={form.description} onChange={(e) => updateForm("description", e.target.value)} placeholder="Detailed description of the goal..." rows={3} className="border-[#E8E2D6] text-sm" />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium text-[#1A1A1A] mb-1 block">Thrust Area</Label>
                 <select
@@ -427,7 +427,7 @@ export function SharedGoalsView({
           </DialogHeader>
           {selectedTemplate && (
             <div className="flex flex-col gap-3">
-              <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                 <div>
                   <span className="text-[#A89F91]">UoM:</span>{" "}
                   {UOM_LABELS[selectedTemplate.uom]}

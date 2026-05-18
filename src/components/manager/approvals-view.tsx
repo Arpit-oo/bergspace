@@ -308,7 +308,7 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
                         {goal.description}
                       </p>
                     )}
-                    <div className="grid grid-cols-4 gap-4 ml-[30px]">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 ml-[30px]">
                       <div>
                         <span className="block text-xs uppercase tracking-wider font-medium text-[#A89F91] mb-1">UoM</span>
                         <span className="text-sm text-[#5C564C]">{UOM_LABELS[goal.uom]}</span>
@@ -369,7 +369,7 @@ export function ApprovalsView({ sheets, managerId }: ApprovalsViewProps) {
 
               {/* Action buttons */}
               {selectedSheet.status === "submitted" && (
-                <div className="flex justify-end gap-3 mt-6 pt-5 border-t border-[#F5F1EA]">
+                <div className="flex flex-wrap justify-end gap-3 mt-6 pt-5 border-t border-[#F5F1EA]">
                   <button
                     onClick={() => setReturnDialogOpen(true)}
                     disabled={loading}
